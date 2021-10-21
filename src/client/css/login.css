@@ -1,0 +1,97 @@
+* {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+legend {
+  font-size: 20px;
+  font-family: "Helvetica Neue";
+}
+
+hr {
+  border: 1px solid #d5d5d5;
+  margin-bottom: 1.5em;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* GENERAL */
+#container {
+  width: auto;
+  height: 100vh;
+  background: url("../../../img/login-bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#content {
+  background-color: white;
+  width: 50em;
+  height: 50em;
+}
+
+/* LOGO */
+#logo {
+  height: 10em;
+  text-align: center;
+}
+
+#logo img {
+  width: 30em;
+  height: auto;
+  padding-top: 2em;
+}
+
+/* FORMS */
+#login-container {
+  display: flex;
+  justify-content: center;
+}
+
+#login {
+  margin: 0em 0em 0em 3em;
+  padding-right: 3em;
+  width: auto;
+  border-right: 1px solid #d5d5d5;
+}
+
+#signup {
+  margin: 0em 3em 0em 3em;
+  width: auto;
+}
+
+#ppic {
+    color: #039ce0;
+    border: 1px solid #039ce0;
+    border-radius: 20px;
+    display: inline-block;
+    padding: 10px 25px;
+    margin-bottom: 1.3em;
+    cursor: pointer;
+}
+
+.textbox {
+  width: 25em;
+  height: 2em;
+  border-radius: 8px;
+  border: 1px solid #d5d5d5;
+  margin: 1em 0em 2em 0em;
+  padding: 1em 1em 1em 1em;
+}
+
+.form-submit {
+  background-color: #039ce0; /* Green */
+  border: none;
+  border-radius: 20px;
+  color: white;
+  padding: 10px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Helvetica-light";
+}
