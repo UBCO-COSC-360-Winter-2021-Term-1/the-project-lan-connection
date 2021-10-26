@@ -12,6 +12,16 @@ The site will have a selection of outdoor adventure categories from which a user
 
 ### Project Functionality Goals
 
+#### Baseline Objectives
+- Browse discussions without registering
+- Search for posts by keyword without registering
+- Search for items/posts by keyword without registering
+- Register at the site by providing their name, e-mail and image
+- Allow user login by providing user id and password
+- Create and comment on discussions when logged into the site
+- Users are required to be able to view/edit their profile
+- User password recovery (via email)
+
 #### Minimum Functional Requirements
 - 3 column layout
 - Form validation with JavaScript
@@ -25,10 +35,12 @@ The site will have a selection of outdoor adventure categories from which a user
 - Discussion grouping and display
 - Navigation breadcrumb strategy
 - Error handling
-#### Additional Requirements 
+#### Additional Requirements
 - Activity by date
 - search and analysis for items 
 - styling flourishes (to really push the outdoor adventure theme, shouldn't be too much extra) 
 - accessibility (should be able to just follow the accessibility techniques shown in class)
 - tracking comment history from user perspective 
 - admin view reports on usage (maybe?)
+- hot items/popular post tracking on home page
+- mobile view
