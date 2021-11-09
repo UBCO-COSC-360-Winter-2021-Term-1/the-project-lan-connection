@@ -1,3 +1,8 @@
+* {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
 /* HEADER IMAGE AND TITLE */
 .header {
   display: flex;
@@ -46,8 +51,22 @@
 /* COMMENTS */
 .user-comment {
   background-color: rgb(228, 228, 228);
-  border-top: 1px solid grey;
   padding-left: 1em;
+}
+
+.comment-header {
+  border-top: 1px solid grey;
+  display: flex;
+  align-items: center;
+  padding-top: 0.75em;
+  background-color: rgb(228, 228, 228);
+  padding-left: 2em;
+}
+
+.comment-header p {
+  font-family: "Helvetica Neue";
+  font-weight: 500;
+  text-decoration: underline;
 }
 
 .user-comment input {
@@ -74,6 +93,7 @@
 }
 
 .user-info {
+  background-color: rgb(228, 228, 228);
     border-top: 1px solid grey;
     padding-left: 1em;
     display: flex;
@@ -81,11 +101,16 @@
 }
 
 .user-info p {
+  background-color: rgb(228, 228, 228);
     margin-left: auto;
     order: 2;
     margin-top: 15px;
     margin-right: 1em;
     font-size: 14px;
+}
+
+.user-content {
+  background-color: rgb(228, 228, 228);
 }
 
 .user-content .menu-bar {
@@ -94,4 +119,5 @@
 
 .user-content p {
     padding-left: 2em;
+    background-color: rgb(228, 228, 228);
 }
