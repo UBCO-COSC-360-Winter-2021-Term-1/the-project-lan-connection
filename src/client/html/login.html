@@ -5,68 +5,67 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/login.css">
     <title>Login/Sign Up</title>
 </head>
 <body>
-    
-        <div id="content">
-            <div id="logo">
-                <img src="../../../img/login-logo.png">
+    <div id="content">
+        <div id="logo">
+            <img src="../../../img/login-logo.png">
+        </div>
+        <div id="forms-container">
+            <div id="login" class="form">
+                <form method="post" action="">                       
+                    <legend>Login</legend>
+                    <hr>
+                    <p>
+                        <label>Email</label>
+                        <br>
+                        <input type="text" class="textbox" name="email" placeholder="Your email" required>
+                    </p>
+                    <p>
+                        <label>Password</label>
+                        <br>
+                        <input type="text" class="textbox" name="password" placeholder="Your password" required>
+                    </p>
+                    <input class="form-submit" type="submit" value="Login"> 
+                </form>
             </div>
-            <div id="login-container">
-                <div id="login">
-                    <form method="post" action="">                       
-                        <legend>Login</legend>
-                        <hr>
-                        <p>
-                            <label>Email</label>
-                            <br>
-                            <input type="text" class="textbox" name="email" placeholder="Your email" required>
-                        </p>
-                        <p>
-                            <label>Password</label>
-                            <br>
-                            <input type="text" class="textbox" name="password" placeholder="Your password" required>
-                        </p>
-                        <input class="form-submit" type="submit" value="Login"> 
-                    </form>
-                </div>
-                <div id="signup">
-                    <form method="post" action="">
-                        <legend>Sign up with email</legend>
-                        <hr>
-                        <p>
-                            <label>First name</label>
-                            <br>
-                            <input type="text" class="textbox" name="first-name" placeholder="Your first name" required>
-                        </p>
-                        <p>
-                            <label>Last name</label>
-                            <br>
-                            <input type="text" class="textbox" name="last-name" placeholder="Your last name">
-                        </p>
-                        <p>
-                            <label>Username</label>
-                            <br>
-                            <input type="text" class="textbox" name="username" placeholder="What would you like to be called?" required>
-                        </p>
-                        <p>
-                            <label>Email</label>
-                            <br>
-                            <input type="text" class="textbox" name="email" placeholder="Your email" required>
-                        </p>
-                        <p>
-                            <label id="ppic">
-                                Upload a profile picture
-                                <input type="file" name="profile-pic" required>
-                            </label> 
-                        </p>
-                        <input class="form-submit" type="submit" value="Sign Up"> 
-                    </form>
-                </div>
+            <div id="signup" class="form">
+                <form method="post" action="">
+                    <legend>Sign up with email</legend>
+                    <hr>
+                    <p>
+                        <label>First name</label>
+                        <br>
+                        <input type="text" class="textbox" name="first-name" placeholder="Your first name" required>
+                    </p>
+                    <p>
+                        <label>Last name</label>
+                        <br>
+                        <input type="text" class="textbox" name="last-name" placeholder="Your last name">
+                    </p>
+                    <p>
+                        <label>Username</label>
+                        <br>
+                        <input type="text" class="textbox" name="username" placeholder="What would you like to be called?" required>
+                    </p>
+                    <p>
+                        <label>Email</label>
+                        <br>
+                        <input type="text" class="textbox" name="email" placeholder="Your email" required>
+                    </p>
+                    <p>
+                        <label id="ppic" class="file-upload">
+                            Upload a profile picture
+                            <input type="file" name="profile-pic" required>
+                        </label> 
+                    </p>
+                    <input class="form-submit" type="submit" value="Sign Up"> 
+                </form>
             </div>
         </div>
- 
+    </div>
 </body>
 </html>

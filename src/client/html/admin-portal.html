@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/admin-portal.css">
     <title>Admin Portal</title>
 </head>
@@ -13,7 +14,7 @@
         <div id="logo">
             <img src="../../../img/login-logo.png">
         </div>
-        <div id="search-user-container">
+        <div id="search-user-container" class="form">
             <form method="post" action="">
                 <legend>Admin Portal</legend>
                 <hr>
@@ -24,16 +25,25 @@
                     <input class="form-submit" type="submit" value="Search">  
                 </p>
             </form>
-            <table>
-                <tr>
-                    <th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th>
-                </tr>
-                <tr>
-                    <td>Noah Ward</td><td>noahward</td><td>noahward@gmail.com</td><td><a href="">Noah's Profile</a></td>
-                </tr>
-                <tr>
-                    <td>Andy McDonald</td><td>andymcd</td><td>andymcd@gmail.com</td><td><a href="">Andy's Profile</a></td>
-                </tr>
+            <table id="users-results">
+                <tbody>
+                    <tr>
+                        <th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th>
+                    </tr>
+                    <tr>
+                        <td>Noah Ward</td><td>noahward</td><td>noahward@gmail.com</td><td><a href="">Noah's Profile</a></td>
+                    </tr>
+                    <tr>
+                        <td>Andy McDonald</td><td>andymcd</td><td>andymcd@gmail.com</td><td><a href="">Andy's Profile</a></td>
+                    </tr>
+                    <tr>
+                        <td>Livia Zalilla</td><td>liviaz</td><td>liviaz@gmail.com</td><td><a href="">Livia's Profile</a></td>
+                    </tr>
+                    <tr>
+                        <td>Another Student</td><td>username</td><td>email</td><td><a href="">Another's Profile</a></td>
+                    </tr>
+                </tbody>
+
             </table>
         </div>
     </div>
