@@ -1,11 +1,7 @@
 /* General */
+
 * {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-}
-
-legend {
-    font-size: 20px;
-    font-family: "Helvetica Neue";
 }
 
 hr {
@@ -22,7 +18,13 @@ hr {
     overflow: auto;
 }
 
+legend, .header {
+    font-size: 20px;
+    font-family: "Helvetica Neue";
+}
+
 /* FORMS */
+
 .form {
     padding: 0 3em 0 3em;
     width: auto;
@@ -66,6 +68,7 @@ input[type="file"] {
 }
 
 /* LOGO */
+
 #logo {
     height: 10em;
     text-align: center;

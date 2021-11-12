@@ -1,16 +1,5 @@
-* {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
-    Helvetica, Arial, "Lucida Grande", sans-serif;
-}
-
-.container-1 {
+.plain-background {
   background-color: #f5f5f5;
-}
-
-.header {
-  font-size: 20px;
-  font-family: "Helvetica Neue";
-  margin-bottom: 1em;
 }
 
 /* RIGHT SIDEBAR */
