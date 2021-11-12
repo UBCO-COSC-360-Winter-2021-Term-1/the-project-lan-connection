@@ -50,20 +50,7 @@
   color: rgb(131, 131, 131);
 }
 
-.form-signup {
-  background-color: #039ce0;
-  border: none;
-  border-radius: 20px;
-  color: white;
-  padding: 6px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  font-family: "Helvetica-light";
-}
-
-.form-login {
+.login-link {
   background-color: white;
   border: 1px solid #039ce0;
   border-radius: 20px;
