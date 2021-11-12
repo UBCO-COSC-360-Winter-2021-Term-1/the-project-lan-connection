@@ -1,0 +1,92 @@
+* {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+      Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+  
+legend {
+    font-size: 20px;
+    font-family: "Helvetica Neue";
+}
+  
+hr {
+    border: 1px solid #d5d5d5;
+    margin-bottom: 1.5em;
+}
+  
+input[type="file"] {
+    display: none;
+}
+
+body {
+    width: auto;
+    height: 100vh;
+    background: url("../../../img/login-bg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#content {
+    background-color: white;
+    width: 50em;
+    height: 50em;
+    border-radius: 8px;
+    padding: 2em;
+}
+
+/* LOGO */
+#logo {
+    height: 10em;
+    text-align: center;
+}
+  
+#logo img {
+    width: 30em;
+    height: auto;
+    padding-top: 2em;
+}
+
+/* FORM */
+#search-user-container {
+    margin: 0em 3em 0em 3em;
+    padding: 0 3em 0 3em;
+    width: auto;
+}
+
+.textbox {
+    width: 25em;
+    height: 2em;
+    border-radius: 8px;
+    border: 1px solid #d5d5d5;
+    margin: 1em 0em 2em 0em;
+    padding: 1em 1em 1em 1em;
+}
+  
+.form-submit {
+    background-color: #039ce0; /* Green */
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: "Helvetica-light";
+}
+
+#show-users-container {
+    margin: 0em 3em 0em 3em;
+    padding: 3em 3em 0 3em;
+    width: auto;
+}
+
+table th {
+    padding: 0.4em;
+    text-align: left;
+}
+table td {
+    padding: 0.4em;
+    text-align: left;
+}
