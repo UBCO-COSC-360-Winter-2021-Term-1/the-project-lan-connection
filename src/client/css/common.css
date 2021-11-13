@@ -79,3 +79,7 @@ input[type="file"] {
     height: auto;
     padding-top: 2em;
 }
+
+.hide-img {
+    display: none;
+}
