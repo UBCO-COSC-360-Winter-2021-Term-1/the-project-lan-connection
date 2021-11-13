@@ -18,7 +18,7 @@ hr {
     overflow: auto;
 }
 
-legend, .header {
+legend, h1 {
     font-size: 20px;
     font-family: "Helvetica Neue";
 }
