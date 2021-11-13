@@ -1,0 +1,151 @@
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+/* RIGHT COLUMN */
+
+.right-col {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  height: 93vh;
+  width: 35%;
+  padding: 1em;
+  position: relative;
+}
+
+.sq1 {
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: white;
+  width: 100%;
+  height: fit-content;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+
+.profile-header {
+  display: flex;
+}
+
+.profile-header img {
+  width: 110px;
+  height: 110px;
+  border-radius: 100px;
+  border: 2px solid grey;
+  margin: 0.5em 1.5em 0.25em 1em;
+}
+
+.profile-header div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.user-name {
+  font-size: 1.75em;
+  margin: 0;
+  padding: 0;
+}
+
+.sq1 button {
+  height: 30px;
+  margin-left: auto;
+  order: 2;
+  background-color: white;
+  border: 1px solid #039ce0;
+  border-radius: 30px;
+  color: #039ce0;
+  padding: 0px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: "Helvetica-light";
+  margin: 1em 0 1em 0.75em;
+
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1em;
+}
+
+.links a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.15em;
+}
+
+.links a:hover {
+    text-decoration: none;
+}
+
+.fa-bookmark {
+    margin-right: 1.3em;
+}
+
+.fa-chart-line {
+    margin-right: 0.85em;
+}
+
+.fa-sign-out-alt {
+    margin-right: 1em;
+}
+
+/* LEFT COLUMN */
+
+.left-col {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding: 1em;
+}
+
+.filter {
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: white;
+  width: 100%;
+  height: fit-content;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  padding: 1em 1em;
+}
+
+.filter div {
+  position: absolute;
+  margin-left: 8em;
+}
+
+.filter h1 {
+  margin-left: 0.5em;
+}
+
+.filter div button {
+  height: 30px;
+  margin-left: auto;
+  order: 2;
+  background-color: white;
+  border: 1px solid #039ce0;
+  border-radius: 30px;
+  color: #039ce0;
+  padding: 0px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: "Helvetica-light";
+  margin-right: 10px;
+}
+
+.posts {
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: white;
+  width: 100%;
+  height: fit-content;
+  padding: 1em;
+}
