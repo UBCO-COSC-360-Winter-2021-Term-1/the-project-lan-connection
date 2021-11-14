@@ -3,6 +3,21 @@
     Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
+.form-login {
+  border: 1px solid #039ce0;
+  border-radius: 30px;
+  background-color: white;
+  color: #039ce0;
+  padding: 0.4em 1.6em;
+  margin-right: 1em;
+}
+
+.form-login:hover {
+  background-color: rgb(248, 248, 248);
+  text-decoration: none;
+  color: #039ce0;
+}
+
 .navbar {
   box-shadow: 0 5px 5px -2px rgba(0, 0, 0, 0.2);
   height: 7vh;
@@ -62,4 +77,20 @@
   display: inline-block;
   font-size: 16px;
   font-family: "Helvetica-light";
+}
+
+.login-link:hover {
+  text-decoration: none;
+  background-color: rgb(248, 248, 248);
+  color: #039ce0;
+}
+
+.header1 {
+  font-family: "Helvetica Neue";
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.search-button:hover {
+  background-color: rgb(248, 248, 248);
 }

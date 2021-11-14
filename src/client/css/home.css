@@ -43,10 +43,14 @@
   width: 30%;
   padding: 1em;
 }
-
+ 
 .post-category {
   margin-bottom: 1em;
   margin-left: 0.5em;
+}
+
+.post-category img:hover, .post-category-l img:hover {
+  transform: translateY(2px);
 }
 
 .post-category-l {
