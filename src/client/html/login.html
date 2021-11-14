@@ -10,41 +10,42 @@
     <title>Login/Sign Up</title>
 </head>
 <body>
+    <script src="../js/formValidation.js"></script>
     <div id="content">
         <div id="logo">
             <img src="../../../img/login-logo.png">
         </div>
         <div id="forms-container">
             <div id="login" class="form">
-                <form method="post" action="">                       
+                <form name="form" method="post" action="" onsubmit="return validateLogin()" onchange="return removeHighlightLogin()">                       
                     <legend>Login</legend>
                     <hr>
                     <p>
                         <label>Email</label>
                         <br>
-                        <input type="text" class="textbox" name="email" placeholder="Your email" required>
+                        <input type="text" class="textbox required-l" name="email" placeholder="Your email">
                     </p>
                     <p>
                         <label>Password</label>
                         <br>
-                        <input type="password" class="textbox" name="password" placeholder="Your password" required>
+                        <input type="password" class="textbox required-l" name="password" placeholder="Your password">
                     </p>
                     <input class="form-submit" type="submit" value="Login"> 
                 </form>
             </div>
-            <div id="signup" class="form">
-                <form method="post" action="">
+            <div name="form" id="signup" class="form">
+                <form method="post" action="" onsubmit="return validateSignup()" onchange="return removeHighlightSignup()">
                     <legend>Sign up with email</legend>
                     <hr>
                     <p>
                         <label>Username</label>
                         <br>
-                        <input type="text" class="textbox" name="username" placeholder="What would you like to be called?" required>
+                        <input type="text" class="textbox required-s" name="username" placeholder="What would you like to be called?">
                     </p>
                     <p>
                         <label>First name</label>
                         <br>
-                        <input type="text" class="textbox" name="first-name" placeholder="Your first name" required>
+                        <input type="text" class="textbox required-s" name="first-name" placeholder="Your first name">
                     </p>
                     <p>
                         <label>Last name</label>
@@ -54,17 +55,17 @@
                     <p>
                         <label>Email</label>
                         <br>
-                        <input type="text" class="textbox" name="email" placeholder="Your email" required>
+                        <input type="text" class="textbox required-s" name="email" placeholder="Your email">
                     </p>
                     <p>
                         <label>Password</label>
                         <br>
-                        <input type="password" class="textbox" name="password" placeholder="Your password" required>
+                        <input type="password" class="textbox required-s" name="password" placeholder="Your password">
                     </p>
                     <p>
                         <label id="ppic" class="file-upload">
                             Upload a profile picture
-                            <input type="file" name="profile-pic" required>
+                            <input type="file" class="required-s" name="profile-pic">
                         </label> 
                     </p>
                     <input class="form-submit" type="submit" value="Sign Up"> 
@@ -72,5 +73,7 @@
             </div>
         </div>
     </div>
+
+    
 </body>
 </html>

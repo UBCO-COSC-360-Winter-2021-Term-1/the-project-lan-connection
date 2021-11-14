@@ -96,5 +96,5 @@ input[type="file"] {
 /* FORM VALIDATION */
 
 .missing-field {
-    background-color: red;
+    border: 1px solid red;
 }
