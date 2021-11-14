@@ -24,6 +24,8 @@ CREATE TABLE Post(
     post_date DATETIME,
     p_likes INTEGER,
     p_dislikes INTEGER,
+    pfp BLOB,
+    FOREIGN KEY (pfp) REFERENCES Account(pfp) ON DELETE CASCADE,
     FOREIGN KEY (uname) REFERENCES Account(uname) ON DELETE CASCADE,
     FOREIGN KEY (cat_title) REFERENCES Category(cat_title) ON DELETE CASCADE,
     PRIMARY KEY(pid)
@@ -37,6 +39,8 @@ CREATE TABLE Comment(
     comment_date DATETIME,
     c_likes INTEGER,
     c_dislikes INTEGER,
+    pfp BLOB,
+    FOREIGN KEY (pfp) REFERENCES Account(pfp) ON DELETE CASCADE,
     FOREIGN KEY (uname) REFERENCES Account(uname) ON DELETE CASCADE,
     FOREIGN KEY (pid) REFERENCES Post(pid) ON DELETE CASCADE,
     PRIMARY KEY(cid)
