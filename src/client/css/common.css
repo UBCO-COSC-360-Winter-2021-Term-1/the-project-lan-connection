@@ -83,3 +83,9 @@ input[type="file"] {
 .hide-img {
     display: none;
 }
+
+/* FORM VALIDATION */
+
+.missing-field {
+    background-color: red;
+}
