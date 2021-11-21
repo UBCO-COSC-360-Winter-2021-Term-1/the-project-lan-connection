@@ -1,79 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/reset.css">
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/login.css">
-    <title>Login/Sign Up</title>
-</head>
-<body>
-    <script src="../js/formValidation.js"></script>
-    <div id="content">
-        <div id="logo">
-            <img src="../../../img/login-logo.png">
-        </div>
-        <div id="forms-container">
-            <div id="login" class="form">
-                <form name="form" method="post" action="" onsubmit="return validateLogin()" onchange="return removeHighlightLogin()">                       
-                    <legend>Login</legend>
-                    <hr>
-                    <p>
-                        <label>Email</label>
-                        <br>
-                        <input type="text" class="textbox required-l" name="email" placeholder="Your email">
-                    </p>
-                    <p>
-                        <label>Password</label>
-                        <br>
-                        <input type="password" class="textbox required-l" name="password" placeholder="Your password">
-                    </p>
-                    <input class="form-submit" type="submit" value="Login"> 
-                </form>
-            </div>
-            <div name="form" id="signup" class="form">
-                <form method="post" action="" onsubmit="return validateSignup()" onchange="return removeHighlightSignup()">
-                    <legend>Sign up with email</legend>
-                    <hr>
-                    <p>
-                        <label>Username</label>
-                        <br>
-                        <input type="text" class="textbox required-s" name="username" placeholder="What would you like to be called?">
-                    </p>
-                    <p>
-                        <label>First name</label>
-                        <br>
-                        <input type="text" class="textbox required-s" name="first-name" placeholder="Your first name">
-                    </p>
-                    <p>
-                        <label>Last name</label>
-                        <br>
-                        <input type="text" class="textbox" name="last-name" placeholder="Your last name">
-                    </p>
-                    <p>
-                        <label>Email</label>
-                        <br>
-                        <input type="text" class="textbox required-s" name="email" placeholder="Your email">
-                    </p>
-                    <p>
-                        <label>Password</label>
-                        <br>
-                        <input type="password" class="textbox required-s" name="password" placeholder="Your password">
-                    </p>
-                    <p>
-                        <label id="ppic" class="file-upload">
-                            Upload a profile picture
-                            <input type="file" class="required-s" name="profile-pic">
-                        </label> 
-                    </p>
-                    <input class="form-submit" type="submit" value="Sign Up"> 
-                </form>
-            </div>
-        </div>
-    </div>
 
-    
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/login.css">
+  <title>Login/Sign Up</title>
+</head>
+
+<body>
+  <script src="../js/formValidation.js"></script>
+  <div id="content">
+    <div id="logo">
+      <img src="../../../img/login-logo.png">
+    </div>
+    <div id="forms-container">
+      <div id="login" class="form">
+        <form name="form" method="post" action="../php/login.php" onsubmit="return validateLogin()"
+          onchange="return removeHighlightLogin()">
+          <legend>Login</legend>
+          <hr>
+          <p>
+            <label>Email</label>
+            <br>
+            <input type="text" class="textbox required-l" name="email" placeholder="Your email">
+          </p>
+          <p>
+            <label>Password</label>
+            <br>
+            <input type="password" class="textbox required-l" name="password" placeholder="Your password">
+          </p>
+          <input class="form-submit" type="submit" value="Login">
+        </form>
+      </div>
+
+      <div name="form" id="signup" class="form">
+        <form method="post" action="../php/newUser.php" onsubmit="return validateSignup()" onchange="return removeHighlightSignup()">
+          <legend>Sign up with email</legend>
+          <hr>
+          <p>
+            <label>Username</label>
+            <br>
+            <input type="text" class="textbox required-s" name="username" id="username" placeholder="What would you like to be called?">
+          </p>
+          <p>
+            <label>First name</label>
+            <br>
+            <input type="text" class="textbox required-s" name="first-name" id="first-name" placeholder="Your first name">
+          </p>
+          <p>
+            <label>Last name</label>
+            <br>
+            <input type="text" class="textbox" name="last-name" id="last-name" placeholder="Your last name">
+          </p>
+          <p>
+            <label>Email</label>
+            <br>
+            <input type="text" class="textbox required-s" name="email" id="email" placeholder="Your email">
+          </p>
+          <p>
+            <label>Password</label>
+            <br>
+            <input type="password" class="textbox required-s" name="password" id="password" placeholder="Your password">
+          </p>
+          <p>
+            <label id="ppic" class="file-upload">
+              Upload a profile picture
+              <input type="file" class="required-s" name="profile-pic" id="profile-pic">
+            </label>
+          </p>
+          <input class="form-submit" type="submit" value="Sign Up">
+        </form>
+      </div>
+    </div>
+  </div>
+
+
 </body>
+
 </html>
