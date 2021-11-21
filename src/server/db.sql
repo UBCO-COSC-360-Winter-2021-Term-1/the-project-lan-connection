@@ -1,9 +1,6 @@
 DROP TABLE IF EXISTS `Account`;
-
 DROP TABLE IF EXISTS `Category`;
-
 DROP TABLE IF EXISTS `Post`;
-
 DROP TABLE IF EXISTS `Comment`;
 
 CREATE TABLE Account(
@@ -36,15 +33,8 @@ CREATE TABLE Post(
   PRIMARY KEY(pid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
-ALTER TABLE
-  Post
-ADD
-  CONSTRAINT fk_uname_post FOREIGN KEY (uname) REFERENCES Account(uname);
-
-ALTER TABLE
-  Post
-ADD
-  CONSTRAINT fk_cat_post FOREIGN KEY (cat_title) REFERENCES Category(cat_title);
+ALTER TABLE Post ADD CONSTRAINT fk_uname_post FOREIGN KEY (uname) REFERENCES Account(uname);
+ALTER TABLE Post ADD CONSTRAINT fk_cat_post FOREIGN KEY (cat_title) REFERENCES Category(cat_title);
 
 CREATE TABLE Comment(
   uname VARCHAR(255),
@@ -58,42 +48,13 @@ CREATE TABLE Comment(
   PRIMARY KEY(cid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
-ALTER TABLE
-  Comment
-ADD
-  CONSTRAINT fk_uname_comment FOREIGN KEY (uname) REFERENCES Account(uname);
+ALTER TABLE Comment ADD CONSTRAINT fk_uname_comment FOREIGN KEY (uname) REFERENCES Account(uname); 
+ALTER TABLE Comment ADD CONSTRAINT fk_pid_comment FOREIGN KEY (pid) REFERENCES Post(pid);
 
-ALTER TABLE
-  Comment
-ADD
-  CONSTRAINT fk_pid_comment FOREIGN KEY (pid) REFERENCES Post(pid);
+INSERT INTO Category VALUES ('Mountain Biking');
+INSERT INTO Category VALUES ('Hiking');
+INSERT INTO Category VALUES ('Climbing');
+INSERT INTO Category VALUES ('Snowboarding');
+INSERT INTO Category VALUES ('Golf');
+INSERT INTO Category VALUES ('Hockey');
 
-INSERT INTO
-  Category
-VALUES
-  ('Mountain Biking');
-
-INSERT INTO
-  Category
-VALUES
-  ('Hiking');
-
-INSERT INTO
-  Category
-VALUES
-  ('Climbing');
-
-INSERT INTO
-  Category
-VALUES
-  ('Snowboarding');
-
-INSERT INTO
-  Category
-VALUES
-  ('Golf');
-
-INSERT INTO
-  Category
-VALUES
-  ('Hockey');

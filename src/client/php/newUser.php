@@ -2,6 +2,7 @@
 
 include 'connectDB.php';
 include 'validateText.php';
+include 'handleImg.php';
 
 $connection = connectToDB();
 
@@ -12,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lname = validate($_POST['last-name']);
   $email = validate($_POST['email']);
   $pword = validate($_POST['password']);
-  $pfp = file_get_contents($_FILES['file']);
+  $fileName = $_FILES['file']['name'];
 
   $sql = "SELECT uname, fname, lname, email, pword FROM Account;";
   $results = mysqli_query($connection, $sql);
@@ -31,12 +32,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // If username or email does not exist, add user info to database
   else {
     $pword = md5($pword);
-    $sql = 'INSERT INTO Account (uname, email, fname, lname, pword, pfp) VALUES (?, ?, ?, ?, ?, ?);';
-    $stmt = $connection->prepare($sql);
-    $stmt->bind_param('sssssb', $uname, $email, $fname, $lname, $pword, $pfp);
-    $stmt->execute();
+    $sql1 = 'INSERT INTO Account (uname, email, fname, lname, pword) VALUES (?, ?, ?, ?, ?);';
+    $stmt1 = $connection->prepare($sql1);
+    $stmt1->bind_param('sssss', $uname, $email, $fname, $lname, $pword);
+    $stmt1->execute();
 
-    //mysqli_query($connection, "INSERT INTO `Account` (`uname`, `email`, `fname`, `lname`, `pword`,`administrator`, `pfp`) VALUES ('".$uname."', '".$email."', '".$fname."', '".$lname."', '".md5($pword)."', `false`, '".$pfp."');");
+    // Image upload to database
+    uploadImgToDB($connection, $fileName, $uname);
+
     echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
             <p>An account for the user <b>'.$uname.'</b> has been created</p>
           </div>';

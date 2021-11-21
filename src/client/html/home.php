@@ -97,10 +97,10 @@
                       
                       $connection = connectToDB();
 
-                      $sql = "SELECT A.uname, post_date, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
-                              FROM Account A
-                              LEFT OUTER JOIN Post P ON A.uname=P.uname
-                              LEFT OUTER JOIN Category C ON P.cat_title=C.cat_title
+                      $sql = "SELECT A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+                              FROM POST P
+                              INNER JOIN Account A ON A.uname=P.uname
+                              INNER JOIN Category C ON P.cat_title=C.cat_title
                               ORDER BY p_likes DESC
                               LIMIT 10;";
                               
@@ -121,23 +121,44 @@
                                   </div>
                                   <div class="post-text">
                                     <p>'.$row["post_body"].'</p>
-                                  </div>
-                                  <div class="post-img">
-                                    <img class="hide-img" src="">
-                                  </div>
-                                  <div class="menu-bar">
-                                    <button class="like"><i class="fas fa-heart"></i></button>
-                                    <label class="like-counter">'.$row["p_likes"].'</label>
+                                  </div>';
 
-                                    <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                                    <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+                          if ($row["post_pic"] == null) {         
+                            echo '<div class="post-img">
+                                      <img class="hide-img" src="">
+                                    </div>
+                                    <div class="menu-bar">
+                                      <button class="like"><i class="fas fa-heart"></i></button>
+                                      <label class="like-counter">'.$row["p_likes"].'</label>
 
-                                    <button class="comment"><i class="fas fa-comment"></i></button>
-                                    <label class="comment-counter">3</label>
+                                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                      <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
-                                    <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                                  </div>
-                                </div>';
+                                      <button class="comment"><i class="fas fa-comment"></i></button>
+                                      <label class="comment-counter">3</label>
+
+                                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                                    </div>
+                                  </div>';
+                          }
+                          else {
+                            echo '<div class="post-img">
+                                      <img class="" src="'.$row["post_pic"].'">
+                                    </div>
+                                    <div class="menu-bar">
+                                      <button class="like"><i class="fas fa-heart"></i></button>
+                                      <label class="like-counter">'.$row["p_likes"].'</label>
+
+                                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                      <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+
+                                      <button class="comment"><i class="fas fa-comment"></i></button>
+                                      <label class="comment-counter">3</label>
+
+                                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                                    </div>
+                                  </div>';
+                          }
                         }
                       }
                       else {
@@ -212,25 +233,25 @@
                     <p class="header1">Personal</p>
 
                     <!--CREATE A POST-->
-                    <form class="create-post">
-                        <div class="post-text">
-                            <input type="search" placeholder="Create a post" aria-label="Search">
-                            <br>
-                            <input type="text" placeholder="Category" list="category-selection" aria-label="Category">
-                            <datalist id="category-selection">
-                                <option>Mountain Biking</option>
-                                <option>Hiking</option>
-                                <option>Climbing</option>
-                                <option>Snowboarding</option>
-                                <option>Golf</option>
-                                <option>Hockey</option>
-                            </datalist>
-                        </div>
-                        <div class="menu-bar">
-                            <a href="#"><img src="../../../img/media.png"></a>
-                            <a href="#"><img src="../../../img/plus.png"></a>
-                            <input type="submit" class="form-post" value="Post">
-                        </div>
+                    <form class="create-post" method="post" action="../php/createPost.php" enctype="multipart/form-data">
+                      <div class="post-text">
+                        <input type="text" name="post_body" placeholder="Create a post" aria-label="Search">
+                        <br>
+                        <input type="text" name="post_category" placeholder="Category" list="category-selection" aria-label="Category">
+                        <datalist id="category-selection">
+                          <option>Mountain Biking</option>
+                          <option>Hiking</option>
+                          <option>Climbing</option>
+                          <option>Snowboarding</option>
+                          <option>Golf</option>
+                          <option>Hockey</option>
+                        </datalist>
+                      </div>
+                      <div class="menu-bar">
+                        <a href="#"><img src="../../../img/media.png"></a>
+                        <input type="file" class="required-s" name="file" id="file">
+                        <input type="submit" class="form-post" value="Post">
+                      </div>
                     </form>
 
                     <!--PROFILE LINKS-->
