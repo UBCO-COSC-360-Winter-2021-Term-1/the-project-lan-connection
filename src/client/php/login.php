@@ -1,14 +1,15 @@
 <?php
 
 include 'connectDB.php';
+include 'validateText.php';
 
 $connection = connectToDB();
 
 // Handle POST requests
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $email = $_POST['email'];
-  $pword = $_POST['password'];
+  $email = validate($_POST['email']);
+  $pword = validate($_POST['password']);
   $pword = md5($pword);
 
   $sql = "SELECT uname, email, pword FROM Account;";

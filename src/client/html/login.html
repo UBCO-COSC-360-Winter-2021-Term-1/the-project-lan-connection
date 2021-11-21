@@ -38,18 +38,21 @@
       </div>
 
       <div name="form" id="signup" class="form">
-        <form method="post" action="../php/newUser.php" onsubmit="return validateSignup()" onchange="return removeHighlightSignup()">
+        <form method="post" action="../php/newUser.php" onsubmit="return validateSignup()"
+          onchange="return removeHighlightSignup()">
           <legend>Sign up with email</legend>
           <hr>
           <p>
             <label>Username</label>
             <br>
-            <input type="text" class="textbox required-s" name="username" id="username" placeholder="What would you like to be called?">
+            <input type="text" class="textbox required-s" name="username" id="username"
+              placeholder="What would you like to be called?">
           </p>
           <p>
             <label>First name</label>
             <br>
-            <input type="text" class="textbox required-s" name="first-name" id="first-name" placeholder="Your first name">
+            <input type="text" class="textbox required-s" name="first-name" id="first-name"
+              placeholder="Your first name">
           </p>
           <p>
             <label>Last name</label>
@@ -69,7 +72,7 @@
           <p>
             <label id="ppic" class="file-upload">
               Upload a profile picture
-              <input type="file" class="required-s" name="profile-pic" id="profile-pic">
+              <input type="file" class="required-s" name="file" id="file">
             </label>
           </p>
           <input class="form-submit" type="submit" value="Sign Up">

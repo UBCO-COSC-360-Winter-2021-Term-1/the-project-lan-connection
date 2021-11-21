@@ -1,17 +1,18 @@
 <?php
 
 include 'connectDB.php';
+include 'validateText.php';
 
 $connection = connectToDB();
 
 // Handle POST requests
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $uname = $_POST['username'];
-  $fname = $_POST['first-name'];
-  $lname = $_POST['last-name'];
-  $email = $_POST['email'];
-  $pword = $_POST['password'];
-  $pfp = $_POST['profile-pic'];
+  $uname = validate($_POST['username']);
+  $fname = validate($_POST['first-name']);
+  $lname = validate($_POST['last-name']);
+  $email = validate($_POST['email']);
+  $pword = validate($_POST['password']);
+  $pfp = file_get_contents($_FILES['file']);
 
   $sql = "SELECT uname, fname, lname, email, pword FROM Account;";
   $results = mysqli_query($connection, $sql);
@@ -52,7 +53,7 @@ else if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 
 mysqli_close($connection);
-//mysqli_free_result($unameResults);
-//mysqli_free_result($emailResults);
+mysqli_free_result($unameResults);
+mysqli_free_result($emailResults);
 
 ?>

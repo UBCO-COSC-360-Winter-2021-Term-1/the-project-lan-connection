@@ -92,8 +92,60 @@
                 <!--MIDDLE COLUMN-->
                 <div class="mid-col">
                     <p class="header1">Popular Posts</p>
+                    <?php
+                      include '../php/connectDB.php';
+                      
+                      $connection = connectToDB();
 
-                    <!--POPULAR POST-->
+                      $sql = "SELECT A.uname, post_date, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+                              FROM Account A
+                              LEFT OUTER JOIN Post P ON A.uname=P.uname
+                              LEFT OUTER JOIN Category C ON P.cat_title=C.cat_title
+                              ORDER BY p_likes DESC
+                              LIMIT 10;";
+                              
+                      $results = mysqli_query($connection, $sql);
+                      $row_cnt = mysqli_num_rows($results);
+
+                      if ($row_cnt !=0) {
+                        while ($row = $results->fetch_assoc())
+                        {
+                          echo '<div class="popular-post">;
+                                  <div class="post-status">
+                                    <img src='.$row["pfp"].' class="pfp-small">
+                                    <a href="#" class="username">'.$row["uname"].'</a>
+                                    <p>'.$row["post_date"].'</p>
+                                  </div>
+                                  <div class="category">
+                                    <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
+                                  </div>
+                                  <div class="post-text">
+                                    <p>'.$row["post_body"].'</p>
+                                  </div>
+                                  <div class="post-img">
+                                    <img class="hide-img" src="">
+                                  </div>
+                                  <div class="menu-bar">
+                                    <button class="like"><i class="fas fa-heart"></i></button>
+                                    <label class="like-counter">'.$row["p_likes"].'</label>
+
+                                    <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                    <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+
+                                    <button class="comment"><i class="fas fa-comment"></i></button>
+                                    <label class="comment-counter">3</label>
+
+                                    <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                                  </div>
+                                </div>';
+                        }
+                      }
+                      else {
+                        echo "<p>No posts to display!</p>";
+                      }
+                    ?>
+
+                    <!--POPULAR POST
                     <div class="popular-post">
                         <div class="post-status">
                             <img src="../../../img/pfp-placeholder.jpeg" class="pfp-small">
@@ -123,7 +175,7 @@
                         </div>
                     </div>
 
-                    <!--ANOTHER LONGER POPULAR POST-->
+                    
                     <div class="popular-post">
                         <div class="post-status">
                             <img src="../../../img/pfp-placeholder.jpeg" class="pfp-small">
@@ -151,7 +203,7 @@
                             
                             <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                         </div>
-                    </div>
+                    </div>-->
 
                 </div>
 
