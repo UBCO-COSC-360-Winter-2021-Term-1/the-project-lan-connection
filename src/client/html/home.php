@@ -47,10 +47,10 @@
                 <input class="search-bar" type="search" placeholder="Search" aria-label="Search">
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
             </form>
-            <!-- Login/Signup link / Session Username -->
+            <!-- Login/Signup link / Profile/Logout links -->
             <?php 
-                if (isset($_SESSION['uname'])) {
-                    echo "<a href='profile' class='form-login'>".$_SESSION['uname']."'s Profile</a>";
+                if (isset($_SESSION['signedin'])) {
+                    echo "<a href='profile.html' class='form-login'>".$_SESSION['signedin']."'s Profile</a>";
                     echo "<a href='../php/logout.php' class='form-login'>Logout</a>";
                 }
                 else {

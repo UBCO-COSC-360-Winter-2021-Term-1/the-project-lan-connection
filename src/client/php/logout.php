@@ -4,9 +4,9 @@
 session_start();
 
 // check if session logged in
-if (isset($_SESSION['uname'])) {
+if (isset($_SESSION['signedin'])) {
     // log out logged in user
-    $_SESSION['uname'] = null;
+    $_SESSION['signedin'] = null;
     header("Location: ".$_SERVER['HTTP_REFERER']);
 }
 else {
