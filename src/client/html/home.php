@@ -17,6 +17,11 @@
     <title>Home</title>
 </head>
 <body>
+    <?php
+    // enable sessions
+    session_start();
+    ?>
+
     <!--NAVIGATION BAR (done with bootstrap)-->
     <nav class="navbar navbar-expand-lg navbar-light navbar-static-top">
         <a class="navbar-brand" href="#"><img src="../../../img/nav-logo.png"></a>
@@ -42,7 +47,16 @@
                 <input class="search-bar" type="search" placeholder="Search" aria-label="Search">
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
             </form>
-            <a href="login.html" class="form-login">Login / Sign Up</a>
+            <!-- Login/Signup link / Session Username -->
+            <?php 
+                if (isset($_SESSION['uname'])) {
+                    echo "<a href='profile' class='form-login'>".$_SESSION['uname']."'s Profile</a>";
+                    echo "<a href='../php/logout.php' class='form-login'>Logout</a>";
+                }
+                else {
+                    echo "<a href='login.html' class='form-login'>Login / Sign Up</a>";
+                }
+            ?>
         </div>
     </nav>
 
