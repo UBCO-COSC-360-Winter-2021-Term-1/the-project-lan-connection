@@ -24,7 +24,7 @@
 <body>
     <!--NAVIGATION BAR (done with bootstrap)-->
     <nav class="navbar navbar-expand-lg navbar-light navbar-static-top">
-        <a class="navbar-brand" href="#"><img src="../../../img/nav-logo.png"></a>
+        <a class="navbar-brand" href="../html/home.php"><img src="../../../img/nav-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -36,10 +36,15 @@
                     <?php echo $pageCat; ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="./home.php">Home</a>
-                    <a class="dropdown-item" href="./profile.php">Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="../php/logout.php">Logout</a>
+                    <?php
+                      $categories = array('Mountain Biking', 'Hiking', 'Climbing', 'Snowboarding', 'Golf', 'Hockey');
+                      if (($key = array_search($pageCat, $categories)) !== false) {
+                        $categories[$key]==null;
+                      }
+                      for($x=0; $x<count($categories); $x++) {
+                        echo '<a class="dropdown-item" href="./category-page.php?page='.$categories[$x].'">'.$categories[$x].'</a>';
+                      }
+                    ?>
                 </div>
                 </li>
             </ul>
