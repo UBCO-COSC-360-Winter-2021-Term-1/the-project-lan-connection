@@ -24,29 +24,33 @@
     <title>User Profile</title>
 </head>
 <body>
+    <!--NAVIGATION BAR (done with bootstrap)-->
     <nav class="navbar navbar-expand-lg navbar-light navbar-static-top">
-        <a class="navbar-brand" href="#"><img src="../../../img/nav-logo.png"></a>
+        <a class="navbar-brand" href="../html/home.php"><img src="../../../img/nav-logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <!--
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="./profile.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Profile
+                <a class="nav-link dropdown-toggle" href="./home.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Home
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="./home.php">Home</a>
+                    <a class="dropdown-item" href="./profile.php">Profile</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="../php.logout.php">Logout</a>
+                    <a class="dropdown-item" href="../php/logout.php">Logout</a>
                 </div>
                 </li>
+                -->
             </ul>
             <form class="form-inline nav-search my-2 my-lg-0" method="get" action="./searchResults.php">
                 <input class="search-bar" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
             </form>
+            <!-- Login/Signup link / Profile/Logout links -->
             <?php 
                 if (isset($_SESSION['signedin'])) {
                     echo "<a href='./profile.php' class='form-login'>My Profile</a>";
