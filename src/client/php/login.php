@@ -42,6 +42,7 @@ $results = mysqli_query($connection, $sql);
 if ($row = mysqli_fetch_assoc($results)) {
   // update session
   $_SESSION['signedin'] = $row['uname'];
+  $_SESSION['LAST_ACTIVITY'] = time();
   // close connection
   mysqli_close($connection);
   mysqli_free_result($results);

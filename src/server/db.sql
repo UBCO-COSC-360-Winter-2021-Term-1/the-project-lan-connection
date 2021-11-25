@@ -21,7 +21,6 @@ CREATE TABLE Category(
 
 CREATE TABLE Post(
   pid INTEGER NOT NULL AUTO_INCREMENT,
-  post_title VARCHAR(255),
   post_body VARCHAR(1000),
   uname VARCHAR(255),
   cat_title VARCHAR(255),
@@ -29,7 +28,6 @@ CREATE TABLE Post(
   p_likes INTEGER,
   p_dislikes INTEGER,
   post_pic BLOB,
-  pfp BLOB,
   PRIMARY KEY(pid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 

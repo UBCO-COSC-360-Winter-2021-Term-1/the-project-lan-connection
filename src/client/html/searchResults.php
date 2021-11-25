@@ -85,63 +85,73 @@ session_start();
           $results = mysqli_query($connection, $sql);
           $row_cnt = mysqli_num_rows($results);
 
-          if ($row_cnt !=0) {
-            while ($row = $results->fetch_assoc())
-            {
-              echo '<div class="popular-post">
-                      <div class="post-status">
-                        <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                        <a href="#" class="username">'.$row["uname"].'</a>
-                        <p>'.$row["post_date"].'</p>
-                      </div>
-                      <div class="category">
-                        <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
-                      </div>
-                      <div class="post-text">
-                        <p>'.$row["post_body"].'</p>
-                      </div>';
+          
 
-              if ($row["post_pic"] == null) {         
-                echo '<div class="post-img">
-                          <img class="hide-img" src="">
+          if ($_GET['search']=="") {
+            echo "<p>Please enter a keyword into the searchbar";
+          } 
+          else {
+            echo "<p>Seeing results for: <b>".$_GET['search']."</b></p>";
+            if ($row_cnt !=0) {
+              while ($row = $results->fetch_assoc())
+              {
+                echo '<div class="popular-post">
+                        <div class="post-status">
+                          <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                          <a href="#" class="username">'.$row["uname"].'</a>
+                          <p>'.$row["post_date"].'</p>
                         </div>
-                        <div class="menu-bar">
-                          <button class="like"><i class="fas fa-heart"></i></button>
-                          <label class="like-counter">'.$row["p_likes"].'</label>
-
-                          <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                          <label class="dislike-counter">'.$row["p_dislikes"].'</label>
-
-                          <button class="comment"><i class="fas fa-comment"></i></button>
-                          <label class="comment-counter"></label>
-
-                          <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                        <div class="category">
+                          <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
                         </div>
-                      </div>';
-              }
-              else {
-                echo '<div class="post-img">
-                          <img class="" src="'.$row["post_pic"].'">
-                        </div>
-                        <div class="menu-bar">
-                          <button class="like"><i class="fas fa-heart"></i></button>
-                          <label class="like-counter">'.$row["p_likes"].'</label>
-
-                          <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                          <label class="dislike-counter">'.$row["p_dislikes"].'</label>
-
-                          <button class="comment"><i class="fas fa-comment"></i></button>
-                          <label class="comment-counter"></label>
-
-                          <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                        </div>
-                      </div>';
+                        <div class="post-text">
+                          <p>'.$row["post_body"].'</p>
+                        </div>';
+  
+                if ($row["post_pic"] == null) {         
+                  echo '<div class="post-img">
+                            <img class="hide-img" src="">
+                          </div>
+                          <div class="menu-bar">
+                            <button class="like"><i class="fas fa-heart"></i></button>
+                            <label class="like-counter">'.$row["p_likes"].'</label>
+  
+                            <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                            <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+  
+                            <button class="comment"><i class="fas fa-comment"></i></button>
+                            <label class="comment-counter"></label>
+  
+                            <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                          </div>
+                        </div>';
+                }
+                else {
+                  echo '<div class="post-img">
+                            <img class="" src="'.$row["post_pic"].'">
+                          </div>
+                          <div class="menu-bar">
+                            <button class="like"><i class="fas fa-heart"></i></button>
+                            <label class="like-counter">'.$row["p_likes"].'</label>
+  
+                            <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                            <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+  
+                            <button class="comment"><i class="fas fa-comment"></i></button>
+                            <label class="comment-counter"></label>
+  
+                            <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                          </div>
+                        </div>';
+                }
               }
             }
+            else {
+              echo "<p>No posts to display!</p>";
+            }
+
           }
-          else {
-            echo "<p>No posts to display!</p>";
-          }
+
            
         }
 

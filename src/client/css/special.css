@@ -1,0 +1,14 @@
+#pfpup {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  background-color: rgb(228, 228, 228);
+  color: #039ce0;
+  font-family: sans-serif;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 0em 0em 0em 0.5em;
+  padding: 0em 0.5em;
+}
+
+#file1 {
+  display: hidden;
+}
