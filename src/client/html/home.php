@@ -50,7 +50,7 @@
             <!-- Login/Signup link / Profile/Logout links -->
             <?php 
                 if (isset($_SESSION['signedin'])) {
-                    echo "<a href='profile.html' class='form-login'>".$_SESSION['signedin']."'s Profile</a>";
+                    echo "<a href='./profile.php' class='form-login'>My Profile</a>";
                     echo "<a href='../php/logout.php' class='form-login'>Logout</a>";
                 }
                 else {
@@ -124,9 +124,9 @@
                       if ($row_cnt !=0) {
                         while ($row = $results->fetch_assoc())
                         {
-                          echo '<div class="popular-post">;
+                          echo '<div class="popular-post">
                                   <div class="post-status">
-                                    <img src='.$row["pfp"].' class="pfp-small">
+                                    <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
                                     <a href="#" class="username">'.$row["uname"].'</a>
                                     <p>'.$row["post_date"].'</p>
                                   </div>
@@ -149,7 +149,7 @@
                                       <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
                                       <button class="comment"><i class="fas fa-comment"></i></button>
-                                      <label class="comment-counter">3</label>
+                                      <label class="comment-counter"></label>
 
                                       <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                     </div>
@@ -167,7 +167,7 @@
                                       <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
                                       <button class="comment"><i class="fas fa-comment"></i></button>
-                                      <label class="comment-counter">3</label>
+                                      <label class="comment-counter"></label>
 
                                       <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                     </div>
@@ -180,66 +180,6 @@
                       }
                     ?>
 
-                    <!--POPULAR POST
-                    <div class="popular-post">
-                        <div class="post-status">
-                            <img src="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                            <a href="#" class="username">noahward</a>
-                            <p>Dec 15, 2020</p>
-                        </div>
-                        <div class="category">
-                            <p>Posted to <a href="#" class="post-category">snowboarding</a></p>
-                        </div>
-                        <div class="post-text">
-                            <p>Powder day at Big White today! Dumped 30cm overnight.</p>
-                        </div>
-                        <div class="post-img">
-                            <img class="hide-img" src="">
-                        </div>
-                        <div class="menu-bar">
-                            <button class="like"><i class="fas fa-heart"></i></button>
-                            <label class="like-counter">7</label>
-
-                            <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                            <label class="dislike-counter">2</label>
-
-                            <button class="comment"><i class="fas fa-comment"></i></button>
-                            <label class="comment-counter">3</label>
-
-                            <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                        </div>
-                    </div>
-
-                    
-                    <div class="popular-post">
-                        <div class="post-status">
-                            <img src="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                            <a href="#" class="username">simotheyam</a>
-                            <p>Oct 20, 2021</p>
-                        </div>
-                        <div class="category">
-                            <p>Posted to <a href="#" class="post-category">climbing</a></p>
-                        </div>
-                        <div class="post-text">
-                            <p>Wow I'm so good at climbing rocks, nobody will ever be better than me</p>
-                        </div>
-                        <div class="post-img">
-                            <img src="../../../img/sample-post-pic.jpg">
-                        </div>
-                        <div class="menu-bar">
-                            <button class="like"><i class="fas fa-heart"></i></button>
-                            <label class="like-counter">14</label>
-
-                            <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                            <label class="dislike-counter">1</label>
-
-                            <button class="comment"><i class="fas fa-comment"></i></button>
-                            <label class="comment-counter">6</label>
-                            
-                            <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                        </div>
-                    </div>-->
-
                 </div>
 
                 <!--RIGHT COLUMN-->
@@ -247,7 +187,7 @@
                     <p class="header1">Personal</p>
 
                     <!--CREATE A POST-->
-                    <form class="create-post" method="post" action="../php/createPost.php" enctype="multipart/form-data">
+                    <form class="create-post" name="form" method="post" action="../php/createPost.php" enctype="multipart/form-data">
                       <div class="post-text">
                         <input type="text" name="post_body" placeholder="Create a post" aria-label="Search">
                         <br>
@@ -262,17 +202,31 @@
                         </datalist>
                       </div>
                       <div class="menu-bar">
-                        <a href="#"><img src="../../../img/media.png"></a>
-                        <input type="file" class="required-s" name="file" id="file">
+
+                        <label for="file-input">
+                          <img src="../../../img/media.png">
+                        </label>
+                        <input id="file" name="file" type="file">
+
                         <input type="submit" class="form-post" value="Post">
                       </div>
                     </form>
 
                     <!--PROFILE LINKS-->
-                    <a href="#"><i class="fa fa-cog"></i>Settings</a>
-                    <a href="#"><i class="fa fa-bookmark"></i>Bookmarks</a>
-                    <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
-                    <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                    <?php 
+                      if (isset($_SESSION['signedin'])) {
+                        echo '<a href="./profile.php"><i class="fa fa-cog"></i>Settings</a>
+                              <a href="#"><i class="fa fa-bookmark"></i>Bookmarks</a>
+                              <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
+                              <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
+                      }
+                      else {
+                        echo '<a href="#"><i class="fa fa-cog"></i>Settings</a>
+                              <a href="#"><i class="fa fa-bookmark"></i>Bookmarks</a>
+                              <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>';
+                      }
+                    ?>
+                    
                 </div>
             </div>
         </div>

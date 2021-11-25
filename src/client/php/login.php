@@ -10,20 +10,20 @@ session_start();
 if (!$_SERVER["REQUEST_METHOD"] == "POST") {
   // not using POST
   die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-  <h1>Oh no!</h1>
-  <p>Ensure request method is POST, not GET</p>
-  <a href="javascript:history.back()">Return to login screen</a>
-  </div>');
+        <h1>Oh no!</h1>
+        <p>Ensure request method is POST, not GET</p>
+        <a href="javascript:history.back()">Return to login screen</a>
+       </div>');
 }
 
 // check if input fields set
 if (!isset($_POST['email']) || !isset($_POST['password'])) {
   // not all inputs set
   die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-          <h1>Oh no!</h1>
-          <p>Ensure both email and password are inputted</p>
-          <a href="javascript:history.back()">Return to login screen</a>
-        </div>');
+        <h1>Oh no!</h1>
+        <p>Ensure both email and password are entered</p>
+        <a href="javascript:history.back()">Return to login screen</a>
+       </div>');
 }
 
 // get input values
@@ -54,10 +54,10 @@ else {
   mysqli_free_result($results);
   // notify user of unsuccessful login attempt
   echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-    <h1>Oh no!</h1>
-    <p>Username and/or password are invalid</p>
-    <a href="javascript:history.back()">Return to login screen</a>
-    </div>';
+          <h1>Oh no!</h1>
+          <p>Username and/or password are invalid</p>
+          <a href="javascript:history.back()">Return to login screen</a>
+        </div>';
 }
 
 ?>

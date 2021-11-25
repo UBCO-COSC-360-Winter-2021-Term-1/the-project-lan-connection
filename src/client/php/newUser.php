@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include 'connectDB.php';
 include 'validateText.php';
 include 'handleImg.php';
@@ -38,11 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt1->execute();
 
     // Image upload to database
-    uploadImgToDB($connection, $fileName, $uname);
+    //uploadImgToDB($connection, $fileName, $uname);
 
-    echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
-            <p>An account for the user <b>'.$uname.'</b> has been created</p>
-          </div>';
+    $_SESSION['signedin'] = $uname;
+    header('Location: ../html/home.php');
   }
   
 }

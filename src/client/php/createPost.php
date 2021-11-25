@@ -1,11 +1,10 @@
 
-/*TODO: The username of person making the post needs to be configured */
-/*TODO: Must know post id so handleImg.php knows what tuple to insert the post pic into */
-
 <?php
 
+session_start();
+
 include 'connectDB.php';
-include 'handleImg';
+include 'handleImg.php';
 
 $connection = connectToDB();
 
@@ -14,17 +13,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $postBody = $_POST['post_body'];
   $postCat = $_POST['post_category'];
-  $postImg = $_FILES['file']['name'];
+  $uname = $_SESSION['signedin'];
+  $curDate = date("Y-m-d H:i:s");
 
   // Insert post information into db
-  $sql = 'INSERT INTO Post (post_body, uname, cat_title, post_date, post_time) VALUES (?, ?, ?, CURDATE(), CURTIME());';
+  $sql = "INSERT INTO Post (post_body, uname, cat_title, post_date) 
+          VALUES (?, ?, ?, ?);";
   $stmt = $connection->prepare($sql);
-  $stmt->bind_param('sss', $postBody, $uname, $postCat);
+  $stmt->bind_param("ssss", $postBody, $uname, $postCat, $curDate);
+
   $stmt->execute();
 
   // Insert post img to db
-  uploadImgToDB($connection, $postImg, $uname, true);
-
+  //uploadImgToDB($connection, $postImg, $uname, true);
+  header('Location: ../html/home.php');
 }
 // Handle GET requests
 else if ($_SERVER["REQUEST_METHOD"] == "GET") {
