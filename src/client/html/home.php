@@ -73,32 +73,32 @@
                     <!--CATEGORY LINKS-->
                     <div class="grid-container">
                         <div class="post-category-l">
-                            <a href="#"><img src="../../../img/biking.jpg"></a>
+                            <a href="./category-page.php?page=Mountain Biking"><img src="../../../img/biking.jpg"></a>
                             <p>Mountain Biking</p>
                         </div>
 
                         <div class="post-category">
-                            <a href="#"><img src="../../../img/hiking.jpg"></a>
+                            <a href="./category-page.php?page=Hiking"><img src="../../../img/hiking.jpg"></a>
                             <p>Hiking</p>
                         </div>
                     
                         <div class="post-category-l">
-                            <a href="#"><img src="../../../img/climbing.jpeg"></a>
+                            <a href="./category-page.php?page=Climbing"><img src="../../../img/climbing.jpeg"></a>
                             <p>Climbing</p>
                         </div>
 
                         <div class="post-category">
-                            <a href="#"><img src="../../../img/snowboarding.jpg"></a>
+                            <a href="./category-page.php?page=Snowboarding"><img src="../../../img/snowboarding.jpg"></a>
                             <p>Snowboarding</p>
                         </div>
                     
                         <div class="post-category-l">
-                            <a href="#"><img src="../../../img/golf.png"></a>
+                            <a href="./category-page.php?page=Golf"><img src="../../../img/golf.png"></a>
                             <p>Golf</p>
                         </div>
 
                         <div class="post-category">
-                            <a href="#"><img src="../../../img/goalie.jpg"></a>
+                            <a href="./category-page.php?page=Hockey"><img src="../../../img/goalie.jpg"></a>
                             <p>Hockey</p>
                         </div>
                     </div>
