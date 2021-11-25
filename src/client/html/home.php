@@ -156,7 +156,8 @@
 
                                       <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                     </div>
-                                  </div>';
+                                  </div>
+                                  <a class="pop-post-comment" href="post.html">Comments</a>';
                           }
                           else {
                             echo '<div class="post-img">
@@ -174,6 +175,7 @@
 
                                       <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                     </div>
+                                    
                                   </div>';
                           }
                         }

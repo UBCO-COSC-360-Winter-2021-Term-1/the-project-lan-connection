@@ -102,6 +102,9 @@
   background-color: white;
   width: 100%;
   height: fit-content;
+}
+
+.pop-post-comment {
   margin-bottom: 2em;
 }
 
