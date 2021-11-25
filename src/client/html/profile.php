@@ -31,19 +31,18 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Home
+                <a class="nav-link dropdown-toggle" href="./profile.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Profile</a>
-                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="./home.php">Home</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    <a class="dropdown-item" href="../php.logout.php">Logout</a>
                 </div>
                 </li>
             </ul>
-            <form class="form-inline nav-search my-2 my-lg-0" method="get" action="">
-                <input class="search-bar" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline nav-search my-2 my-lg-0" method="get" action="./searchResults.php">
+                <input class="search-bar" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
             </form>
             <?php 
@@ -80,12 +79,12 @@
 
                           $uname = $_SESSION['signedin'];
     
-                          $sql = "SELECT A.uname, post_date, post_time, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+                          $sql = "SELECT A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
                                   FROM POST P
                                   INNER JOIN Account A ON A.uname=P.uname
                                   INNER JOIN Category C ON P.cat_title=C.cat_title
                                   WHERE A.uname = '$uname'
-                                  ORDER BY post_date DESC, post_time DESC;";
+                                  ORDER BY post_date DESC";
                                   
                           $results = mysqli_query($connection, $sql);
                           $row_cnt = mysqli_num_rows($results);
@@ -96,7 +95,7 @@
                                       <div class="post-status">
                                         <img src='.$row["pfp"].' class="pfp-small">
                                         <a href="./profile.php" class="username">'.$row["uname"].'</a>
-                                        <p>'.$row["post_date"].$row["post_time"].'</p>
+                                        <p>'.$row["post_date"].'</p>
                                       </div>
                                       <div class="category">
                                         <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
@@ -135,7 +134,7 @@
                                                   <label class="dislike-counter">'.$row["p_dislikes"].'</label>
             
                                                   <button class="comment"><i class="fas fa-comment"></i></button>
-                                                  <label class="comment-counter">3</label>
+                                                  <label class="comment-counter"></label>
             
                                                   <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                                 </div>
@@ -286,5 +285,10 @@
             </div>
         </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
 </html>
