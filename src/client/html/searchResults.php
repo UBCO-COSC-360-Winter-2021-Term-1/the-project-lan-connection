@@ -73,10 +73,11 @@
           $search = validate($_GET['search']);
           $search = '%'.$search.'%';
           
-          $sql = "SELECT pid, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+          $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
                   FROM POST P
                   INNER JOIN Account A ON A.uname=P.uname
                   INNER JOIN Category C ON P.cat_title=C.cat_title
+                  LEFT OUTER JOIN Images I ON I.imageID=P.imageID
                   WHERE post_body LIKE '$search' OR A.uname LIKE '$search'
                   ORDER BY post_date ASC;";
 
@@ -96,17 +97,17 @@
                 echo '<div class="popular-post">
                         <div class="post-status">
                           <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                          <a href="#" class="username">'.$row["uname"].'</a>
+                          <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
                           <p>'.$row["post_date"].'</p>
                         </div>
                         <div class="category">
-                          <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
+                          <p>Posted to <a href="./category-page.php?page='.$row['cat_title'].'" class="post-category">'.$row["cat_title"].'</a></p>
                         </div>
                         <div class="post-text">
                           <p>'.$row["post_body"].'</p>
                         </div>';
   
-                if ($row["post_pic"] == null) {         
+                if ($row["imageID"] == null) {         
                   echo '<div class="post-img">
                             <img class="hide-img" src="">
                           </div>
@@ -127,7 +128,7 @@
                 }
                 else {
                   echo '<div class="post-img">
-                            <img class="" src="'.$row["post_pic"].'">
+                            <img class="" src="'.$row["imageID"].'">
                           </div>
                           <div class="menu-bar">
                             <button class="like"><i class="fas fa-heart"></i></button>

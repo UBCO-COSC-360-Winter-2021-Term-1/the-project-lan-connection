@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../js/activity.js"></script>
     <title>Home</title>
 </head>
 <body>
@@ -111,23 +110,25 @@
                       
                       $connection = connectToDB();
 
-                      $sql = "SELECT pid, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+                      $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
                               FROM POST P
                               INNER JOIN Account A ON A.uname=P.uname
                               INNER JOIN Category C ON P.cat_title=C.cat_title
+                              LEFT OUTER JOIN Images I ON I.imageID=P.imageID
                               ORDER BY p_likes DESC
                               LIMIT 10;";
                               
                       $results = mysqli_query($connection, $sql);
                       $row_cnt = mysqli_num_rows($results);
 
+                    
                       if ($row_cnt !=0) {
                         while ($row = $results->fetch_assoc())
                         {
                           echo '<div class="popular-post">
                                   <div class="post-status">
                                     <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                                    <a href="#" class="username">'.$row["uname"].'</a>
+                                    <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
                                     <p>'.$row["post_date"].'</p>
                                   </div>
                                   <div class="category">
@@ -137,7 +138,7 @@
                                     <p>'.$row["post_body"].'</p>
                                   </div>';
 
-                          if ($row["post_pic"] == null) {         
+                          if ($row["imageID"] == null) {         
                             echo '<div class="post-img">
                                       <img class="hide-img" src="">
                                     </div>
@@ -158,7 +159,7 @@
                           }
                           else {
                             echo '<div class="post-img">
-                                      <img class="" src="'.$row["post_pic"].'">
+                                      <img class="" src="'.$row["imageID"].'">
                                     </div>
                                     <div class="menu-bar">
                                       <button class="like"><i class="fas fa-heart"></i></button>
@@ -180,6 +181,7 @@
                       else {
                         echo "<p>No posts to display!</p>";
                       }
+                      
                     ?>
 
                 </div>

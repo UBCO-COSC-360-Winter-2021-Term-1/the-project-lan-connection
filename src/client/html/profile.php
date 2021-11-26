@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="../css/post.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../js/activity.js"></script>
+    <script type="text/javascript" src="../js/sortPosts.js"></script>
     <title>My Profile</title>
 </head>
 <body>
@@ -69,9 +69,9 @@
                     <div class="filter">
                         <h1>Filter by:</h1>
                         <div>
-                            <button>Newest</button>
-                            <button>Upvotes</button>
-                            <button>Downvotes</button>
+                          <input type="submit" id="1" onclick="changeColor(this.id)" class="special-button classy" name="newest" value="Newest">
+                          <input type="submit" id="2" onclick="changeColor(this.id)" class="special-button" name="likes" value="Likes">
+                          <input type="submit" id="3" onclick="changeColor(this.id)" class="special-button" name="dislikes" value="Dislikes">
                         </div>
                     </div>
 
@@ -82,17 +82,52 @@
                           $connection = connectToDB();
 
                           $uname = $_SESSION['signedin'];
-    
-                          $sql = "SELECT P.pid, fname, lname, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+                          $userProfile = $_GET['username'] ?? null;
+
+                          $newestQuery = $_GET['newest'] ?? null;
+                          $likesQuery = $_GET['likes'] ?? null;
+                          $dislikesQuery = $_GET['dislikes'] ?? null;
+
+
+                          if (isset($userProfile)){
+                            
+                            $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
                                   FROM POST P
                                   INNER JOIN Account A ON A.uname=P.uname
                                   INNER JOIN Category C ON P.cat_title=C.cat_title
-                                  WHERE A.uname = '$uname'
+                                  LEFT OUTER JOIN Images I ON I.imageID=P.imageID
+                                  WHERE A.uname = '$userProfile'
                                   ORDER BY post_date DESC";
                                   
-                          $result = mysqli_query($connection, $sql);
-                          $row_cnt = mysqli_num_rows($result);
-    
+                            $result = mysqli_query($connection, $sql);
+                            $row_cnt = mysqli_num_rows($result);
+
+                            $query = mysqli_query($connection, "SELECT uname, fname, lname FROM Account WHERE uname = '$userProfile'");
+                            $result2 = mysqli_fetch_array($query);
+
+                            $fname = $result2['fname'];
+                            $lname = $result2['lname'];
+
+                          }
+                          else {
+                            $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
+                                    FROM POST P
+                                    INNER JOIN Account A ON A.uname=P.uname
+                                    INNER JOIN Category C ON P.cat_title=C.cat_title
+                                    LEFT OUTER JOIN Images I ON I.imageID=P.imageID
+                                    WHERE A.uname = '$uname'
+                                    ORDER BY post_date DESC";
+                                    
+                            $result = mysqli_query($connection, $sql);
+                            $row_cnt = mysqli_num_rows($result);
+
+                            $query = mysqli_query($connection, "SELECT uname, fname, lname FROM Account WHERE uname = '$uname'");
+                            $result2 = mysqli_fetch_array($query);
+
+                            $fname2 = $result2['fname'];
+                            $lname2 = $result2['lname'];
+                          }
+
                           if ($row_cnt = 0) {
                             echo 'No posts to display!';
                           }
@@ -101,17 +136,17 @@
                             echo '<div class="popular-post">
                                     <div class="post-status">
                                       <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                                      <a href="./profile.php" class="username">'.$row["uname"].'</a>
+                                      <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
                                       <p>'.$row["post_date"].'</p>
                                     </div>
                                     <div class="category">
-                                      <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
+                                      <p>Posted to <a href="./category-page.php?page='.$row['cat_title'].'" class="post-category">'.$row["cat_title"].'</a></p>
                                     </div>
                                     <div class="post-text">
                                       <p>'.$row["post_body"].'</p>
                                     </div>';
 
-                            if ($row["post_pic"] == null) {
+                            if ($row["imageID"] == null) {
                               echo '<div class="post-img">
                                       <img class="hide-img" src="">
                                     </div>
@@ -132,7 +167,7 @@
                             }
                             else {
                               echo '<div class="post-img">
-                                        <img class="" src="'.$row["post_pic"].'">
+                                        <img class="" src="'.$row["imageID"].'">
                                       </div>
                                       <div class="menu-bar">
                                         <button class="like"><i class="fas fa-heart"></i></button>
@@ -154,28 +189,35 @@
                         ?>
                   </div>
                 </div>
-
+                        
                 <div class="right-col">
                     <div class="sq1">
                         <div class="profile-header">
                             <img src="../../../img/pfp-placeholder.jpeg">
                             <div>
-                                <?php
-                                  if ($row_cnt !=0) {
-                                    echo '<p class="user-name">'.$fname.' '.$lname.'</p>';
-                                    echo '<p>'.$uname.'</p>';
-                                  }
-                                ?>
+                              <?php
+
+                                if (isset($userProfile)) {
+                                  echo '<p class="user-name">'.$fname.' '.$lname.'</p>';
+                                  echo '<p>'.$userProfile.'</p>';                 
+                                }
+                                else {
+                                  echo '<p class="user-name">'.$fname2.' '.$lname2.'</p>';
+                                  echo '<p>'.$uname.'</p>'; 
+                                }
+                              
+                              ?>
+                                     
                             </div>
                         </div>
                         <?php
-                          if (isset($_SESSION['signedin'])) {
+                          if (isset($_SESSION['signedin']) && !isset($userProfile)) {
                             echo '<button>Change profile picture</button>';
                           }
                         ?>
                         <div class="links">
                             <?php
-                              if (isset($_SESSION['signedin'])) {      
+                              if (isset($_SESSION['signedin']) && !isset($userProfile)) {      
                                 echo '<a href="#"><i class="fa fa-bookmark"></i>Bookmarks</a>
                                       <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
                                       <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
@@ -184,26 +226,33 @@
                             
                         </div>
                     </div> 
-                    <form class="create-post" name="form" method="post" action="../php/createPost.php" enctype="multipart/form-data">
-                        <div class="post-text">
-                            <input type="search" name="post_body" placeholder="Create a post" aria-label="Search">
-                            <br>
-                            <input type="text" name="post_category" placeholder="Category" list="category-selection" aria-label="Category">
-                            <datalist id="category-selection">
-                                <option>Mountain Biking</option>
-                                <option>Hiking</option>
-                                <option>Climbing</option>
-                                <option>Snowboarding</option>
-                                <option>Golf</option>
-                                <option>Hockey</option>
-                            </datalist>
-                        </div>
-                        <div class="menu-bar">
-                            <a href="#"><img src="../../../img/media.png"></a>
-                            <a href="#"><img src="../../../img/plus.png"></a>
-                            <input type="submit" class="form-post" value="Post">
-                        </div>
-                    </form>
+                    <?php
+
+                      if (!isset($userProfile)) {
+                        
+                        echo '<form class="create-post" name="form" method="post" action="../php/createPost.php" enctype="multipart/form-data">
+                            <div class="post-text">
+                                <input type="search" name="post_body" placeholder="Create a post" aria-label="Search">
+                                <br>
+                                <input type="text" name="post_category" placeholder="Category" list="category-selection" aria-label="Category">
+                                <datalist id="category-selection">
+                                    <option>Mountain Biking</option>
+                                    <option>Hiking</option>
+                                    <option>Climbing</option>
+                                    <option>Snowboarding</option>
+                                    <option>Golf</option>
+                                    <option>Hockey</option>
+                                </datalist>
+                            </div>
+                            <div class="menu-bar">
+                                <a href="#"><img src="../../../img/media.png"></a>
+                                <a href="#"><img src="../../../img/plus.png"></a>
+                                <input type="submit" class="form-post" value="Post">
+                            </div>
+                        </form>';
+                      }
+                    
+                    ?>
                 </div>
             </div>
         </div>
