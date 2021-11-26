@@ -66,4 +66,48 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
   }
 }
 
+/**
+ * $connection: established connection to DB
+ * $id : id of image in images table
+ * $purpose: "profile" for id=uname, "post" for id=pid, "image" for id=imageID
+ * return : the src string for the image encapsulated in double quotes
+ */
+function accessImgFromDB($connection, $id, $purpose) {
+  // query account/post table for imageID
+  switch ($purpose) {
+    case "profile":
+      $sql = "SELECT imageID FROM account WHERE uname = $id";
+      if ($results = mysqli_query($connection, $sql)) {
+        if ($row = mysqli_fetch_assoc($results)) {
+          $imageID = $row['imaageID'];
+        }
+      }
+      // mysqli_free_result($results);
+      break;
+    case "post":
+      $sql = "SELECT imageID FROM post WHERE pid = $id";
+      if ($results = mysqli_query($connection, $sql)) {
+        if ($row = mysqli_fetch_assoc($results)) {
+          $imageID = $row['imageID'];
+        }
+      }
+      // mysqli_free_result($results);
+    default:
+      $imageID = $id;
+  }
+
+  // query images table
+  $sql = "SELECT contentType, image FROM images WHERE imageID = ?";
+  $stmt = mysqli_stmt_init($connection);
+  mysqli_stmt_prepare($stmt, $sql);
+  mysqli_stmt_bind_param($stmt, "i", $userID);
+  $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
+  mysqli_stmt_bind_result($stmt, $type, $image);
+  mysqli_stmt_fetch($stmt);
+  mysqli_stmt_close($stmt);
+  
+  // formulate output
+  return "'data:image/".$type.";base64,".base64_encode($image)."'";
+}
+
 ?>
