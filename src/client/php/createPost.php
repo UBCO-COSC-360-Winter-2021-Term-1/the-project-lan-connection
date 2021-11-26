@@ -37,22 +37,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Insert post information into db
     $sql = "INSERT INTO Post (post_body, uname, cat_title, post_date, p_likes, p_dislikes) 
             VALUES (?, ?, ?, ?, 0, 0);";
-    $stmt = $connection->prepare($sql);
-    $stmt->bind_param("ssss", $postBody, $uname, $postCat, $curDate);
-  
-    // Insert post img to db
-    //uploadImgToDB($connection, $postImg, $uname, true);
-    if ($stmt->execute()) {
+
+    // execute insert stmt
+    if (mysqli_query($connection, $sql)) {
+      // get post id
+      $postID = mysqli_insert_id($connection);
+
+      // Insert post img to db
+      uploadImgToDB($connection, $postImg, $postID, "post");
+
+      // redirect user back to home
       header('Location: ../html/home.php');
     }
     else {
-      echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+      die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
               <h1>Oh no!</h1>
               <p>Something went wrong with your post</p>
               <a href="javascript:history.back()">Return to previous screen</a>
-            </div>';
+            </div>');
     }
-
   }
 
 }
