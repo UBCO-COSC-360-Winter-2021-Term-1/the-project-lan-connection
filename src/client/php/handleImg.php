@@ -1,57 +1,68 @@
 <?php
 
 // Handle account creation image processing
-function uploadImgToDB ($connection, $fileName, $uname, $isPost = false) {
-
-  $targetDir = '../uploads/';
-  $targetFilePath = $targetDir . $fileName;
-  $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
-  $allowTypes = array('jpg','png','jpeg','pdf');
-  $file = $_FILES['file']['tmp_name'];
-
-  // IF image is being uploaded in a post
-  if ($isPost) {
-    if (in_array($fileType, $allowTypes)) {
-      if (move_uploaded_file($file, $targetFilePath)) {
-
-        $insert = $connection->query("UPDATE Post SET post_pic = '".$fileName."' WHERE uname = '".$uname."'");
-        
-        if ($insert) {
-          echo "The file ".$fileName." has been uploaded successfully.";
-        }
-        else {
-          echo "File upload failed, please try again.";
-        } 
-      }
-      else {
-        echo "Sorry, there was an error uploading your file.";
-      }
+/**
+ * $connection : created DB connection
+ * $filename : image file taken from $_FILES (Ex: $_FILES["ppic"]["name"])
+ * $id : username of user uploading image
+ * $purpose : either "profile" or "post"
+ */
+function uploadImgToDB ($connection, $fileName, $id, $purpose) {
+  // get inputted picture file
+  if (isset($fileName)) {
+    // initialize image variables
+    $target_file = "../../../img/" . basename($fileName);
+    $uploadOk = 1; // switch to zero if anything wrong
+    // Check file size
+    if ($_FILES["ppic"]["size"] > 1000000) {
+      $uploadOk = 0;
     }
-    else {
-      echo 'Sorry, only JPG, JPEG, PNG, & PDF files are allowed to upload.';
+    // Check file type
+    $imageFileType = strtolower(pathinfo(basename($fileName), PATHINFO_EXTENSION));
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "gif") {
+      $uploadOk = 0;
+    }
+    // Move image to server folder
+    if ($uploadOk != 0 && move_uploaded_file($_FILES["ppic"]["tmp_name"], $target_file)) {
+      // image successfully moved into server folder
+    } else {
+      // error using user's image -> don't upload
+      $upoadOk = 0;
     }
   }
-  // If image is being uploaded on account creation
-  else {  
-    if (in_array($fileType, $allowTypes)) {
-      if (move_uploaded_file($file, $targetFilePath)) {
 
-        $insert = $connection->query("UPDATE Account SET pfp = '".$fileName."' WHERE uname = '".$uname."'");
-        
-        if ($insert) {
-          echo "The file ".$fileName." has been uploaded successfully.";
-        }
-        else {
-          echo "File upload failed, please try again.";
-        } 
-      }
-      else {
-        echo "Sorry, there was an error uploading your file.";
-      }
+  // check if uploading image
+  if ($uploadOk != 0) {
+    // get image data from file
+    $imagedata = file_get_contents($target_file);
+    // write insert sql
+    $sql = "INSERT INTO images (contentType, image) VALUES (?,?);"; // removed lab 10 user parameter
+    // build sql prepared statement
+    $stmt = mysqli_stmt_init($connection);
+    mysqli_stmt_prepare($stmt, $sql);
+    $null = NULL;
+    mysqli_stmt_bind_param($stmt, "sb", $imageFileType, $null); // not adding user parameter like in lab 10
+    mysqli_stmt_send_long_data($stmt, 1, $imagedata); // blob is at idx 1
+    // execute insert
+    $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
+    // get auto increment id of inserted row
+    $insertID = mysqli_insert_id($connection);
+    // close prepared statement
+    mysqli_stmt_close($stmt);
+
+    // create SQL INSERT stmt
+    switch ($purpose) {
+      case "profile":
+        // insert image id into user's imageID field in account
+        $sql = "UPDATE account SET imageID=$insertID WHERE uname='$id';";
+        break;
+      case "post":
+        $sql = "UPDATE post SET imageID=$insertID WHERE pid='$id';";
+        break;
     }
-    else {
-      echo 'Sorry, only JPG, JPEG, PNG, & PDF files are allowed to upload.';
-    }
+    
+    // execute INSERT
+    mysqli_query($connection, $sql);
   }
 }
 
