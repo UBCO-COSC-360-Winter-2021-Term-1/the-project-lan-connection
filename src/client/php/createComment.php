@@ -48,12 +48,7 @@
                 <a href="javascript:history.back()">Return to previous screen</a>
               </div>';
       }
-
-
     }
-
-
-
   }
   else if ($_SERVER["REQUEST_METHOD"] == "GET") {
     echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
@@ -62,9 +57,5 @@
             <a href="javascript:history.back()">Return to login screen</a>
           </div>';
   }
-
-
-
-
-
+  
 ?>
