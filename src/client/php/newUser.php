@@ -55,16 +55,20 @@ if ($row = mysqli_fetch_assoc($results)) {
        </div>');
 }
 
+// release results 
+mysqli_free_result($results);
+
 // insert new user into DB
 $sql2 = "INSERT INTO account (uname, fname, lname, email, pword) VALUES ('$uname', '$fname', '$lname', '$email', '$pword')";
 mysqli_query($connection, $sql2);
 
-/* // get profile photo
+// get inputted picture file
 if (isset($_FILES["ppic"]["name"])) {
   // initialize image variables
-  $uploadOk = 1;
+  $target_file = "../../../img/" . basename($_FILES["ppic"]["name"]);
+  $uploadOk = 1; // switch to zero if anything wrong
   // Check file size
-  if ($_FILES["ppic"]["size"] > 100000) {
+  if ($_FILES["ppic"]["size"] > 1000000) {
     $uploadOk = 0;
   }
   // Check file type
@@ -72,31 +76,42 @@ if (isset($_FILES["ppic"]["name"])) {
   if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "gif") {
     $uploadOk = 0;
   }
-  // Check if upload ok 
-  if ($uploadOk != 0) {
-    $ppic = basename($_FILES["userImage"]["name"]);
+  // Move image to server folder
+  if ($uploadOk != 0 && move_uploaded_file($_FILES["ppic"]["tmp_name"], $target_file)) {
+    // image successfully moved into server folder
+  }
+  else {
+    // error using user's image -> don't upload
+    $upoadOk = 0;
   }
 }
-// check if image upload didn't work
-if ($uploadOk == 0) {
-  // use generic picture as profile pic instead
-  $ppic = "../../../img/default_profile_picture";
+
+// check if uploading image
+if ($uploadOk != 0) {
+  // get image data from file
+  $imagedata = file_get_contents($target_file);
+  // write insert sql
+  $sql3 = "INSERT INTO images (contentType, image) VALUES (?,?);"; // removed lab 10 user parameter
+  // build sql prepared statement
+  $stmt = mysqli_stmt_init($connection);
+  mysqli_stmt_prepare($stmt, $sql3);
+  $null = NULL;
+  mysqli_stmt_bind_param($stmt, "sb", $imageFileType, $null); // not adding user parameter like in lab 10
+  mysqli_stmt_send_long_data($stmt, 1, $imagedata); // blob is at idx 1
+  // execute insert
+  $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
+  // get auto increment id of inserted row
+  $insertID = mysqli_insert_id($connection);
+  // close prepared statement
+  mysqli_stmt_close($stmt);
+
+  // insert image id into user's imageID field in account
+  $sql4 = "UPDATE account SET imageID=$insertID WHERE uname='$uname';";
+  mysqli_query($connection, $sql4);
+  // echo "<p>number of updated account rows = " . mysqli_affected_rows($connection) . "</p>";
 }
 
-// upload image
-$imagedata = file_get_contents($ppic);
-$sql3 = "UPDATE account SET (pfp = ?) WHERE (username = '$uname');";
-$stmt = mysqli_stmt_init($connection);
-mysqli_stmt_prepare($stmt, $sql3);
-$null = NULL;
-mysqli_stmt_bind_param($stmt, "isb", $userID, $imageFileType, $null);
-mysqli_stmt_send_long_data($stmt, 2, $imagedata);
-$result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
-mysqli_stmt_close($stmt); */
-
-
 // close connection to DB
-mysqli_free_result($results);
 mysqli_close($connection);
 
 // update signin state variable
@@ -104,8 +119,6 @@ $_SESSION['signedin'] = $uname;
 
 // redirect signed in user to home page
 header('Location: ../html/home.php');
-
-
 
 // // Handle POST requests
 // if ($_SERVER["REQUEST_METHOD"] == "POST") {
