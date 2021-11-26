@@ -39,7 +39,7 @@ $pword = md5($pword);
 $connection = connectToDB();
 
 // make SQL request for checking if username/email already in DB
-$sql1 = "SELECT * FROM users WHERE username = '$uname' OR email = '$email';";
+$sql1 = "SELECT * FROM Account WHERE (uname = '$uname' OR email = '$email');";
 $results = mysqli_query($connection, $sql1);
 
 // dont add new user if username/email already in DB
@@ -56,7 +56,7 @@ if ($row = mysqli_fetch_assoc($results)) {
 }
 
 // insert new user into DB
-$sql2 = "INSERT INTO users (username, firstName, lastName, email, password) VALUES ('$uname', '$fname', '$lname', '$email', '$pword')";
+$sql2 = "INSERT INTO account (uname, fname, lname, email, pword) VALUES ('$uname', '$fname', '$lname', '$email', '$pword')";
 mysqli_query($connection, $sql2);
 
 /* // get profile photo
@@ -104,7 +104,6 @@ $_SESSION['signedin'] = $uname;
 
 // redirect signed in user to home page
 header('Location: ../html/home.php');
-
 
 
 
