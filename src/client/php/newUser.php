@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lname = validate($_POST['last-name']);
   $email = validate($_POST['email']);
   $pword = validate($_POST['password']);
-  $fileName = $_FILES['file']['name'];
+  // $fileName = $_FILES['file']['name'];
 
   $sql = "SELECT uname, fname, lname, email, pword FROM Account;";
   $results = mysqli_query($connection, $sql);

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/reset.css">
   <link rel="stylesheet" href="../css/common.css">
   <link rel="stylesheet" href="../css/login.css">
+  <script src="../js/formValidation.js"></script>
   <title>Login/Sign Up</title>
   <script src="../js/formValidation.js"></script>
 </head>
@@ -70,7 +71,14 @@
             <input type="password" class="textbox required-s" name="password" id="password" placeholder="Your password">
           </p>
           <p>
-            <input type="file" class="required-s" name="file" id="file">
+            <label>Confirm Password</label>
+            <br>
+            <input type="password" class="textbox required-s" name="password-check" id="password-check" placeholder="Retype your password">
+          </p>
+          <p>
+            <!-- Making file input not required -> will handle this case in newuser.php-->
+            <!-- <input type="file" class="required-s" name="file" id="file"> -->
+            <input type="file" name="file" id="file">
             <label id="ppic" class="file-upload">Upload a profile picture</label>
           </p>
           <input class="form-submit" type="submit" value="Sign Up">
