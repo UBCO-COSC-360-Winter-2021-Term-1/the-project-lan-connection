@@ -59,6 +59,42 @@ if ($row = mysqli_fetch_assoc($results)) {
 $sql2 = "INSERT INTO users (username, firstName, lastName, email, password) VALUES ('$uname', '$fname', '$lname', '$email', '$pword')";
 mysqli_query($connection, $sql2);
 
+/* // get profile photo
+if (isset($_FILES["ppic"]["name"])) {
+  // initialize image variables
+  $uploadOk = 1;
+  // Check file size
+  if ($_FILES["ppic"]["size"] > 100000) {
+    $uploadOk = 0;
+  }
+  // Check file type
+  $imageFileType = strtolower(pathinfo(basename($_FILES["ppic"]["name"]), PATHINFO_EXTENSION));
+  if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "gif") {
+    $uploadOk = 0;
+  }
+  // Check if upload ok 
+  if ($uploadOk != 0) {
+    $ppic = basename($_FILES["userImage"]["name"]);
+  }
+}
+// check if image upload didn't work
+if ($uploadOk == 0) {
+  // use generic picture as profile pic instead
+  $ppic = "../../../img/default_profile_picture";
+}
+
+// upload image
+$imagedata = file_get_contents($ppic);
+$sql3 = "UPDATE account SET (pfp = ?) WHERE (username = '$uname');";
+$stmt = mysqli_stmt_init($connection);
+mysqli_stmt_prepare($stmt, $sql3);
+$null = NULL;
+mysqli_stmt_bind_param($stmt, "isb", $userID, $imageFileType, $null);
+mysqli_stmt_send_long_data($stmt, 2, $imagedata);
+$result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
+mysqli_stmt_close($stmt); */
+
+
 // close connection to DB
 mysqli_free_result($results);
 mysqli_close($connection);
