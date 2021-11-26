@@ -1,6 +1,18 @@
 <?php
+
   session_start();
+
+  $now = time();
+  if (isset($_SESSION['discard_after']) && $now > $_SESSION['discard_after']) {
+    session_unset();
+    session_destroy();
+    session_start();
+  }
+
+  $_SESSION['discard_after'] = $now + 1800;
+  
   $pageCat = $_GET['page'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +96,7 @@
                       
               $connection = connectToDB();
 
-              $sql = "SELECT A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+              $sql = "SELECT pid, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
                       FROM POST P
                       INNER JOIN Account A ON A.uname=P.uname
                       INNER JOIN Category C ON P.cat_title=C.cat_title
@@ -127,7 +139,8 @@
 
                               <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                             </div>
-                          </div>';
+                          </div>
+                          <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
                   }
                   else {
                     echo '<div class="post-img">
@@ -145,13 +158,14 @@
 
                               <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                             </div>
-                          </div>';
+                          </div>
+                          <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
                   }
                 }
               }
               else {
                 echo "<p>Be the first to post in this category!</p>";
-                echo '<a href="javascript:history.back()">Return to home screen</a>';
+                echo '<a href="./home.php">Return to home screen</a>';
               }
 
             ?>

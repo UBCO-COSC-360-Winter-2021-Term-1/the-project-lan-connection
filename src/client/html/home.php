@@ -1,6 +1,16 @@
-
 <?php
+
   session_start();
+
+  $now = time();
+  if (isset($_SESSION['discard_after']) && $now > $_SESSION['discard_after']) {
+    session_unset();
+    session_destroy();
+    session_start();
+  }
+
+  $_SESSION['discard_after'] = $now + 1800;
+
 ?>
 
 <!DOCTYPE html>
@@ -32,20 +42,7 @@
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <!--
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="./home.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Home
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="./profile.php">Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="../php/logout.php">Logout</a>
-                </div>
-                </li>
-                -->
-            </ul>
+            <ul class="navbar-nav mr-auto"></ul>
             <form class="form-inline nav-search my-2 my-lg-0" method="get" action="./searchResults.php">
                 <input class="search-bar" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
@@ -114,7 +111,7 @@
                       
                       $connection = connectToDB();
 
-                      $sql = "SELECT A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+                      $sql = "SELECT pid, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
                               FROM POST P
                               INNER JOIN Account A ON A.uname=P.uname
                               INNER JOIN Category C ON P.cat_title=C.cat_title
@@ -157,7 +154,7 @@
                                       <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                     </div>
                                   </div>
-                                  <a class="pop-post-comment" href="post.html">Comments</a>';
+                                  <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
                           }
                           else {
                             echo '<div class="post-img">
@@ -174,9 +171,9 @@
                                       <label class="comment-counter"></label>
 
                                       <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                                    </div>
-                                    
-                                  </div>';
+                                    </div>                                
+                                  </div>
+                                  <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
                           }
                         }
                       }

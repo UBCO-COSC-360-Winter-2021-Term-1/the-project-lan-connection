@@ -1,5 +1,16 @@
 <?php
+
   session_start();
+
+  $now = time();
+  if (isset($_SESSION['discard_after']) && $now > $_SESSION['discard_after']) {
+    session_unset();
+    session_destroy();
+    session_start();
+  }
+
+  $_SESSION['discard_after'] = $now + 1800;
+  
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +32,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script type="text/javascript" src="../js/activity.js"></script>
-    <title>User Profile</title>
+    <title>My Profile</title>
 </head>
 <body>
     <!--NAVIGATION BAR (done with bootstrap)-->
@@ -32,20 +43,7 @@
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <!--
-                <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="./home.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Home
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="./profile.php">Profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="../php/logout.php">Logout</a>
-                </div>
-                </li>
-                -->
-            </ul>
+            <ul class="navbar-nav mr-auto"></ul>
             <form class="form-inline nav-search my-2 my-lg-0" method="get" action="./searchResults.php">
                 <input class="search-bar" type="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
@@ -63,7 +61,7 @@
         </div>
     </nav>
     
-    <div class="plain-background">
+    <div class="plain-background-2">
         <div class="container">
             <div class="row">
 
@@ -85,7 +83,7 @@
 
                           $uname = $_SESSION['signedin'];
     
-                          $sql = "SELECT fname, lname, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
+                          $sql = "SELECT P.pid, fname, lname, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
                                   FROM POST P
                                   INNER JOIN Account A ON A.uname=P.uname
                                   INNER JOIN Category C ON P.cat_title=C.cat_title
@@ -132,7 +130,8 @@
 
                                                 <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                               </div>
-                                            </div>';
+                                            </div>
+                                            <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
                                       }
                                       else {
                                         echo '<div class="post-img">
@@ -150,7 +149,8 @@
             
                                                   <button class="bookmark"><i class="fa fa-bookmark"></i></button>
                                                 </div>
-                                              </div>';
+                                              </div>
+                                              <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
                                       }
                             }
                           }
