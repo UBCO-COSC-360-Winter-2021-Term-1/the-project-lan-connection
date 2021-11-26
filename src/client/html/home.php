@@ -131,7 +131,7 @@
                                     <p>'.$row["post_date"].'</p>
                                   </div>
                                   <div class="category">
-                                    <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
+                                    <p>Posted to <a href="./category-page.php?page='.$row['cat_title'].'" class="post-category">'.$row["cat_title"].'</a></p>
                                   </div>
                                   <div class="post-text">
                                     <p>'.$row["post_body"].'</p>

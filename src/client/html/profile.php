@@ -90,74 +90,67 @@
                                   WHERE A.uname = '$uname'
                                   ORDER BY post_date DESC";
                                   
-                          $results = mysqli_query($connection, $sql);
-                          $row_cnt = mysqli_num_rows($results);
-
-                          $result = $results->fetch_assoc();
+                          $result = mysqli_query($connection, $sql);
+                          $row_cnt = mysqli_num_rows($result);
     
-                          if ($row_cnt !=0) {
-
-                            $fname = $result['fname'];
-                            $lname = $result['lname'];
-
-                            while ($row = $results->fetch_assoc()) {
-                              echo '<div class="popular-post">
-                                      <div class="post-status">
-                                        <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                                        <a href="./profile.php" class="username">'.$row["uname"].'</a>
-                                        <p>'.$row["post_date"].'</p>
-                                      </div>
-                                      <div class="category">
-                                        <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
-                                      </div>
-                                      <div class="post-text">
-                                        <p>'.$row["post_body"].'</p>
-                                      </div>';
-
-                                      if ($row["post_pic"] == null) {
-                                        echo '<div class="post-img">
-                                                <img class="hide-img" src="">
-                                              </div>
-                                              <div class="menu-bar">
-                                                <button class="like"><i class="fas fa-heart"></i></button>
-                                                <label class="like-counter">'.$row["p_likes"].'</label>
-
-                                                <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                                                <label class="dislike-counter">'.$row["p_dislikes"].'</label>
-
-                                                <button class="comment"><i class="fas fa-comment"></i></button>
-                                                <label class="comment-counter">3</label>
-
-                                                <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                                              </div>
-                                            </div>
-                                            <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
-                                      }
-                                      else {
-                                        echo '<div class="post-img">
-                                                  <img class="" src="'.$row["post_pic"].'">
-                                                </div>
-                                                <div class="menu-bar">
-                                                  <button class="like"><i class="fas fa-heart"></i></button>
-                                                  <label class="like-counter">'.$row["p_likes"].'</label>
-            
-                                                  <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                                                  <label class="dislike-counter">'.$row["p_dislikes"].'</label>
-            
-                                                  <button class="comment"><i class="fas fa-comment"></i></button>
-                                                  <label class="comment-counter"></label>
-            
-                                                  <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                                                </div>
-                                              </div>
-                                              <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
-                                      }
-                            }
-                          }
-                          else {
+                          if ($row_cnt = 0) {
                             echo 'No posts to display!';
                           }
 
+                          while ($row = mysqli_fetch_array($result)) {
+                            echo '<div class="popular-post">
+                                    <div class="post-status">
+                                      <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                                      <a href="./profile.php" class="username">'.$row["uname"].'</a>
+                                      <p>'.$row["post_date"].'</p>
+                                    </div>
+                                    <div class="category">
+                                      <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
+                                    </div>
+                                    <div class="post-text">
+                                      <p>'.$row["post_body"].'</p>
+                                    </div>';
+
+                            if ($row["post_pic"] == null) {
+                              echo '<div class="post-img">
+                                      <img class="hide-img" src="">
+                                    </div>
+                                    <div class="menu-bar">
+                                      <button class="like"><i class="fas fa-heart"></i></button>
+                                      <label class="like-counter">'.$row["p_likes"].'</label>
+
+                                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                      <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+
+                                      <button class="comment"><i class="fas fa-comment"></i></button>
+                                      <label class="comment-counter">3</label>
+
+                                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                                    </div>
+                                  </div>
+                                  <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
+                            }
+                            else {
+                              echo '<div class="post-img">
+                                        <img class="" src="'.$row["post_pic"].'">
+                                      </div>
+                                      <div class="menu-bar">
+                                        <button class="like"><i class="fas fa-heart"></i></button>
+                                        <label class="like-counter">'.$row["p_likes"].'</label>
+  
+                                        <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                        <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+  
+                                        <button class="comment"><i class="fas fa-comment"></i></button>
+                                        <label class="comment-counter"></label>
+  
+                                        <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                                      </div>
+                                    </div>
+                                    <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
+                            }
+                          }
+                          
                         ?>
                   </div>
                 </div>

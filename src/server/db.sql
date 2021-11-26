@@ -42,7 +42,6 @@ CREATE TABLE Comment(
   comment_date DATETIME,
   c_likes INTEGER,
   c_dislikes INTEGER,
-  pfp BLOB,
   PRIMARY KEY(cid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 

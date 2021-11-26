@@ -57,7 +57,7 @@
     </nav>
 
     <div class="container-1">
-        <div class="content-box">
+      <div class="content-box">
 
         <?php
           include '../php/connectDB.php';
@@ -65,6 +65,7 @@
           $connection = connectToDB();
 
           $uname = $_SESSION['signedin'];
+          
           $pid = $_GET['pids'];
 
           $sql = "SELECT P.pid, fname, lname, A.uname, post_date, post_pic, P.cat_title, post_body, p_likes, p_dislikes, A.pfp 
@@ -74,156 +75,90 @@
                   WHERE P.pid = '$pid'
                   ORDER BY post_date DESC";
                   
-          $result = mysqli_query($connection, $sql);
-
-          //$result = $results->fetch_assoc();
+          $result = mysqli_query($connection, $sql); 
           
-          // DEBUG
-          function debug_to_console($data) {
-            $output = $data;
-            if (is_array($output))
-                $output = implode(',', $output);
-        
-            echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-          }
-          debug_to_console($pid);          
-
-          while ($row = mysqli_fetch_array($result)) { 
+          while ($row = mysqli_fetch_array($result)) {
+            // Echo post 
             echo '<div class="popular-post">
-            <div class="post-status">
-              <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-              <a href="./profile.php" class="username">'.$row["uname"].'</a>
-              <p>'.$row["post_date"].'</p>
-            </div>
-            <div class="category">
-              <p>Posted to <a href="#" class="post-category">'.$row["cat_title"].'</a></p>
-            </div>
-            <div class="post-text">
-              <p>'.$row["post_body"].'</p>
-            </div>';
-
-            if ($row["post_pic"] == null) {
+                    <div class="post-status">
+                      <img src='.$row['pfp'].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                      <a href="./profile.php" class="username">'.$uname.'</a>
+                      <p>'.$row['post_date'].'</p>
+                    </div>
+                    <div class="category">
+                      <p>Posted to <a href="#" class="post-category">'.$row['cat_title'].'</a></p>
+                    </div>
+                    <div class="post-text">
+                      <p>'.$row['post_body'].'</p>
+                    </div>';
+            // If there is a picture with the post
+            if ($row['post_pic'] == null) {
               echo '<div class="post-img">
                       <img class="hide-img" src="">
                     </div>
                     <div class="menu-bar">
                       <button class="like"><i class="fas fa-heart"></i></button>
-                      <label class="like-counter">'.$row["p_likes"].'</label>
-
+                      <label class="like-counter">'.$row['p_likes'].'</label>
                       <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                      <label class="dislike-counter">'.$row["p_dislikes"].'</label>
-
+                      <label class="dislike-counter">'.$row['p_dislikes'].'</label>
                       <button class="comment"><i class="fas fa-comment"></i></button>
-                      <label class="comment-counter">3</label>
-
+                      <label class="comment-counter"></label>
                       <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                    </div>
-                  </div>';
-            }
-            else {
-              echo '<div class="post-img">
-                        <img class="" src="'.$row["post_pic"].'">
-                      </div>
-                      <div class="menu-bar">
-                        <button class="like"><i class="fas fa-heart"></i></button>
-                        <label class="like-counter">'.$row["p_likes"].'</label>
-
-                        <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                        <label class="dislike-counter">'.$row["p_dislikes"].'</label>
-
-                        <button class="comment"><i class="fas fa-comment"></i></button>
-                        <label class="comment-counter"></label>
-
-                        <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                      </div>
                     </div>';
             }
+            // If there is no picture posted
+            else {
+              echo '<div class="post-img">
+                      <img class="" src="'.$row['post_pic'].'">
+                    </div>
+                    <div class="menu-bar">
+                      <button class="like"><i class="fas fa-heart"></i></button>
+                      <label class="like-counter">'.$row['p_likes'].'</label>
+                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                      <label class="dislike-counter">'.$row['p_dislikes'].'</label>
+                      <button class="comment"><i class="fas fa-comment"></i></button>
+                      <label class="comment-counter"></label>
+                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                    </div>';
+            }
+            // Echo comment form    
+            echo '<form class="create-post" name="form" method="post" action="../php/createComment.php">            
+                    <div class="user-comment">
+                      <img src='.$row['pfp'].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">
+                      <input type="text" name="comment" placeholder="Leave a comment" aria-label="Search">
+                      <input type="hidden" id="pid" name="pid" value='.$pid.'> 
+                    </div>
+                  </form>';
 
-          }
+                  // Query comments for a certian post
+                  $sql2 = "SELECT * FROM Comment WHERE pid = '$pid'"; 
+                  $result2 = mysqli_query($connection, $sql2); 
+                  
+                  while ($row2 = mysqli_fetch_array($result2)) {
+                    // Echo comments
+                    echo '<div class="comments">
+                            <div class="user-info">
+                              <img src="../../../img/pfp-placeholder.jpeg" alt="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">
+                              <a href="#">'.$row2['uname'].'</a>
+                              <p>'.$row2['comment_date'].'</p>
+                            </div>
+                            <div class="user-content">
+                              <p>'.$row2['comment_body'].'</p>
+                              <div class="menu-bar">
+                                <button class="like"><i class="fas fa-heart"></i></button>
+                                <label class="like-counter">'.$row2['c_likes'].'</label>
+                                <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                <label class="dislike-counter">'.$row2['c_dislikes'].'</label>
+                              </div>
+                            </div>
+                          </div>';
+                  }
+          } 
+          
 
         ?> 
-
-            <!--THIS IS A POST CONTAINING COMMENTS
-            <div class="popular-post">
-                <div class="post-status">
-                    <img src="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                    <a href="#" class="username">noahward</a>
-                    <p>Dec 15, 2020</p>
-                </div>
-                <div class="category">
-                    <p>Posted to <a href="#" class="post-category">snowboarding</a></p>
-                </div>
-                <div class="post-text">
-                    <p>Powder day at Big White today! Dumped 30cm overnight.</p>
-                </div>
-
-                <!--Delete the line below using php if no media is uploaded to a post
-                <div class="post-img">
-                    <img class="hide-img" src="">
-                </div>
-
-                <div class="menu-bar">
-                    <button class="like"><i class="fas fa-heart"></i></button>
-                    <label class="like-counter">7</label>
-
-                    <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                    <label class="dislike-counter">2</label>
-
-                    <button class="comment"><i class="fas fa-comment"></i></button>
-                    <label class="comment-counter">2</label>
-
-                    <button class="bookmark"><i class="fa fa-bookmark"></i></button>
-                </div>
-
-                <!--LEAVE A COMMENT ON A POST
-                <form class="create-post">
-                    
-                    <div class="user-comment">
-                        <img src="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">
-                        <input type="search" placeholder="Leave a comment" aria-label="Search">
-                    </div>
-
-                    <!--Only echo the following code if a post has comments
-                    <div class="comments">
-                        <div class="user-info">
-                            <img src="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">
-                            <a href="#">coleytweed</a>
-                            <p>Dec 16, 2020</p>
-                        </div>
-                        <div class="user-content">
-                            <p>Silverstar gets less snow than Big White</p>
-                            <div class="menu-bar">
-                                <button class="like"><i class="fas fa-heart"></i></button>
-                                <label class="like-counter">14</label>
-
-                                <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                                <label class="dislike-counter">1</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="comments">
-                        <div class="user-info">
-                            <img src="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">
-                            <a href="#">coleytweed</a>
-                            <p>Dec 16, 2020</p>
-                        </div>
-                        <div class="user-content">
-                            <p>This is another comment placeholder, which takes up multiple lines for testing purposes, etc
-                            </p>
-                            <div class="menu-bar">
-                                <button class="like"><i class="fas fa-heart"></i></button>
-                                <label class="like-counter">2</label>
-
-                                <button class="dislike"><i class="far fa-heart-broken"></i></button>
-                                <label class="dislike-counter">0</label>
-                            </div>
-                        </div>
-                    </div>
-        -->
-                </form>
-            </div>
-        </div>
+            </div>            
+      </div>
     </div>
 </body>
 </html>
