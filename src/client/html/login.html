@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="../css/login.css">
   <script src="../js/formValidation.js"></script>
   <title>Login/Sign Up</title>
-  <script src="../js/formValidation.js"></script>
 </head>
 
 <body>
@@ -78,8 +77,8 @@
           <p>
             <!-- Making file input not required -> will handle this case in newuser.php-->
             <!-- <input type="file" class="required-s" name="file" id="file"> -->
-            <input type="file" name="file" id="file">
-            <label id="ppic" class="file-upload">Upload a profile picture</label>
+            <label><input type="file" class="file-upload" name="ppic" id="ppic"></label>
+            
           </p>
           <input class="form-submit" type="submit" value="Sign Up">
         </form>
