@@ -96,6 +96,17 @@
             if ($row_cnt !=0) {
               while ($row = $results->fetch_assoc())
               {
+
+                // Grab likes and dislikes for each post
+                $pids = $row['pid'];
+                $sqlLikes = "SELECT * FROM Ratings WHERE (pid = $pids AND action='liked')";
+                $sqlDislikes = "SELECT * FROM Ratings WHERE (pid = $pids AND action='disliked')";
+                $likesResult = mysqli_query($connection, $sqlLikes);
+                $dislikesResult = mysqli_query($connection, $sqlDislikes);
+
+                $numLikes = mysqli_num_rows($likesResult);
+                $numDislikes = mysqli_num_rows($dislikesResult);
+
                 $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
                 echo '<div class="popular-post">
                         <div class="post-status">
@@ -116,10 +127,10 @@
                           </div>
                           <div class="menu-bar">
                             <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
-                            <label class="like-counter">'.$row["p_likes"].'</label>
+                            <label class="like-counter">'.$numLikes.'</label>
   
                             <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
-                            <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+                            <label class="dislike-counter">'.$numDislikes.'</label>
   
                             <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                             <label class="comment-counter"></label>
@@ -134,10 +145,10 @@
                           </div>
                           <div class="menu-bar">
                             <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
-                            <label class="like-counter">'.$row["p_likes"].'</label>
+                            <label class="like-counter">'.$numLikes.'</label>
   
                             <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
-                            <label class="dislike-counter">'.$row["p_dislikes"].'</label>
+                            <label class="dislike-counter">'.$numDislikes.'</label>
   
                             <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                             <label class="comment-counter"></label>
