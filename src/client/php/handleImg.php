@@ -11,15 +11,15 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
   // get inputted picture file
   if (isset($fileName)) {
     // initialize image variables
-    $target_file = "../../../img/" . basename($fileName);
+    $target_file = "../uploads" . basename($fileName);
     $uploadOk = 1; // switch to zero if anything wrong
     // Check file size
-    if ($_FILES["ppic"]["size"] > 1000000) {
+    if ($_FILES["ppic"]["size"] > 10000000) {
       $uploadOk = 0;
     }
     // Check file type
     $imageFileType = strtolower(pathinfo(basename($fileName), PATHINFO_EXTENSION));
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "gif") {
+    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "gif" && $imageFileType != "jpeg" && $imageFileType != "pdf") {
       $uploadOk = 0;
     }
     // Move image to server folder
@@ -76,7 +76,7 @@ function accessImgFromDB($connection, $id, $purpose) {
   // query account/post table for imageID
   switch ($purpose) {
     case "profile":
-      $sql = "SELECT imageID FROM account WHERE uname = $id";
+      $sql = "SELECT imageID FROM Account WHERE uname = $id";
       if ($results = mysqli_query($connection, $sql)) {
         if ($row = mysqli_fetch_assoc($results)) {
           $imageID = $row['imaageID'];
@@ -100,7 +100,7 @@ function accessImgFromDB($connection, $id, $purpose) {
   $sql = "SELECT contentType, image FROM images WHERE imageID = ?";
   $stmt = mysqli_stmt_init($connection);
   mysqli_stmt_prepare($stmt, $sql);
-  mysqli_stmt_bind_param($stmt, "i", $userID);
+  mysqli_stmt_bind_param($stmt, "i", $id);
   $result = mysqli_stmt_execute($stmt) or die(mysqli_stmt_error($stmt));
   mysqli_stmt_bind_result($stmt, $type, $image);
   mysqli_stmt_fetch($stmt);

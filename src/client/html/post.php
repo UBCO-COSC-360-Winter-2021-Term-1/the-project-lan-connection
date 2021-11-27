@@ -97,13 +97,13 @@
                       <img class="hide-img" src="">
                     </div>
                     <div class="menu-bar">
-                      <button class="like"><i class="fas fa-heart"></i></button>
+                      <button class="like"><i class="far fa-thumbs-up"></i></button>
                       <label class="like-counter">'.$row['p_likes'].'</label>
-                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                      <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                       <label class="dislike-counter">'.$row['p_dislikes'].'</label>
-                      <button class="comment"><i class="fas fa-comment"></i></button>
+                      <button class="comment"><i class="far fa-comment"></i></button>
                       <label class="comment-counter"></label>
-                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                      <button class="bookmark"><i class="far fa-bookmark"></i></button>
                     </div>';
             }
             // If there is no picture posted
@@ -112,13 +112,13 @@
                       <img class="" src="'.$row['imageID'].'">
                     </div>
                     <div class="menu-bar">
-                      <button class="like"><i class="fas fa-heart"></i></button>
+                      <button class="like"><i class="far fa-thumbs-up"></i></button>
                       <label class="like-counter">'.$row['p_likes'].'</label>
-                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                      <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                       <label class="dislike-counter">'.$row['p_dislikes'].'</label>
-                      <button class="comment"><i class="fas fa-comment"></i></button>
+                      <button class="comment"><i class="far fa-comment"></i></button>
                       <label class="comment-counter"></label>
-                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                      <button class="bookmark"><i class="far fa-bookmark"></i></button>
                     </div>';
             }
             // Echo comment form    
@@ -145,9 +145,9 @@
                             <div class="user-content">
                               <p>'.$row2['comment_body'].'</p>
                               <div class="menu-bar">
-                                <button class="like"><i class="fas fa-heart"></i></button>
+                                <button class="like"><i class="far fa-thumbs-up"></i></button>
                                 <label class="like-counter">'.$row2['c_likes'].'</label>
-                                <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                                 <label class="dislike-counter">'.$row2['c_dislikes'].'</label>
                               </div>
                             </div>

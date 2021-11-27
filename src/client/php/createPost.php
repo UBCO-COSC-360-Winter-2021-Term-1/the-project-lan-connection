@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $postBody = $_POST['post_body'];
   $postCat = $_POST['post_category'];
   $uname = $_SESSION['signedin'];
+  $postImg = $_FILES["file"]["name"];
 
   if ($postBody == null || $postCat == null) {
     echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
@@ -36,8 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
     // Insert post information into db
     $sql = "INSERT INTO Post (post_body, uname, cat_title, post_date, p_likes, p_dislikes) 
-            VALUES (?, ?, ?, ?, 0, 0);";
-
+            VALUES ('$postBody', '$uname', '$postCat', '$curDate', 0, 0);";
+  
     // execute insert stmt
     if (mysqli_query($connection, $sql)) {
       // get post id

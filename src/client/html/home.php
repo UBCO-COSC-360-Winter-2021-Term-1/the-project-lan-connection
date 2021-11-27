@@ -107,6 +107,7 @@
                     <p class="header1">Popular Posts</p>
                     <?php
                       include '../php/connectDB.php';
+                      include '../php/handleImg.php';
                       
                       $connection = connectToDB();
 
@@ -125,9 +126,10 @@
                       if ($row_cnt !=0) {
                         while ($row = $results->fetch_assoc())
                         {
+                          $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
                           echo '<div class="popular-post">
                                   <div class="post-status">
-                                    <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                                    <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
                                     <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
                                     <p>'.$row["post_date"].'</p>
                                   </div>
@@ -143,16 +145,16 @@
                                       <img class="hide-img" src="">
                                     </div>
                                     <div class="menu-bar">
-                                      <button class="like"><i class="fas fa-heart"></i></button>
+                                      <button class="like"><i class="far fa-thumbs-up"></i></button>
                                       <label class="like-counter">'.$row["p_likes"].'</label>
 
-                                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                      <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                                       <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
-                                      <button class="comment"><i class="fas fa-comment"></i></button>
+                                      <button class="comment"><i class="far fa-comment"></i></button>
                                       <label class="comment-counter"></label>
 
-                                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                                      <button class="bookmark"><i class="far fa-bookmark"></i></button>
                                     </div>
                                   </div>
                                   <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
@@ -162,16 +164,16 @@
                                       <img class="" src="'.$row["imageID"].'">
                                     </div>
                                     <div class="menu-bar">
-                                      <button class="like"><i class="fas fa-heart"></i></button>
+                                      <button class="like"><i class="far fa-thumbs-up"></i></button>
                                       <label class="like-counter">'.$row["p_likes"].'</label>
 
-                                      <button class="dislike"><i class="far fa-heart-broken"></i></button>
+                                      <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                                       <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
-                                      <button class="comment"><i class="fas fa-comment"></i></button>
+                                      <button class="comment"><i class="far fa-comment"></i></button>
                                       <label class="comment-counter"></label>
 
-                                      <button class="bookmark"><i class="fa fa-bookmark"></i></button>
+                                      <button class="bookmark"><i class="far fa-bookmark"></i></button>
                                     </div>                                
                                   </div>
                                   <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
@@ -207,7 +209,7 @@
                       </div>
                       <div class="menu-bar">
 
-                        <input id="file1" name="file" type="file" hidden>
+                        <input id="file" name="file" type="file">
                         <label id="pfpup" for="file-input"><img src="../../../img/media.png"></label>
 
                         <input type="submit" class="form-post" value="Post">
