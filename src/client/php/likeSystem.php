@@ -44,8 +44,17 @@
         $sql = "DELETE FROM Ratings
                 WHERE (uname = '$uname' AND pid = '$pid' AND action = 'liked')";
         mysqli_query($connection, $sql);
-        mysqli_close($connection);
-        echo 'Unlike was a success'; 
+
+        $sqlLikes = "SELECT * FROM Ratings WHERE (pid = $pid AND action='liked')";
+        $sqlDislikes = "SELECT * FROM Ratings WHERE (pid = $pid AND action='disliked')";
+        $likesResult = mysqli_query($connection, $sqlLikes);
+        $dislikesResult = mysqli_query($connection, $sqlDislikes);
+
+        $numLikes = mysqli_num_rows($likesResult);
+        $numDislikes = mysqli_num_rows($dislikesResult);
+
+        mysqli_close($connection);     
+        echo json_encode(array($numLikes, $numDislikes));
         break;
 
       case 'disliked':
@@ -79,8 +88,16 @@
         $sql = "DELETE FROM Ratings
                 WHERE (uname = '$uname' AND pid = '$pid' AND action = 'disliked')";
         mysqli_query($connection, $sql);
-        mysqli_close($connection);
-        echo 'Undislike was a success';
+        $sqlLikes = "SELECT * FROM Ratings WHERE (pid = $pid AND action='liked')";
+        $sqlDislikes = "SELECT * FROM Ratings WHERE (pid = $pid AND action='disliked')";
+        $likesResult = mysqli_query($connection, $sqlLikes);
+        $dislikesResult = mysqli_query($connection, $sqlDislikes);
+
+        $numLikes = mysqli_num_rows($likesResult);
+        $numDislikes = mysqli_num_rows($dislikesResult);
+
+        mysqli_close($connection);     
+        echo json_encode(array($numLikes, $numDislikes));
         break;
 
     }

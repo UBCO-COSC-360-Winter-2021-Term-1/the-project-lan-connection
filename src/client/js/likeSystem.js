@@ -46,8 +46,8 @@ function clickedLike(obj) {
     }
   }).done(function (res) {
     var result = $.parseJSON(res);
-    $('.like-counter').text(result[0]);
-    $('.dislike-counter').text(result[1]);
+    $(obj).siblings('.like-counter').eq(0).text(result[0]);
+    $(obj).siblings('.dislike-counter').eq(0).text(result[1]);
   });
 
 
@@ -91,8 +91,8 @@ function clickedDislike(obj) {
     }
   }).done(function (res) {
     var result = $.parseJSON(res);
-    $('.like-counter').text(result[0]);
-    $('.dislike-counter').text(result[1]);
+    $(obj).siblings('.like-counter').text(result[0]);
+    $(obj).siblings('.dislike-counter').text(result[1]);
   });
 
 }
