@@ -12,6 +12,7 @@ function clickedLike(obj) {
 
   // Like
   if ($(obj).children('i').eq(0).hasClass('far fa-thumbs-up')) {
+    var clickBtnValue = 'liked';
     $(obj).children('i').eq(0).removeClass("far fa-thumbs-up");
     $(obj).children('i').eq(0).addClass("fas fa-thumbs-up");
 
@@ -22,17 +23,42 @@ function clickedLike(obj) {
   }
   // Unlike
   else {
+    var clickBtnValue = 'unliked';
     $(obj).children('i').eq(0).removeClass("fas fa-thumbs-up");
     $(obj).children('i').eq(0).addClass("far fa-thumbs-up");
   }
-}
 
+  var postId = $(obj).attr("data-value");
+
+  // Post like info to likeSystem.php and update the database from there
+  $.ajax({
+    type: "POST",
+    url: "../php/likeSystem.php",
+    data: {
+      action: clickBtnValue,
+      pid: postId
+    },
+    success: function (data) {
+      console.log('Likes, dislikes: ' + data);
+    },
+    error: function (xhr, status, error) {
+      console.error(xhr);
+    }
+  }).done(function (res) {
+    var result = $.parseJSON(res);
+    $('.like-counter').text(result[0]);
+    $('.dislike-counter').text(result[1]);
+  });
+
+
+}
 
 // User clicked dislike
 function clickedDislike(obj) {
 
   // Dislike
   if ($(obj).children('i').eq(0).hasClass('far fa-thumbs-down')) {
+    var clickBtnValue = 'disliked';
     $(obj).children('i').eq(0).removeClass("far fa-thumbs-down");
     $(obj).children('i').eq(0).addClass("fas fa-thumbs-down");
 
@@ -43,9 +69,31 @@ function clickedDislike(obj) {
   }
   // Undislike
   else {
+    var clickBtnValue = 'undisliked';
     $(obj).children('i').eq(0).removeClass("fas fa-thumbs-down");
     $(obj).children('i').eq(0).addClass("far fa-thumbs-down");
   }
+
+  var postId = $(obj).attr("data-value");
+
+  $.ajax({
+    type: "POST",
+    url: "../php/likeSystem.php",
+    data: {
+      action: clickBtnValue,
+      pid: postId
+    },
+    success: function (data) {
+      console.log('Likes, dislikes: ' + data);
+    },
+    error: function (xhr, status, error) {
+      console.error(xhr);
+    }
+  }).done(function (res) {
+    var result = $.parseJSON(res);
+    $('.like-counter').text(result[0]);
+    $('.dislike-counter').text(result[1]);
+  });
 
 }
 

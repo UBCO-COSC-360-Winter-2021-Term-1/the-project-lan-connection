@@ -62,11 +62,8 @@ CREATE TABLE Ratings (
   uname VARCHAR(255),
   pid INTEGER,
   action VARCHAR(10),
-  PRIMARY KEY(uname, pid)
+  CONSTRAINT UC_rating_info UNIQUE (uname, pid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
-
-ALTER TABLE Ratings ADD CONSTRAINT fk_uname_ratings FOREIGN KEY (uname) REFERENCES Account(uname);
-ALTER TABLE Ratings ADD CONSTRAINT fk_pid_ratings FOREIGN KEY (pid) REFERENCES Post(pid);
 
 ALTER TABLE Comment ADD CONSTRAINT fk_uname_comment FOREIGN KEY (uname) REFERENCES Account(uname); 
 ALTER TABLE Comment ADD CONSTRAINT fk_pid_comment FOREIGN KEY (pid) REFERENCES Post(pid);
