@@ -14,7 +14,7 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
     $target_file = "../uploads" . basename($fileName);
     $uploadOk = 1; // switch to zero if anything wrong
     // Check file size
-    if ($_FILES["ppic"]["size"] > 10000000) {
+    if ($_FILES["ppic"]["size"] > 1000000000000) {
       $uploadOk = 0;
     }
     // Check file type
@@ -36,7 +36,7 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
     // get image data from file
     $imagedata = file_get_contents($target_file);
     // write insert sql
-    $sql = "INSERT INTO images (contentType, image) VALUES (?,?);"; // removed lab 10 user parameter
+    $sql = "INSERT INTO Images (contentType, image) VALUES (?, ?);"; // removed lab 10 user parameter
     // build sql prepared statement
     $stmt = mysqli_stmt_init($connection);
     mysqli_stmt_prepare($stmt, $sql);
@@ -54,10 +54,10 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
     switch ($purpose) {
       case "profile":
         // insert image id into user's imageID field in account
-        $sql = "UPDATE account SET imageID=$insertID WHERE uname='$id';";
+        $sql = "UPDATE Account SET imageID=$insertID WHERE uname='$id';";
         break;
       case "post":
-        $sql = "UPDATE post SET imageID=$insertID WHERE pid='$id';";
+        $sql = "UPDATE Post SET imageID=$insertID WHERE pid='$id';";
         break;
     }
     

@@ -1,4 +1,5 @@
 
+// Change the style of the sort buttons upon click
 function changeColor(clicked_id) {
   one = document.getElementById('1');
   two = document.getElementById('2');

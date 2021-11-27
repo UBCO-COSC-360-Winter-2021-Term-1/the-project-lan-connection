@@ -60,10 +60,11 @@
 
         <?php
           include '../php/connectDB.php';
+          include '../php/handleImg.php';
       
           $connection = connectToDB();
           
-          $uname = $_SESSION['signedin'];
+          $uname = $_SESSION['signedin'] ?? null;
           
           $pid = $_GET['pids'];
 
@@ -78,11 +79,11 @@
           $result = mysqli_query($connection, $sql); 
           
           while ($row = mysqli_fetch_array($result)) {
-            // Echo post 
+            $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
             echo '<div class="popular-post">
                     <div class="post-status">
-                      <img src='.$row['pfp'].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                      <a href="./profile.php?username='.$row['uname'].'" class="username">'.$uname.'</a>
+                      <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                      <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row['uname'].'</a>
                       <p>'.$row['post_date'].'</p>
                     </div>
                     <div class="category">

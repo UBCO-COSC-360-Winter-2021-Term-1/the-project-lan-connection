@@ -27,6 +27,7 @@ html {
 
 .popular-post {
   width: 80%;
+  margin-bottom: 2em;
 }
 
 /* COMMENTS */
@@ -157,6 +158,7 @@ html {
 
 .menu-bar a {
   color: black;
+  margin-left: 1.25em;
 }
 
 .menu-bar a:hover {

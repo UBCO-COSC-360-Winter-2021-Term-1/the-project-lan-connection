@@ -58,6 +58,16 @@ CREATE TABLE Comment(
   PRIMARY KEY(cid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
+CREATE TABLE Ratings (
+  uname VARCHAR(255),
+  pid INTEGER,
+  action VARCHAR(10),
+  PRIMARY KEY(uname, pid)
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+ALTER TABLE Ratings ADD CONSTRAINT fk_uname_ratings FOREIGN KEY (uname) REFERENCES Account(uname);
+ALTER TABLE Ratings ADD CONSTRAINT fk_pid_ratings FOREIGN KEY (pid) REFERENCES Post(pid);
+
 ALTER TABLE Comment ADD CONSTRAINT fk_uname_comment FOREIGN KEY (uname) REFERENCES Account(uname); 
 ALTER TABLE Comment ADD CONSTRAINT fk_pid_comment FOREIGN KEY (pid) REFERENCES Post(pid);
 ALTER TABLE Comment ADD CONSTRAINT fk_imageID_comment FOREIGN KEY (imageID) REFERENCES Images(imageID);

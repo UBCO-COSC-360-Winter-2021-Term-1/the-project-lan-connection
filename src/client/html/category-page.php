@@ -92,6 +92,7 @@
         <div class="content-box">
             <?php
               include '../php/connectDB.php';
+              include '../php/handleImg.php';
                       
               $connection = connectToDB();
 
@@ -110,9 +111,10 @@
               if ($row_cnt !=0) {
                 while ($row = $results->fetch_assoc())
                 {
+                  $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
                   echo '<div class="popular-post">
                           <div class="post-status">
-                            <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                            <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
                             <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
                             <p>'.$row["post_date"].'</p>
                           </div>
@@ -134,13 +136,12 @@
                               <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                               <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
-                              <button class="comment"><i class="far fa-comment"></i></button>
+                              <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                               <label class="comment-counter"></label>
 
                               <button class="bookmark"><i class="far fa-bookmark"></i></button>
                             </div>
-                          </div>
-                          <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
+                          </div>';
                   }
                   else {
                     echo '<div class="post-img">
@@ -153,13 +154,12 @@
                               <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                               <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
-                              <button class="comment"><i class="far fa-comment"></i></button>
+                              <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                               <label class="comment-counter"></label>
 
                               <button class="bookmark"><i class="far fa-bookmark"></i></button>
                             </div>
-                          </div>
-                          <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
+                          </div>';
                   }
                 }
               }

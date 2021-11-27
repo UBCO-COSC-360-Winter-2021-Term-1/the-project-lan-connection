@@ -78,6 +78,7 @@
                     <div class="posts">
                         <?php
                           include '../php/connectDB.php';
+                          include '../php/handleImg.php';
                       
                           $connection = connectToDB();
 
@@ -108,6 +109,8 @@
                             $fname = $result2['fname'];
                             $lname = $result2['lname'];
 
+                            
+
                           }
                           else {
                             $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
@@ -133,9 +136,10 @@
                           }
 
                           while ($row = mysqli_fetch_array($result)) {
+                            $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
                             echo '<div class="popular-post">
                                     <div class="post-status">
-                                      <img src='.$row["pfp"].' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                                      <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
                                       <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
                                       <p>'.$row["post_date"].'</p>
                                     </div>
@@ -157,13 +161,12 @@
                                       <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                                       <label class="dislike-counter">'.$row["p_dislikes"].'</label>
 
-                                      <button class="comment"><i class="far fa-comment"></i></i></button>
-                                      <label class="comment-counter">3</label>
+                                      <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
+                                      <label class="comment-counter"></label>
 
                                       <button class="bookmark"><i class="far fa-bookmark"></i></button>
                                     </div>
-                                  </div>
-                                  <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
+                                  </div>';
                             }
                             else {
                               echo '<div class="post-img">
@@ -176,13 +179,12 @@
                                         <button class="dislike"><i class="far fa-thumbs-down"></i></button>
                                         <label class="dislike-counter">'.$row["p_dislikes"].'</label>
   
-                                        <button class="comment"><i class="far fa-comment"></i></button>
+                                        <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                                         <label class="comment-counter"></label>
   
                                         <button class="bookmark"><i class="far fa-bookmark"></i></button>
                                       </div>
-                                    </div>
-                                    <a class="pop-post-comment" href="post.php?pids='.$row['pid'].'">Comments</a>';
+                                    </div>';
                             }
                           }
                           
@@ -193,7 +195,7 @@
                 <div class="right-col">
                     <div class="sq1">
                         <div class="profile-header">
-                            <img src="../../../img/pfp-placeholder.jpeg">
+                            <img src="<?php $pfp ?>">
                             <div>
                               <?php
 
