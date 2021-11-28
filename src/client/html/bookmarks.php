@@ -93,13 +93,18 @@
           if ($row_cnt !=0) {
             while ($row = $results->fetch_assoc())
             {
-              // Grab likes and dislikes for each post
               $pids = $row['pid'];
+              // Grab number of likes, dislikes and comments for each post
               $numLikes = getNumLikes($connection, $pids);
               $numDislikes = getNumDislikes($connection, $pids);
               $numComments = getNumComments($connection, $pids);
-
+              // Determine if each post has already been liked by the signed in user
+              $liked = alreadyLiked($connection, $pids, $_SESSION['signedin']);
+              $disliked = alreadyDisliked($connection, $pids, $_SESSION['signedin']);
+              $bookmarked = alreadyBookmarked($connection, $pids, $_SESSION['signedin']);
+              //Access the posting user's profile picture
               $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
+              
               echo '<div class="popular-post">
                       <div class="post-status">
                         <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
@@ -118,16 +123,37 @@
                           <img class="hide-img" src="">
                         </div>
                         <div class="menu-bar">
-                          <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
+                          <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked">';
+                          if($liked) {
+                            echo '<i class="fas fa-thumbs-up"></i>';
+                          } else {
+                            echo '<i class="far fa-thumbs-up"></i>';
+                          }
+                          echo '</button>
                           <label class="like-counter">'.$numLikes.'</label>
 
-                          <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
+                          <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked">';         
+                          if($disliked) {
+                            echo '<i class="fas fa-thumbs-down"></i>';
+                          }
+                          else {
+                            echo '<i class="far fa-thumbs-down"></i>';
+                          }
+                          echo '</button>
                           <label class="dislike-counter">'.$numDislikes.'</label>
 
                           <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                           <label class="comment-counter">'.$numComments.'</label>
 
-                          <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                          </div>
+                          <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked">';
+                          if ($bookmarked) {
+                            echo '<i class="fas fa-bookmark"></i>';
+                          }
+                          else {
+                            echo '<i class="far fa-bookmark"></i>';
+                          }
+                          echo '</button>
+                        </div>
                       </div>';
               }
               else {
@@ -135,16 +161,37 @@
                           <img class="" src="'.$row["imageID"].'">
                         </div>
                         <div class="menu-bar">
-                          <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
+                          <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked">';
+                          if($liked) {
+                            echo '<i class="fas fa-thumbs-up"></i>';
+                          } else {
+                            echo '<i class="far fa-thumbs-up"></i>';
+                          }
+                          echo '</button>
                           <label class="like-counter">'.$numLikes.'</label>
 
-                          <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
+                          <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked">';
+                          if($disliked) {
+                            echo '<i class="fas fa-thumbs-down"></i>';
+                          }
+                          else {
+                            echo '<i class="far fa-thumbs-down"></i>';
+                          }
+                          echo '</button>
                           <label class="dislike-counter">'.$numDislikes.'</label>
 
                           <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                           <label class="comment-counter">'.$numComments.'</label>
 
-                          <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                          </div>
+                          <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked">';
+                          if ($bookmarked) {
+                            echo '<i class="fas fa-bookmark"></i>';
+                          }
+                          else {
+                            echo '<i class="far fa-bookmark"></i>';
+                          }
+                          echo '</button>                                    
+                          </div>                                
                       </div>';
               }
             }

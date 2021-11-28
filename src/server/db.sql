@@ -68,7 +68,7 @@ CREATE TABLE Ratings (
   uname VARCHAR(255),
   pid INTEGER,
   action VARCHAR(10),
-  CONSTRAINT UC_rating_info UNIQUE (uname, pid)
+  PRIMARY KEY (uname, pid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 CREATE TABLE Bookmarks (
@@ -79,6 +79,7 @@ CREATE TABLE Bookmarks (
 
 ALTER TABLE Bookmarks ADD CONSTRAINT fk_pid_bookmarks FOREIGN KEY (pid) REFERENCES Post(pid); 
 ALTER TABLE Bookmarks ADD CONSTRAINT fk_uname_bookmarks FOREIGN KEY (uname) REFERENCES Account(uname); 
+
 
 INSERT INTO Category VALUES ('Mountain Biking');
 INSERT INTO Category VALUES ('Hiking');
