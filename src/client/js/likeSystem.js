@@ -29,7 +29,6 @@ function clickedLike(obj) {
   }
 
   var postId = $(obj).attr("data-value");
-
   // Post like info to likeSystem.php and update the database from there
   $.ajax({
     type: "POST",
@@ -95,18 +94,4 @@ function clickedDislike(obj) {
     $(obj).siblings('.dislike-counter').text(result[1]);
   });
 
-}
-
-// User clicked bookmark
-function clickedBookmark(obj) {
-  // Bookmark
-  if ($(obj).children('i').eq(0).hasClass('far fa-bookmark')) {
-    $(obj).children('i').eq(0).removeClass("far fa-bookmark");
-    $(obj).children('i').eq(0).addClass("fas fa-bookmark");
-  }
-  // Unbookmark
-  else {
-    $(obj).children('i').eq(0).removeClass("fas fa-bookmark");
-    $(obj).children('i').eq(0).addClass("far fa-bookmark");
-  }
 }

@@ -34,7 +34,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> 
     <script src="../js/likeSystem.js"></script>
     <script src="../js/bookmarkSystem.js"></script>
-    <title>Search Results</title>
+    <title>Bookmarks</title>
 </head>
 <body>
     <!--NAVIGATION BAR (done with bootstrap)-->
@@ -65,102 +65,95 @@
 
   <div class="plain-background">
     <div class="container5">
+      <p class="header1">Bookmarked Posts</p>
 
       <?php
         include '../php/connectDB.php';
         include '../php/validateText.php';
         include '../php/handleImg.php';
         include '../php/retrieveLikes.php';
+        include '../php/bookmarkSystem.php';
 
         $connection = connectToDB();
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-
-          $search = validate($_GET['search'] ?? null);
-          $search = '%'.$search.'%';
           
-          $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
+          $sql = "SELECT B.pid, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
                   INNER JOIN Account A ON A.uname=P.uname
                   INNER JOIN Category C ON P.cat_title=C.cat_title
+                  INNER JOIN Bookmarks B ON B.pid = P.pid
                   LEFT OUTER JOIN Images I ON I.imageID=P.imageID
-                  WHERE post_body LIKE '$search' OR A.uname LIKE '$search'
+                  WHERE B.uname = '$user'
                   ORDER BY post_date ASC;";
 
           $results = mysqli_query($connection, $sql);
           $row_cnt = mysqli_num_rows($results);
 
+          if ($row_cnt !=0) {
+            while ($row = $results->fetch_assoc())
+            {
+              // Grab likes and dislikes for each post
+              $pids = $row['pid'];
+              $numLikes = getNumLikes($connection, $pids);
+              $numDislikes = getNumDislikes($connection, $pids);
+              $numComments = getNumComments($connection, $pids);
 
-          if(isset($_GET['search'])) {
-            if ($_GET['search']=="") {
-              echo "<p>Please enter a keyword into the searchbar";
-            } 
-            else {
-              echo "<p>Seeing results for: <b>".$_GET['search']."</b></p>";
-              if ($row_cnt !=0) {
-                while ($row = $results->fetch_assoc())
-                {
-                  // Grab likes and dislikes for each post
-                  $pids = $row['pid'];
-                  $numLikes = getNumLikes($connection, $pids);
-                  $numDislikes = getNumDislikes($connection, $pids);
-                  $numComments = getNumComments($connection, $pids);
+              $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
+              echo '<div class="popular-post">
+                      <div class="post-status">
+                        <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
+                        <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
+                        <p>'.$row["post_date"].'</p>
+                      </div>
+                      <div class="category">
+                        <p>Posted to <a href="./category-page.php?page='.$row['cat_title'].'" class="post-category">'.$row["cat_title"].'</a></p>
+                      </div>
+                      <div class="post-text">
+                        <p>'.$row["post_body"].'</p>
+                      </div>';
 
-                  $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
-                  echo '<div class="popular-post">
-                          <div class="post-status">
-                            <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                            <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
-                            <p>'.$row["post_date"].'</p>
-                          </div>
-                          <div class="category">
-                            <p>Posted to <a href="./category-page.php?page='.$row['cat_title'].'" class="post-category">'.$row["cat_title"].'</a></p>
-                          </div>
-                          <div class="post-text">
-                            <p>'.$row["post_body"].'</p>
-                          </div>';
-    
-                  if ($row["imageID"] == null) {         
-                    echo '<div class="post-img">
-                              <img class="hide-img" src="">
-                            </div>
-                            <div class="menu-bar">
-                              <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
-                              <label class="like-counter">'.$numLikes.'</label>
-    
-                              <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
-                              <label class="dislike-counter">'.$numDislikes.'</label>
-    
-                              <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
-                              <label class="comment-counter">'.$numComments.'</label>
-    
-                              <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                          </div>
-                          </div>';
-                  }
-                  else {
-                    echo '<div class="post-img">
-                              <img class="" src="'.$row["imageID"].'">
-                            </div>
-                            <div class="menu-bar">
-                              <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
-                              <label class="like-counter">'.$numLikes.'</label>
-    
-                              <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
-                              <label class="dislike-counter">'.$numDislikes.'</label>
-    
-                              <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
-                              <label class="comment-counter">'.$numComments.'</label>
-    
-                              <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                          </div>
-                          </div>';
-                  }
-                }
+              if ($row["imageID"] == null) {         
+                echo '<div class="post-img">
+                          <img class="hide-img" src="">
+                        </div>
+                        <div class="menu-bar">
+                          <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
+                          <label class="like-counter">'.$numLikes.'</label>
+
+                          <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
+                          <label class="dislike-counter">'.$numDislikes.'</label>
+
+                          <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
+                          <label class="comment-counter">'.$numComments.'</label>
+
+                          <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                          </div>
+                      </div>';
               }
               else {
-                echo "<p>No posts to display!</p>";
+                echo '<div class="post-img">
+                          <img class="" src="'.$row["imageID"].'">
+                        </div>
+                        <div class="menu-bar">
+                          <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked"><i class="far fa-thumbs-up"></i></button>
+                          <label class="like-counter">'.$numLikes.'</label>
+
+                          <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked"><i class="far fa-thumbs-down"></i></button>
+                          <label class="dislike-counter">'.$numDislikes.'</label>
+
+                          <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
+                          <label class="comment-counter">'.$numComments.'</label>
+
+                          <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                          </div>
+                      </div>';
               }
             }
           }
+          else {
+            echo "<p>No posts to display!</p>";
+          }
+          
+          
         }
 
       ?>

@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> 
     <script src="../js/likeSystem.js"></script>
+    <script src="../js/bookmarkSystem.js"></script>
     <title>Home</title>
 </head>
 <body>
@@ -161,7 +162,7 @@
                                       <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                                       <label class="comment-counter">'.$numComments.'</label>
 
-                                      <button onclick="clickedBookmark(this)" class="bookmark"><i class="far fa-bookmark"></i></button>
+                                      <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>
                                     </div>
                                   </div>';
                           }
@@ -179,8 +180,7 @@
                                       <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                                       <label class="comment-counter">'.$numComments.'</label>
 
-                                      <button onclick="clickedBookmark(this)" class="bookmark"><i class="far fa-bookmark"></i></button>
-                                    </div>                                
+                                      <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                                    </div>                                
                                   </div>';
                           }
                         }
@@ -225,7 +225,7 @@
                     <?php 
                       if (isset($_SESSION['signedin'])) {
                         echo '<a href="./profile.php"><i class="fa fa-cog"></i>Settings</a>
-                              <a href="#"><i class="fa fa-bookmark"></i>Bookmarks</a>
+                              <a href="./bookmarks.php?user='.$_SESSION['signedin'].'"><i class="fa fa-bookmark"></i>Bookmarks</a>
                               <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
                               <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
                       }

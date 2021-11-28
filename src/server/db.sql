@@ -1,8 +1,11 @@
+
 DROP TABLE IF EXISTS `Images`;
 DROP TABLE IF EXISTS `Account`;
 DROP TABLE IF EXISTS `Category`;
 DROP TABLE IF EXISTS `Post`;
 DROP TABLE IF EXISTS `Comment`;
+DROP TABLE IF EXISTS `Ratings`;
+DROP TABLE IF EXISTS `Bookmarks`;
 
 CREATE TABLE Images(
   imageID int(11) NOT NULL AUTO_INCREMENT,
@@ -23,7 +26,6 @@ CREATE TABLE Account(
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 ALTER TABLE Account ADD CONSTRAINT fk_imageID_account FOREIGN KEY (imageID) REFERENCES Images(imageID);
-
 
 CREATE TABLE Category(
   cat_title VARCHAR(255),
@@ -58,6 +60,10 @@ CREATE TABLE Comment(
   PRIMARY KEY(cid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
+ALTER TABLE Comment ADD CONSTRAINT fk_uname_comment FOREIGN KEY (uname) REFERENCES Account(uname); 
+ALTER TABLE Comment ADD CONSTRAINT fk_pid_comment FOREIGN KEY (pid) REFERENCES Post(pid);
+ALTER TABLE Comment ADD CONSTRAINT fk_imageID_comment FOREIGN KEY (imageID) REFERENCES Images(imageID);
+
 CREATE TABLE Ratings (
   uname VARCHAR(255),
   pid INTEGER,
@@ -65,9 +71,14 @@ CREATE TABLE Ratings (
   CONSTRAINT UC_rating_info UNIQUE (uname, pid)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
-ALTER TABLE Comment ADD CONSTRAINT fk_uname_comment FOREIGN KEY (uname) REFERENCES Account(uname); 
-ALTER TABLE Comment ADD CONSTRAINT fk_pid_comment FOREIGN KEY (pid) REFERENCES Post(pid);
-ALTER TABLE Comment ADD CONSTRAINT fk_imageID_comment FOREIGN KEY (imageID) REFERENCES Images(imageID);
+CREATE TABLE Bookmarks (
+  uname VARCHAR(255),
+  pid INTEGER,
+  PRIMARY KEY(uname, pid)
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
+
+ALTER TABLE Bookmarks ADD CONSTRAINT fk_pid_bookmarks FOREIGN KEY (pid) REFERENCES Post(pid); 
+ALTER TABLE Bookmarks ADD CONSTRAINT fk_uname_bookmarks FOREIGN KEY (uname) REFERENCES Account(uname); 
 
 INSERT INTO Category VALUES ('Mountain Biking');
 INSERT INTO Category VALUES ('Hiking');

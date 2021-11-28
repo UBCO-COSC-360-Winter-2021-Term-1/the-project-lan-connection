@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> 
     <script src="../js/likeSystem.js"></script>
+    <script src="../js/bookmarkSystem.js"></script>
     <title><?php echo $pageCat; ?></title>
 </head>
 <body>
@@ -148,8 +149,7 @@
                               <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                               <label class="comment-counter">'.$numComments.'</label>
 
-                              <button class="bookmark"><i class="far fa-bookmark"></i></button>
-                            </div>
+                              <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                            </div>
                           </div>';
                   }
                   else {
@@ -166,8 +166,7 @@
                               <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
                               <label class="comment-counter">'.$numComments.'</label>
 
-                              <button class="bookmark"><i class="far fa-bookmark"></i></button>
-                            </div>
+                              <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked"><i class="far fa-bookmark"></i></button>                            </div>
                           </div>';
                   }
                 }
