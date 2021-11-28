@@ -10,6 +10,15 @@
   $pid = $_POST['pid'];
   $action = $_POST['action'];
 
+  if (!isset($uname)) {
+    die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+          <h1>Oh no!</h1>
+          <p>You must sign in to use this feature</p>
+          <a href="../html/login.html">Login here</a><br>
+          <a href="javascript:history.back()">Return to previous screen</a>
+        </div>');
+  }
+
   if (isset($_POST['action'])) {
     switch ($_POST['action']) {
 

@@ -109,6 +109,7 @@
                     <?php
                       include '../php/connectDB.php';
                       include '../php/handleImg.php';
+                      include '../php/retrieveLikes.php';
                       
                       $connection = connectToDB();
 
@@ -128,13 +129,9 @@
                         {
                           // Grab likes and dislikes for each post
                           $pids = $row['pid'];
-                          $sqlLikes = "SELECT * FROM Ratings WHERE (pid = $pids AND action='liked')";
-                          $sqlDislikes = "SELECT * FROM Ratings WHERE (pid = $pids AND action='disliked')";
-                          $likesResult = mysqli_query($connection, $sqlLikes);
-                          $dislikesResult = mysqli_query($connection, $sqlDislikes);
-
-                          $numLikes = mysqli_num_rows($likesResult);
-                          $numDislikes = mysqli_num_rows($dislikesResult);
+                          $numLikes = getNumLikes($connection, $pids);
+                          $numDislikes = getNumDislikes($connection, $pids);
+                          $numComments = getNumComments($connection, $pids);
 
                           $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
                           echo '<div class="popular-post">
@@ -162,7 +159,7 @@
                                       <label class="dislike-counter">'.$numDislikes.'</label>
 
                                       <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
-                                      <label class="comment-counter"></label>
+                                      <label class="comment-counter">'.$numComments.'</label>
 
                                       <button onclick="clickedBookmark(this)" class="bookmark"><i class="far fa-bookmark"></i></button>
                                     </div>
@@ -180,7 +177,7 @@
                                       <label class="dislike-counter">'.$numDislikes.'</label>
 
                                       <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
-                                      <label class="comment-counter"></label>
+                                      <label class="comment-counter">'.$numComments.'</label>
 
                                       <button onclick="clickedBookmark(this)" class="bookmark"><i class="far fa-bookmark"></i></button>
                                     </div>                                

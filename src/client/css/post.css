@@ -159,6 +159,7 @@ html {
 .menu-bar a {
   color: black;
   margin-left: 1.25em;
+  margin-right: 0.4em;
 }
 
 .menu-bar a:hover {
