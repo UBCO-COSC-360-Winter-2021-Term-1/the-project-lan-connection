@@ -82,7 +82,7 @@ function accessImgFromDB($connection, $id, $purpose) {
           $imageID = $row['imaageID'];
         }
       }
-      // mysqli_free_result($results);
+      mysqli_free_result($results);
       break;
     case "post":
       $sql = "SELECT imageID FROM post WHERE pid = $id";
@@ -91,7 +91,7 @@ function accessImgFromDB($connection, $id, $purpose) {
           $imageID = $row['imageID'];
         }
       }
-      // mysqli_free_result($results);
+      mysqli_free_result($results);
     default:
       $imageID = $id;
   }

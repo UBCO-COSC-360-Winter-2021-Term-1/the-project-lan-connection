@@ -111,9 +111,8 @@
 
 function displayPost2($connection, $pid, $currentUname) {
   // include other functions
-  include '../php/connectDB.php';
-  include '../php/handleImg.php';
-  include '../php/retrieveLikes.php';
+  // include '../php/handleImg.php';
+  // include '../php/retrieveLikes.php';
   // make sql query for post info needed
   $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
@@ -145,9 +144,47 @@ function displayPost2($connection, $pid, $currentUname) {
     $html = $html.'<img src='.$pfp.' class="pfp-small">';
     $html = $html.'<a href="./profile.php?username='.$uname.'" class="username">'.$uname.' </a>';
     $html = $html.'<p>'.$postDate.'</p></div>';
-    $html = $html. '<div class="category"><p>Posted to<a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p>';
-
-
+    $html = $html. '<div class="category"><p>Posted to<a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p></div>';
+    $html = $html. '<div class="post-text"><p>'. $pBody.'</p></div>';
+    if ($pimg != null) {
+      $html = $html . '<div class="post-img"><img class="" src=' . $pimg . '></div>';
+    }
+    $html = $html. '<div class="menu-bar"><button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$pid.' value="liked">';
+    if ($liked) {
+      $html = $html.'<i class="fas fa-thumbs-up"></i>';
+    }
+    else {
+      $html = $html . '<i class="far fa-thumbs-up"></i>';
+    }
+    $html = $html.'</button>';
+    $html = $html.'<label class="like-counter">'.$numLikes.'</label>';
+    $html = $html.'<button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$pid.'" value="disliked">';
+    if ($disliked) {
+      $html = $html.'<i class="fas fa-thumbs-down"></i>';
+    }
+    else {
+      $html = $html.'<i class="far fa-thumbs-down"></i>';
+    }
+    $html = $html.'</button>';
+    $html = $html.'<label class="dislike-counter">'.$numDislikes.'</label>';
+    $html = $html.'<a href="post.php?pids='.$pid.'" class="comment"><i class="far fa-comment"></i></a>';
+    $html = $html.'<label class="comment-counter">'.$numComments.'</label>';
+    $html = $html.'<button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$pid.'" value="liked">';
+    if ($bookmarked) {
+      $html = $html.'<i class="fas fa-bookmark"></i>';
+    }
+    else {
+      $html = $html.'<i class="far fa-bookmark"></i>';
+    }
+    $html = $html.'</butto></div></div>';
+  }
+  mysqli_free_result($result);
+  // return output html as string
+  if ($html != null) {
+    return $html; // return output html as string ready to echo
+  }
+  else {
+    return ''; // return empty string if no post
   }
 
 
