@@ -61,7 +61,7 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
         break;
     }
     
-    // execute INSERT
+    // execute UPDATE
     mysqli_query($connection, $sql);
   }
 }
@@ -79,7 +79,7 @@ function accessImgFromDB($connection, $id, $purpose) {
       $sql = "SELECT imageID FROM Account WHERE uname = $id";
       if ($results = mysqli_query($connection, $sql)) {
         if ($row = mysqli_fetch_assoc($results)) {
-          $imageID = $row['imaageID'];
+          $imageID = $row['imageID'];
         }
       }
       mysqli_free_result($results);
