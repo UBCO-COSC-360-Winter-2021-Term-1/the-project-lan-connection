@@ -131,12 +131,11 @@ navigate to that users profile and display all of their posts.
                             $result = mysqli_query($connection, $sql);
                             $row_cnt = mysqli_num_rows($result);
 
-                            $query = mysqli_query($connection, "SELECT uname, fname, lname, A.imageId as pfp FROM Account A LEFT OUTER JOIN Images I ON I.imageID=A.imageID FROM Account WHERE uname = '$uname'");
+                            $query = mysqli_query($connection, "SELECT uname, fname, lname FROM Account WHERE uname = '$uname'");
                             $result2 = mysqli_fetch_array($query);
 
                             $fname2 = $result2['fname'];
                             $lname2 = $result2['lname'];
-                            $pfp2 = accessImgFromDB($connection, $result2['pfp'], 'account');
                           }
 
                           if ($row_cnt = 0) {
@@ -219,7 +218,14 @@ navigate to that users profile and display all of their posts.
                 <div class="right-col">
                     <div class="sq1">
                         <div class="profile-header">
-                            <?php echo '<img src="'.$pfp2.'">'; ?>
+                            <?php 
+                              if(isset($userProfile)) {
+                                echo '<img src="'.$pfp2.'">'; 
+                              }
+                              else {
+                                echo '<img src="'.$pfp.'">';
+                              }
+                            ?>
                             <div>
                               <?php
 
