@@ -16,7 +16,7 @@
     $disliked = alreadyDisliked($connection, $pids, $_SESSION['signedin'] ?? null);
     $bookmarked = alreadyBookmarked($connection, $pids, $_SESSION['signedin'] ?? null);
     //Access the posting user's profile picture
-    $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
+    $pfp = accessImgFromDB($connection, $row['pfp'], 'image');
     
     echo '<div class="popular-post">
             <div class="post-status">
@@ -108,5 +108,50 @@
             </div>';
     }
   }
+
+function displayPost2($connection, $pid, $currentUname) {
+  // include other functions
+  include '../php/connectDB.php';
+  include '../php/handleImg.php';
+  include '../php/retrieveLikes.php';
+  // make sql query for post info needed
+  $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
+                  FROM POST P
+                  INNER JOIN Account A ON A.uname=P.uname
+                  INNER JOIN Category C ON P.cat_title=C.cat_title
+                  LEFT OUTER JOIN Images I ON I.imageID=P.imageID
+                  WHERE P.pid = '$pid'
+                  ORDER BY post_date DESC";
+  $result = mysqli_query($connection, $sql);
+  if ($row = mysqli_fetch_array($result)) {
+    // assign sql results to php variables
+    $uname = $row['uname'];
+    $postDate = $row['post_date'];
+    $cat = $row['cat_title'];
+    $pBody = str_replace("~", "'", $row['post_body']);
+    // Grab number of likes, dislikes and comments for post
+    $numLikes = getNumLikes($connection, $pid);
+    $numDislikes = getNumDislikes($connection, $pid);
+    $numComments = getNumComments($connection, $pid);
+    // determine if signed in has already liked post
+    $liked = alreadyLiked($connection, $pid, $currentUname ?? null);
+    $disliked = alreadyDisliked($connection, $pid, $currentUname ?? null);
+    $bookmarked = alreadyBookmarked($connection, $pid, $currentUname ?? null);
+    // Access proster profile pic + post image
+    $pfp = accessImgFromDB($connection, $row['pfp'], 'image');
+    $pimg = accessImgFromDB($connection, $row['pimg'], 'image');
+    // build html of post
+    $html = '<div class="popular-post"><div class="post-status">';
+    $html = $html.'<img src='.$pfp.' class="pfp-small">';
+    $html = $html.'<a href="./profile.php?username='.$uname.'" class="username">'.$uname.' </a>';
+    $html = $html.'<p>'.$postDate.'</p></div>';
+    $html = $html. '<div class="category"><p>Posted to<a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p>';
+
+
+  }
+
+
+
+}
 
 ?>
