@@ -1,6 +1,6 @@
 <?php
 
-// Handle account creation image processing
+// Handle account creation image processing or post image processing
 /**
  * $connection : created DB connection
  * $filename : image file taken from $_FILES (Ex: $_FILES["ppic"]["name"])

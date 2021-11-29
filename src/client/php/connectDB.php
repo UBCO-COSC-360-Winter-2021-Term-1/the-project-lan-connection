@@ -1,4 +1,7 @@
 <?php
+/*
+This function is called when a php file needs to connect to the database.
+*/
 
 function connectToDB() { 
   //DB config info

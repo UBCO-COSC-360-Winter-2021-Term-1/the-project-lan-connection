@@ -1,5 +1,9 @@
 <?php
-
+/*
+This page displays the category page of the category the user has clicked on.
+It dynamically updates to show one of the 6 possible categories. It does this through a get
+request contained in the link the user clicked on to navigate to the page.
+*/
   session_start();
 
   $now = time();

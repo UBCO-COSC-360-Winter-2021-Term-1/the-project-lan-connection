@@ -1,4 +1,8 @@
 <?php
+/*
+This is the home page. This is navigatable by a non-signed in user, but the links to settings,
+bookmarks and activity monitor will not be functional.
+*/
 
   session_start();
 
@@ -11,7 +15,7 @@
 
   $_SESSION['discard_after'] = $now + 1800;
 
-  $uname = $_SESSION['signedin'];
+  $uname = $_SESSION['signedin'] ?? null;
 
 ?>
 
@@ -136,9 +140,9 @@
                           $numDislikes = getNumDislikes($connection, $pids);
                           $numComments = getNumComments($connection, $pids);
                           // Determine if each post has already been liked by the signed in user
-                          $liked = alreadyLiked($connection, $pids, $_SESSION['signedin']);
-                          $disliked = alreadyDisliked($connection, $pids, $_SESSION['signedin']);
-                          $bookmarked = alreadyBookmarked($connection, $pids, $_SESSION['signedin']);
+                          $liked = alreadyLiked($connection, $pids, $_SESSION['signedin'] ?? null);
+                          $disliked = alreadyDisliked($connection, $pids, $_SESSION['signedin'] ?? null);
+                          $bookmarked = alreadyBookmarked($connection, $pids, $_SESSION['signedin'] ?? null);
                           //Access the posting user's profile picture
                           $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
                           

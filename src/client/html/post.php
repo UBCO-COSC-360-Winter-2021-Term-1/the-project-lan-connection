@@ -1,4 +1,10 @@
 <?php
+/*
+This page is navigatable without being signed in
+This page is displayed when a user clicks on the comment icon of a certain post.
+That certain post is isolated by it's post id and displayed on its own, along with a
+comment box and all comments left by users. 
+*/
 
   session_start();
 

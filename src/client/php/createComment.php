@@ -1,4 +1,7 @@
 <?php
+/*
+This php file adds a users comment information to the database, and handles any exceptions along the way.
+*/
 
   session_start();
 

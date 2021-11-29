@@ -1,5 +1,12 @@
 <?php
 
+/*
+This file handles two user actions: bookmarking or unbookmarking a post.
+In the first case it adds the signed in user's bookmark information to the database,
+and in the second case it deletes the tuple from the database. It also handles the case that
+the user is not signed in.
+*/
+
   error_reporting(0);
   session_start();
 

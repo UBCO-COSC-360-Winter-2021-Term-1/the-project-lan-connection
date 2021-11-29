@@ -1,6 +1,6 @@
 <?php
 
-  // Get number of likes on a post
+  // Return number of likes on a post
   function getNumLikes($connection, $pid) {
     $sql = "SELECT * FROM Ratings WHERE (pid = $pid AND action='liked')";
     $likesResult = mysqli_query($connection, $sql);
@@ -8,7 +8,7 @@
     return $numLikes;
   }
 
-  // Get number of dislikes on a post
+  // Return number of dislikes on a post
   function getNumDislikes($connection, $pid) {
     $sql = "SELECT * FROM Ratings WHERE (pid = $pid AND action='disliked')";
     $dislikesResult = mysqli_query($connection, $sql);
@@ -16,7 +16,7 @@
     return $numDislikes;
   }
 
-  // Get number of comments on a post
+  // Return number of comments on a post
   function getNumComments($connection, $pid) {
     $sql = "SELECT * FROM Comment WHERE pid=$pid";
     $commentsResult = mysqli_query($connection, $sql);
@@ -25,6 +25,7 @@
   }
 
   // Check if a user has already liked a post
+  // If they have, return true
   function alreadyLiked($connection, $pid, $uname) {
     if (!isset($uname)) {
       return false;
@@ -52,6 +53,7 @@
   }
 
   // Check if a user has already disliked a post
+  // If they have, return true
   function alreadyDisliked($connection, $pid, $uname) {
     if (!isset($uname)) {
       return false;
@@ -78,6 +80,8 @@
     }
   }
 
+  // Check if a user has already bookmarked a post
+  // If they have, return true
   function alreadyBookmarked($connection, $pid, $uname) {
     if (!isset($uname)) {
       return false;

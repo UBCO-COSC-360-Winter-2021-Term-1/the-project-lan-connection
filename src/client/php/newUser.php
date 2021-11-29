@@ -1,5 +1,11 @@
 <?php
 
+/*
+This php file creates a new user and adds them to the database.
+In the process, this file handles all possible events of user not being signed in,
+invalid get requests, making sure all fields are filled out, etc.
+*/
+
 include 'connectDB.php';
 include 'validateText.php';
 include 'handleImg.php';

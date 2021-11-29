@@ -1,6 +1,9 @@
 <?php
 
-// enable sessions
+/*
+This php file is called when a user should be logged out 
+*/
+
 session_start();
 
 // check if session logged in

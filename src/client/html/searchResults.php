@@ -1,4 +1,8 @@
 <?php
+/*
+This page is navigatbale for a non signed in user.
+This page is displayed when a user enters a keyword search into the searchbar located in the nav bar.
+*/
 
   session_start();
 

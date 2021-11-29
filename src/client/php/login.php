@@ -1,4 +1,8 @@
 <?php
+/*
+This file logs in a user and handles a range of scenarios inclduing invalid get requests,
+non matching passwords, password doesn't match the username, etc.
+*/
 
 include 'connectDB.php';
 include 'validateText.php';

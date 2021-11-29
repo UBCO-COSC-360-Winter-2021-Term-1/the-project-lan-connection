@@ -1,5 +1,9 @@
-
 <?php
+
+/*
+This php file creates a post and adds the post information to the database.
+It also handles exceptions where a user is not signed in, or if a field is left blank in the post, etc.
+*/
 
 session_start();
 

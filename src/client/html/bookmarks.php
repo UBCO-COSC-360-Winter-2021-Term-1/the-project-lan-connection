@@ -1,4 +1,9 @@
 <?php
+/*
+This page is for signed-in users only.
+This page is displayed when a signed in user clicks on the bookmarks link.
+There are two possible bookmark links: one on the home page and one on the profile page of a signed in user.
+*/
 
   session_start();
 

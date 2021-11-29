@@ -1,4 +1,11 @@
 <?php
+/*
+This page is naviagtable by a non signed in user.
+This page may be displayed when a user clicks on their own profile link in the nav bar or the
+settings link on the home page. On a users own profile, they may change their profile picture and several other actions.
+It is also displayed when a user clicks on another users username on a post; in this case it will
+navigate to that users profile and display all of their posts.
+*/
 
   session_start();
 

@@ -1,4 +1,13 @@
 <?php
+/*
+This php file recieves a post request from likeSystem.js containing the post id and action.
+This file will update the database depending on the action, which there are four of:
+- like  (insert a row into the database)
+- unlike (delete that row from the database)
+- dislike (insert)
+- undislike (delete)
+This is handled by a switch statement.
+*/
 
   session_start();
 
