@@ -15,8 +15,6 @@ bookmarks and activity monitor will not be functional.
 
   $_SESSION['discard_after'] = $now + 1800;
 
-  $uname = $_SESSION['signedin'] ?? null;
-
 ?>
 
 <!DOCTYPE html>
@@ -112,136 +110,98 @@ bookmarks and activity monitor will not be functional.
 
                 <!--MIDDLE COLUMN-->
                 <div class="mid-col">
-                    <p class="header1">Popular Posts</p>
+                  <p class="header1">Popular Posts</p>
+                  <?php
+                    include '../php/connectDB.php';
+                    include '../php/handleImg.php';
+                    include '../php/retrieveLikes.php';
+                    
+                    $connection = connectToDB();
+                    // Query the posts that will be displayed on the home page
+                    $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
+                            FROM POST P
+                            INNER JOIN Account A ON A.uname=P.uname
+                            INNER JOIN Category C ON P.cat_title=C.cat_title
+                            LEFT OUTER JOIN Images I ON I.imageID=P.imageID
+                            ORDER BY p_likes DESC
+                            LIMIT 10;";
+                            
+                    $results = mysqli_query($connection, $sql);
+                    $row_cnt = mysqli_num_rows($results);
+                    
+                    if ($row_cnt !=0) {
+                      while ($row = $results->fetch_assoc())
+                      {
+                        // Assign database post values to their own variables for ease of use
+                        $pid = $row['pid'];
+                        $uname = $row['uname'];
+                        $postDate = $row['post_date'];
+                        $cat = $row['cat_title'];
+                        $pBody = $row['post_body'];
+                        // Grab number of likes, dislikes and comments for each post
+                        $numLikes = getNumLikes($connection, $pid);
+                        $numDislikes = getNumDislikes($connection, $pid);
+                        $numComments = getNumComments($connection, $pid);
+                        // Determine if each post has already been liked by the signed in user
+                        $liked = alreadyLiked($connection, $pid, $_SESSION['signedin'] ?? null);
+                        $disliked = alreadyDisliked($connection, $pid, $_SESSION['signedin'] ?? null);
+                        $bookmarked = alreadyBookmarked($connection, $pid, $_SESSION['signedin'] ?? null);
+                        //Access the posting user's profile picture
+                        $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
+                  ?>
+                        <div class="popular-post">
+                          <div class="post-status">
+                            <?php echo '<img src="'.$pfp.'" alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">'; ?>
+                            <?php echo '<a href="./profile.php?username='.$uname.'" class="username">'.$uname.' </a>'; ?>
+                            <?php echo '<p>'.$postDate.'</p>'; ?>
+                          </div>
+                          <div class="category">
+                            <?php echo '<p>Posted to<a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p>'; ?>
+                          </div>
+                          <div class="post-text">
+                            <?php echo '<p>'.$pBody.'</p>'; ?>
+                          </div>
+                          <div class="post-img">
+                            <?php
+                            if ($row["imageID"] == null) { echo '<img class="hide-img" src="">'; }
+                            else { echo '<img class="" src="'.$row["imageID"].'">'; }
+                            ?>
+                          </div>
+                          <div class="menu-bar">
+                            <?php echo '<button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$pid.'" value="liked">'; ?>
+                            <?php 
+                            if ($liked) { echo '<i class="fas fa-thumbs-up"></i>'; } 
+                            else { echo '<i class="far fa-thumbs-up"></i>'; }
+                            ?>
+                            </button>
+                            <?php echo '<label class="like-counter">'.$numLikes.'</label>'; ?>
+
+                            <?php echo '<button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$pid.'" value="disliked">' ?>     
+                            <?php
+                            if ($disliked) { echo '<i class="fas fa-thumbs-down"></i>'; }
+                            else { echo '<i class="far fa-thumbs-down"></i>'; }
+                            ?>
+                            </button>
+                            <?php echo '<label class="dislike-counter">'.$numDislikes.'</label>'; ?>
+
+                            <?php echo '<a href="post.php?pids='.$pid.'" class="comment"><i class="far fa-comment"></i></a>'; ?>
+                            <?php echo '<label class="comment-counter">'.$numComments.'</label>'; ?>
+
+                            <?php echo '<button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$pid.'" value="liked">'; ?>
+                            <?php        
+                            if ($bookmarked) { echo '<i class="fas fa-bookmark"></i>'; }
+                            else { echo '<i class="far fa-bookmark"></i>'; }
+                            ?>
+                            </button>
+                          </div>
+                        </div>
                     <?php
-                      include '../php/connectDB.php';
-                      include '../php/handleImg.php';
-                      include '../php/retrieveLikes.php';
-                      
-                      $connection = connectToDB();
-
-                      $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
-                              FROM POST P
-                              INNER JOIN Account A ON A.uname=P.uname
-                              INNER JOIN Category C ON P.cat_title=C.cat_title
-                              LEFT OUTER JOIN Images I ON I.imageID=P.imageID
-                              ORDER BY p_likes DESC
-                              LIMIT 10;";
-                              
-                      $results = mysqli_query($connection, $sql);
-                      $row_cnt = mysqli_num_rows($results);
-                      
-                      if ($row_cnt !=0) {
-                        while ($row = $results->fetch_assoc())
-                        {
-                          $pids = $row['pid'];
-                          // Grab number of likes, dislikes and comments for each post
-                          $numLikes = getNumLikes($connection, $pids);
-                          $numDislikes = getNumDislikes($connection, $pids);
-                          $numComments = getNumComments($connection, $pids);
-                          // Determine if each post has already been liked by the signed in user
-                          $liked = alreadyLiked($connection, $pids, $_SESSION['signedin'] ?? null);
-                          $disliked = alreadyDisliked($connection, $pids, $_SESSION['signedin'] ?? null);
-                          $bookmarked = alreadyBookmarked($connection, $pids, $_SESSION['signedin'] ?? null);
-                          //Access the posting user's profile picture
-                          $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
-                          
-                          echo '<div class="popular-post">
-                                  <div class="post-status">
-                                    <img src='.$pfp.' alt="../../../img/pfp-placeholder.jpeg" class="pfp-small">
-                                    <a href="./profile.php?username='.$row['uname'].'" class="username">'.$row["uname"].'</a>
-                                    <p>'.$row["post_date"].'</p>
-                                  </div>
-                                  <div class="category">
-                                    <p>Posted to <a href="./category-page.php?page='.$row['cat_title'].'" class="post-category">'.$row["cat_title"].'</a></p>
-                                  </div>
-                                  <div class="post-text">
-                                    <p>'.$row["post_body"].'</p>
-                                  </div>';
-
-                          if ($row["imageID"] == null) {         
-                            echo '<div class="post-img">
-                                      <img class="hide-img" src="">
-                                    </div>
-                                    <div class="menu-bar">
-                                      <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked">';
-                                      if($liked) {
-                                        echo '<i class="fas fa-thumbs-up"></i>';
-                                      } else {
-                                        echo '<i class="far fa-thumbs-up"></i>';
-                                      }
-                                      echo '</button>
-                                      <label class="like-counter">'.$numLikes.'</label>
-
-                                      <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked">';         
-                                      if($disliked) {
-                                        echo '<i class="fas fa-thumbs-down"></i>';
-                                      }
-                                      else {
-                                        echo '<i class="far fa-thumbs-down"></i>';
-                                      }
-                                      echo '</button>
-                                      <label class="dislike-counter">'.$numDislikes.'</label>
-
-                                      <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
-                                      <label class="comment-counter">'.$numComments.'</label>
-
-                                      <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked">';
-                                      if ($bookmarked) {
-                                        echo '<i class="fas fa-bookmark"></i>';
-                                      }
-                                      else {
-                                        echo '<i class="far fa-bookmark"></i>';
-                                      }
-                                      echo '</button>
-                                    </div>
-                                  </div>';
-                          }
-                          else {
-                            echo '<div class="post-img">
-                                      <img class="" src="'.$row["imageID"].'">
-                                    </div>
-                                    <div class="menu-bar">
-                                      <button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$row['pid'].'" value="liked">';
-                                      if($liked) {
-                                        echo '<i class="fas fa-thumbs-up"></i>';
-                                      } else {
-                                        echo '<i class="far fa-thumbs-up"></i>';
-                                      }
-                                      echo '</button>
-                                      <label class="like-counter">'.$numLikes.'</label>
-
-                                      <button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$row['pid'].'" value="disliked">';
-                                      if($disliked) {
-                                        echo '<i class="fas fa-thumbs-down"></i>';
-                                      }
-                                      else {
-                                        echo '<i class="far fa-thumbs-down"></i>';
-                                      }
-                                      echo '</button>
-                                      <label class="dislike-counter">'.$numDislikes.'</label>
-
-                                      <a href="post.php?pids='.$row['pid'].'" class="comment"><i class="far fa-comment"></i></a>
-                                      <label class="comment-counter">'.$numComments.'</label>
-
-                                      <button type="submit" onclick="clickedBookmark(this)" class="bookmark" data-value="'.$row['pid'].'" value="liked">';
-                                      if ($bookmarked) {
-                                        echo '<i class="fas fa-bookmark"></i>';
-                                      }
-                                      else {
-                                        echo '<i class="far fa-bookmark"></i>';
-                                      }
-                                      echo '</button>                                    
-                                      </div>                                
-                                  </div>';
-                          }
-                        }
-                      }
-                      else {
-                        echo "<p>No posts to display!</p>";
-                      }                     
+                      } // End of while loop displaying posts
+                    } // End of if statment ensuring posts!=0
+                    else {
+                      echo "<p>No posts to display!</p>";
+                    }                     
                     ?>
-
                 </div>
 
                 <!--RIGHT COLUMN-->
