@@ -13,8 +13,11 @@ This php file adds a users comment information to the database, and handles any 
   // Handle POST requests
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    // Replace any apostrophes in the user submitted text with a placeholder (~)
     $commentText = $_POST['comment'];
-    $uname = $_SESSION['signedin'];
+    $commentText = str_replace("'", "~", $commentText);
+
+    $uname = $_SESSION['signedin'] ?? null;
     $pid = $_POST['pid'];
 
     if ($commentText == null) {
@@ -36,8 +39,8 @@ This php file adds a users comment information to the database, and handles any 
       date_default_timezone_set('America/Vancouver');
       $curDate = date('Y-m-d H:i:s');
 
-      $sql = "INSERT INTO Comment (pid, comment_body, uname, comment_date, c_likes, c_dislikes) 
-            VALUES (?, ?, ?, ?, 0, 0);";
+      $sql = "INSERT INTO Comment (pid, comment_body, uname, comment_date) 
+            VALUES (?, ?, ?, ?);";
       $stmt = $connection->prepare($sql);
       $stmt->bind_param("ssss", $pid, $commentText, $uname, $curDate);
 

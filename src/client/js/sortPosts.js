@@ -1,6 +1,6 @@
 
 // Change the style of the sort buttons upon click
-function changeColor(clicked_id) {
+function changeColor(obj) {
   one = document.getElementById('1');
   two = document.getElementById('2');
   three = document.getElementById('3');
@@ -9,7 +9,7 @@ function changeColor(clicked_id) {
   two.classList.remove("classy");
   three.classList.remove("classy");
 
-  target = document.getElementById(clicked_id);
+  target = document.getElementById(obj);
   target.classList.add("classy");
 }
 

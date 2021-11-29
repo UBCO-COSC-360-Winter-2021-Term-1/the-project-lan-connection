@@ -82,6 +82,8 @@ html {
   padding-left: 1em;
   display: flex;
   align-items: center;
+  padding-top: 0.5em;
+  padding-bottom: 0.25em;
 }
 
 .user-info p {
@@ -97,12 +99,8 @@ html {
   background-color: rgb(228, 228, 228);
 }
 
-.user-content .menu-bar {
-  padding-left: 2em;
-}
-
 .user-content p {
-  padding-left: 2em;
+  padding-left: 2.2em;
   background-color: rgb(228, 228, 228);
 }
 
@@ -198,6 +196,11 @@ html {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 } 
+
+.menu-bar-comment {
+  background-color: rgb(228, 228, 228);
+  height: 0.01em;  
+}
 
 .menu-bar img {
   width: 30px;

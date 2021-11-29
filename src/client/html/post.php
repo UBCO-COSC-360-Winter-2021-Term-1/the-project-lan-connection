@@ -77,7 +77,7 @@ comment box and all comments left by users.
           
           $pid = $_GET['pids'];
 
-          $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
+          $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
                   INNER JOIN Account A ON A.uname=P.uname
                   INNER JOIN Category C ON P.cat_title=C.cat_title
@@ -95,6 +95,8 @@ comment box and all comments left by users.
             $postDate = $row['post_date'];
             $cat = $row['cat_title'];
             $pBody = $row['post_body'];
+            // Replace our placeholder (~) with the user submitted apostrophes
+            $pBody = str_replace("~", "'", $pBody);
             // Grab number of likes, dislikes and comments for each post
             $numLikes = getNumLikes($connection, $pid);
             $numDislikes = getNumDislikes($connection, $pid);
@@ -114,7 +116,7 @@ comment box and all comments left by users.
                 <?php echo '<p>'.$postDate.'</p>'; ?>
               </div>
               <div class="category">
-                <?php echo '<p>Posted to<a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p>'; ?>
+                <?php echo '<p>Posted to <a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p>'; ?>
               </div>
               <div class="post-text">
                 <?php echo '<p>'.$pBody.'</p>'; ?>
@@ -164,16 +166,19 @@ comment box and all comments left by users.
 
               <?php
               // Query comments for each post
-              $sql2 = "SELECT * FROM Comment WHERE pid = '$pid' ORDER BY comment_date DESC"; 
+              $sql2 = "SELECT * FROM Comment WHERE pid = '$pid'  ORDER BY comment_date DESC"; 
               $result2 = mysqli_query($connection, $sql2); 
-
-              // Display each comment on the post
+              
               while ($row2 = mysqli_fetch_array($result2))
               {
                 $cUname = $row2['uname'];
                 $cDate = $row2['comment_date'];
                 $cBody = $row2['comment_body'];
+                // Replace our placeholder (~) with the user submitted apostrophes
+                $cBody = str_replace("~", "'", $cBody);
+
                 ?>
+                <!-- Display comments -->
                 <div class="comments">
                         <div class="user-info">
                           <img src="../../../img/pfp-placeholder.jpeg" alt="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">
@@ -182,6 +187,7 @@ comment box and all comments left by users.
                         </div>
                         <div class="user-content">
                           <?php echo '<p>'.$cBody.'</p>'; ?>
+                          <div class="menu-bar-comment"></div>
                         </div>
                       </div>
                 <?php

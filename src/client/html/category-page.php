@@ -103,7 +103,7 @@ request contained in the link the user clicked on to navigate to the page.
                       
               $connection = connectToDB();
 
-              $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp 
+              $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp 
                       FROM POST P
                       INNER JOIN Account A ON A.uname=P.uname
                       INNER JOIN Category C ON P.cat_title=C.cat_title
@@ -124,6 +124,8 @@ request contained in the link the user clicked on to navigate to the page.
                   $postDate = $row['post_date'];
                   $cat = $row['cat_title'];
                   $pBody = $row['post_body'];
+                  // Replace our placeholder (~) with the user submitted apostrophes
+                  $pBody = str_replace("~", "'", $pBody);
                   // Grab number of likes, dislikes and comments for each post
                   $numLikes = getNumLikes($connection, $pid);
                   $numDislikes = getNumDislikes($connection, $pid);

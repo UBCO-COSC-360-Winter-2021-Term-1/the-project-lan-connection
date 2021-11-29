@@ -104,6 +104,8 @@ There are two possible bookmark links: one on the home page and one on the profi
               $postDate = $row['post_date'];
               $cat = $row['cat_title'];
               $pBody = $row['post_body'];
+              // Replace our placeholder (~) with the user submitted apostrophes
+              $pBody = str_replace("~", "'", $pBody);
               // Grab number of likes, dislikes and comments for each post
               $numLikes = getNumLikes($connection, $pid);
               $numDislikes = getNumDislikes($connection, $pid);
@@ -122,7 +124,7 @@ There are two possible bookmark links: one on the home page and one on the profi
                   <?php echo '<p>'.$postDate.'</p>'; ?>
                 </div>
                 <div class="category">
-                  <?php echo '<p>Posted to<a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p>'; ?>
+                  <?php echo '<p>Posted to <a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p>'; ?>
                 </div>
                 <div class="post-text">
                   <?php echo '<p>'.$pBody.'</p>'; ?>

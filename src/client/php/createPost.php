@@ -15,7 +15,10 @@ $connection = connectToDB();
 // Handle POST requests
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+  // Replace any apostrophes in the user submitted text with a placeholder (~)
   $postBody = $_POST['post_body'];
+  $postBody = str_replace("'", "~", $postBody);
+
   $postCat = $_POST['post_category'];
   $uname = $_SESSION['signedin'];
   $postImg = $_FILES["file"]["name"];
@@ -40,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $curDate = date('Y-m-d H:i:s');
   
     // Insert post information into db
-    $sql = "INSERT INTO Post (post_body, uname, cat_title, post_date, p_likes, p_dislikes) 
-            VALUES ('$postBody', '$uname', '$postCat', '$curDate', 0, 0);";
+    $sql = "INSERT INTO Post (post_body, uname, cat_title, post_date) 
+            VALUES ('$postBody', '$uname', '$postCat', '$curDate');";
   
     // execute insert stmt
     if (mysqli_query($connection, $sql)) {
