@@ -91,7 +91,6 @@ function accessImgFromDB($connection, $id, $purpose) {
           $imageID = $row['imageID'];
         }
       }
-      mysqli_free_result($results);
     default:
       $imageID = $id;
   }

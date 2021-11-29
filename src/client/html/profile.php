@@ -101,23 +101,23 @@ navigate to that users profile and display all of their posts.
 
                           if (isset($userProfile)){
                             
-                            $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, p_likes, p_dislikes, A.imageID AS pfp
-                                  FROM POST P
-                                  INNER JOIN Account A ON A.uname=P.uname
-                                  INNER JOIN Category C ON P.cat_title=C.cat_title
-                                  LEFT OUTER JOIN Images I ON I.imageID=P.imageID
-                                  WHERE A.uname = '$userProfile'
-                                  ORDER BY post_date DESC";
+                            $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
+                                    FROM POST P
+                                    INNER JOIN Account A ON A.uname=P.uname
+                                    INNER JOIN Category C ON P.cat_title=C.cat_title
+                                    LEFT OUTER JOIN Images I ON I.imageID=P.imageID
+                                    WHERE A.uname = '$userProfile'
+                                    ORDER BY post_date DESC";
                                   
                             $result = mysqli_query($connection, $sql);
                             $row_cnt = mysqli_num_rows($result);
 
-                            $query = mysqli_query($connection, "SELECT uname, fname, lname FROM Account WHERE uname = '$userProfile'");
+                            $query = mysqli_query($connection, "SELECT uname, fname, lname, A.imageId as pfp FROM Account A LEFT OUTER JOIN Images I ON I.imageID=A.imageID WHERE uname = '$userProfile'");
                             $result2 = mysqli_fetch_array($query);
 
                             $fname = $result2['fname'];
-                            $lname = $result2['lname'];      
-
+                            $lname = $result2['lname']; 
+                            $pfp2 = accessImgFromDB($connection, $result2['pfp'], 'account');
                           }
                           else {
                             $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
@@ -131,11 +131,12 @@ navigate to that users profile and display all of their posts.
                             $result = mysqli_query($connection, $sql);
                             $row_cnt = mysqli_num_rows($result);
 
-                            $query = mysqli_query($connection, "SELECT uname, fname, lname FROM Account WHERE uname = '$uname'");
+                            $query = mysqli_query($connection, "SELECT uname, fname, lname, A.imageId as pfp FROM Account A LEFT OUTER JOIN Images I ON I.imageID=A.imageID FROM Account WHERE uname = '$uname'");
                             $result2 = mysqli_fetch_array($query);
 
                             $fname2 = $result2['fname'];
                             $lname2 = $result2['lname'];
+                            $pfp2 = accessImgFromDB($connection, $result2['pfp'], 'account');
                           }
 
                           if ($row_cnt = 0) {
@@ -218,7 +219,7 @@ navigate to that users profile and display all of their posts.
                 <div class="right-col">
                     <div class="sq1">
                         <div class="profile-header">
-                            <?php echo '<img src="'.$pfp.'">'; ?>
+                            <?php echo '<img src="'.$pfp2.'">'; ?>
                             <div>
                               <?php
 
