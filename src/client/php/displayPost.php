@@ -133,9 +133,12 @@ function displayPost2($connection, $pid, $currentUname) {
     $numDislikes = getNumDislikes($connection, $pid);
     $numComments = getNumComments($connection, $pid);
     // determine if signed in has already liked post
-    $liked = alreadyLiked($connection, $pid, $currentUname ?? null);
-    $disliked = alreadyDisliked($connection, $pid, $currentUname ?? null);
-    $bookmarked = alreadyBookmarked($connection, $pid, $currentUname ?? null);
+    // $liked = alreadyLiked($connection, $pid, $currentUname ?? null);
+    // $disliked = alreadyDisliked($connection, $pid, $currentUname ?? null);
+    // $bookmarked = alreadyBookmarked($connection, $pid, $currentUname ?? null);
+    $liked = false;
+    $disliked = false;
+    $bookmarked = false;
     // Access proster profile pic + post image
     $pfp = accessImgFromDB($connection, $row['pfp'], 'image');
     $pimg = accessImgFromDB($connection, $row['pimg'], 'image');
