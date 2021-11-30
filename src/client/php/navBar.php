@@ -21,6 +21,9 @@ function displayNavBar($signedin, $pagecat) {
         }
         $html = $html . '</div></li></ul>';
     }
+    else {
+        $html = $html . '<ul class="navbar-nav mr-auto"></ul>';
+    }
     $html = $html . '<form class="form-inline nav-search my-2 my-lg-0" method="get" action="./searchResults.php">';
     $html = $html . '<input class="search-bar" type="search" name="search" placeholder="Search" aria-label="Search">';
     $html = $html . '<button class="search-button" type="submit"><i class="fa fa-search"></i></button>';
