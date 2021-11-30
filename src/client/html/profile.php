@@ -113,11 +113,12 @@ $_SESSION['discard_after'] = $now + 1800;
               $result = mysqli_query($connection, $sql);
               $row_cnt = mysqli_num_rows($result);
 
-              $query = mysqli_query($connection, "SELECT uname, fname, lname FROM Account WHERE uname = '$uname'");
+              $query = mysqli_query($connection, "SELECT uname, fname, lname, A.imageId as pfp FROM Account A LEFT OUTER JOIN Images I ON I.imageID=A.imageID WHERE uname = '$uname'");
               $result2 = mysqli_fetch_array($query);
 
               $fname2 = $result2['fname'];
               $lname2 = $result2['lname'];
+              $pfp = accessImgFromDB($connection, $result2['pfp'], 'account');
             }
 
             if ($row_cnt = 0) {

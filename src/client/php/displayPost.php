@@ -1,9 +1,7 @@
 <?php
 
 function displayPost2($connection, $pid, $currentUname) {
-  // include other functions
-  // include '../php/handleImg.php';
-  // include '../php/retrieveLikes.php';
+
   // make sql query for post info needed
   $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
@@ -24,12 +22,9 @@ function displayPost2($connection, $pid, $currentUname) {
     $numDislikes = getNumDislikes($connection, $pid);
     $numComments = getNumComments($connection, $pid);
     // determine if signed in has already liked post
-    // $liked = alreadyLiked($connection, $pid, $currentUname ?? null);
-    // $disliked = alreadyDisliked($connection, $pid, $currentUname ?? null);
-    // $bookmarked = alreadyBookmarked($connection, $pid, $currentUname ?? null);
-    $liked = false;
-    $disliked = false;
-    $bookmarked = false;
+    $liked = alreadyLiked($connection, $pid, $currentUname ?? null);
+    $disliked = alreadyDisliked($connection, $pid, $currentUname ?? null);
+    $bookmarked = alreadyBookmarked($connection, $pid, $currentUname ?? null);
     // Access proster profile pic + post image
     $pfp = accessImgFromDB($connection, $row['pfp'], 'image');
     $pimg = accessImgFromDB($connection, $row['pimg'], 'image');
@@ -40,10 +35,9 @@ function displayPost2($connection, $pid, $currentUname) {
     $html = $html.'<p>'.$postDate.'</p></div>';
     $html = $html. '<div class="category"><p>Posted to <a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p></div>';
     $html = $html. '<div class="post-text"><p>'. $pBody.'</p></div>';
-    // if ($pimg != null) {
-      // $html = $html . '<div class="post-img"><img class="" src=' . $pimg . '></div>';
-    // }
-    $html = $html. '<div class="menu-bar"><button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$pid.' value="liked">';
+    // likes
+    $html = $html.'<div class="menu-bar">';
+    $html = $html.'<button type="submit" onclick="clickedLike(this)" class="like" data-value="'.$pid.'" value="liked">';
     if ($liked) {
       $html = $html.'<i class="fas fa-thumbs-up"></i>';
     }
@@ -52,6 +46,7 @@ function displayPost2($connection, $pid, $currentUname) {
     }
     $html = $html.'</button>';
     $html = $html.'<label class="like-counter">'.$numLikes.'</label>';
+
     $html = $html.'<button type="submit" onclick="clickedDislike(this)" class="dislike" data-value="'.$pid.'" value="disliked">';
     if ($disliked) {
       $html = $html.'<i class="fas fa-thumbs-down"></i>';
@@ -78,7 +73,7 @@ function displayPost2($connection, $pid, $currentUname) {
     return $html; // return output html as string ready to echo
   }
   else {
-    return ''; // return empty string if no post
+    return '<p>No posts to display!</p>'; // return empty string if no post
   }
 
 
