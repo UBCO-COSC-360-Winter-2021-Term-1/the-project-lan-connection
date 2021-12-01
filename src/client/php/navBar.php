@@ -37,7 +37,7 @@ function displayNavBar($connection, $signedin, $pagecat) {
       $html = $html . '<a href="./admin-portal.php" class="form-login">Admin Portal</a>';
     }
     if ($signedin != null) {
-        $html = $html . "<a href='./profile.php' class='form-login'>My Profile</a>";
+        $html = $html . "<a href='./profile.php?username=".$signedin."' class='form-login'>My Profile</a>";
         $html = $html . "<a href='../php/logout.php' class='form-login'>Logout</a>";
     } else {
         $html = $html . "<a href='login.html' class='form-login'>Login / Sign Up</a>";

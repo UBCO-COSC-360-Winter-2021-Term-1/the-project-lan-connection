@@ -7,6 +7,12 @@ It is also displayed when a user clicks on another users username on a post; in 
 navigate to that users profile and display all of their posts.
 */
 
+include '../php/navBar.php';
+include '../php/connectDB.php';
+include '../php/handleImg.php';
+include '../php/retrieveLikes.php';
+include '../php/displayPost.php';
+
 session_start();
 
 $now = time();
@@ -17,6 +23,17 @@ if (isset($_SESSION['discard_after']) && $now > $_SESSION['discard_after']) {
 }
 
 $_SESSION['discard_after'] = $now + 1800;
+
+$connection = connectToDB();
+
+$uname = $_SESSION['signedin'] ?? null; // currently signed in user
+$userProfile = $_GET['username'] ?? null; // uname of profile being visited
+
+$newestQuery = $_GET['newest'] ?? null;
+$likesQuery = $_GET['likes'] ?? null;
+$dislikesQuery = $_GET['dislikes'] ?? null;
+
+
 
 ?>
 
@@ -41,16 +58,23 @@ $_SESSION['discard_after'] = $now + 1800;
   <script src="../js/likeSystem.js"></script>
   <script src="../js/sortPosts.js"></script>
   <script src="../js/bookmarkSystem.js"></script>
-  <title>My Profile</title>
+  <title>Profile</title>
 </head>
 
 <body>
+  <?php
+  // Check if desired profile uname not set
+  if ($userProfile == null) {
+    die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+          <h1>Oh no!</h1>
+          <p>Desired profile is not specified</p>
+          <a href="../html/home.php">Return to Home page</a>
+        </div>');
+  }
+  ?>
+
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
-  include '../php/navBar.php';
-  include '../php/connectDB.php';
-  $connection = connectToDB();
-
   echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
   ?>
 
@@ -70,18 +94,7 @@ $_SESSION['discard_after'] = $now + 1800;
 
           <div class="posts">
             <?php
-            include '../php/handleImg.php';
-            include '../php/retrieveLikes.php';
-            include '../php/displayPost.php';
-
-            $uname = $_SESSION['signedin'] ?? null;
-            $userProfile = $_GET['username'] ?? null;
-
-            $newestQuery = $_GET['newest'] ?? null;
-            $likesQuery = $_GET['likes'] ?? null;
-            $dislikesQuery = $_GET['dislikes'] ?? null;
-
-
+            // query DB with desired uname
             if (isset($userProfile)) {
 
               $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
@@ -101,25 +114,7 @@ $_SESSION['discard_after'] = $now + 1800;
               $fname = $result2['fname'];
               $lname = $result2['lname'];
               $pfp2 = accessImgFromDB($connection, $result2['pfp'], 'image');
-            } else {
-              $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
-                                    FROM POST P
-                                    INNER JOIN Account A ON A.uname=P.uname
-                                    INNER JOIN Category C ON P.cat_title=C.cat_title
-                                    LEFT OUTER JOIN Images I ON I.imageID=P.imageID
-                                    WHERE A.uname = '$uname'
-                                    ORDER BY post_date DESC";
-
-              $result = mysqli_query($connection, $sql);
-              $row_cnt = mysqli_num_rows($result);
-
-              $query = mysqli_query($connection, "SELECT uname, fname, lname, A.imageId as pfp FROM Account A LEFT OUTER JOIN Images I ON I.imageID=A.imageID WHERE uname = '$uname'");
-              $result2 = mysqli_fetch_array($query);
-
-              $fname2 = $result2['fname'];
-              $lname2 = $result2['lname'];
-              $pfp = accessImgFromDB($connection, $result2['pfp'], 'image');
-            }
+            } 
 
             if ($row_cnt = 0) {
               echo 'No posts to display!';
@@ -127,7 +122,7 @@ $_SESSION['discard_after'] = $now + 1800;
 
             while ($row = mysqli_fetch_array($result)) {
               echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, false);
-            } // End of while loop
+            } 
             ?>
           </div>
         </div>
@@ -138,41 +133,33 @@ $_SESSION['discard_after'] = $now + 1800;
               <?php
               if (isset($userProfile)) {
                 echo '<img src=' . $pfp2 . '>';
-              } else {
-                echo '<img src=' . $pfp . '>';
-              }
+              } 
               ?>
               <div>
                 <?php
-
                 if (isset($userProfile)) {
                   echo '<p class="user-name">' . $fname . ' ' . $lname . '</p>';
                   echo '<p>' . $userProfile . '</p>';
-                } else {
-                  echo '<p class="user-name">' . $fname2 . ' ' . $lname2 . '</p>';
-                  echo '<p>' . $uname . '</p>';
-                }
+                } 
                 ?>
               </div>
             </div>
             <?php
-            if (isset($_SESSION['signedin']) && !isset($userProfile)) {
+            // if on own page
+            if ($uname == $userProfile ?? $uname != null) {
+              // display edit account tools
               echo '<button>Change profile picture</button>';
-            }
-            ?>
-            <div class="links">
-              <?php
-              if (isset($_SESSION['signedin']) && !isset($userProfile)) {
-                echo '<a href="./bookmarks.php?user=' . $_SESSION['signedin'] . '"><i class="fa fa-bookmark"></i>Bookmarks</a>
+              echo '<div class="links">';
+              echo '<a href="./bookmarks.php?user=' . $_SESSION['signedin'] . '"><i class="fa fa-bookmark"></i>Bookmarks</a>
                       <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
                       <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
-              }
-              ?>
-            </div>
+              echo '</div>';
+            }
+            ?>
           </div>
 
-          <!-- If navigated to the profile page by the "My Profile" link -->
-          <?php if (!isset($userProfile)) : ?>
+          <!-- If on own profile page -->
+          <?php if ($uname == $userProfile ?? $uname != null) : ?>
             <form class="create-post" name="form" method="post" action="../php/createPost.php" enctype="multipart/form-data">
               <div class="post-text">
                 <textarea name="post_body" placeholder="Create a post" rows="5"></textarea>
@@ -191,7 +178,6 @@ $_SESSION['discard_after'] = $now + 1800;
                 <input type="submit" class="form-post" value="Post">
               </div>
             </form>
-          <?php else : ?>
           <?php endif; ?>
 
 
