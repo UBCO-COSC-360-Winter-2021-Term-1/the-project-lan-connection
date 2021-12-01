@@ -48,7 +48,7 @@ $_SESSION['discard_after'] = $now + 1800;
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
   include '../php/navBar.php';
-  echo displayNavBar($_SESSION['signedin'], null);
+  echo displayNavBar($_SESSION['signedin'] ?? null, null);
   ?>
 
   <div class="plain-background-2">
@@ -164,8 +164,8 @@ $_SESSION['discard_after'] = $now + 1800;
               <?php
               if (isset($_SESSION['signedin']) && !isset($userProfile)) {
                 echo '<a href="./bookmarks.php?user=' . $_SESSION['signedin'] . '"><i class="fa fa-bookmark"></i>Bookmarks</a>
-                                      <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
-                                      <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
+                      <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
+                      <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
               }
               ?>
             </div>

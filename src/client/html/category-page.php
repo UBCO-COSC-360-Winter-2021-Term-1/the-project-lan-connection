@@ -44,7 +44,7 @@ $pageCat = $_GET['page'] ?? null;
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
   include '../php/navBar.php';
-  echo displayNavBar($_SESSION['signedin'], $pageCat);
+  echo displayNavBar($_SESSION['signedin'] ?? null, $pageCat);
   ?>
 
   <!--PAGE CONTENT-->

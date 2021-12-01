@@ -32,7 +32,7 @@
 .profile-header img {
   width: 110px;
   height: 110px;
-  border-radius: 100px;
+  border-radius: 1000px;
   border: 2px solid grey;
   margin: 0.5em 1.5em 0.25em 1em;
 }
@@ -45,7 +45,9 @@
 
 .user-name {
   font-size: 1.75em;
+  line-height: 120%;
   margin: 0;
+  margin-bottom: 0.25em;
   padding: 0;
 }
 

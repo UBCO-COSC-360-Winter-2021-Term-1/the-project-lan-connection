@@ -42,7 +42,7 @@ bookmarks and activity monitor will not be functional.
     <!--NAVIGATION BAR (done with bootstrap)-->
     <?php 
     include '../php/navBar.php';
-    echo displayNavBar($_SESSION['signedin'], null); 
+    echo displayNavBar($_SESSION['signedin'] ?? null, null); 
     ?>
 
     <!--PAGE CONTENT-->
