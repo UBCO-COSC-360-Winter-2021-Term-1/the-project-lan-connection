@@ -126,7 +126,7 @@ $_SESSION['discard_after'] = $now + 1800;
             }
 
             while ($row = mysqli_fetch_array($result)) {
-              echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null);
+              echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, false);
             } // End of while loop
             ?>
           </div>

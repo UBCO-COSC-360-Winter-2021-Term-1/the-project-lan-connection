@@ -114,7 +114,7 @@ bookmarks and activity monitor will not be functional.
                     if ($row_cnt !=0) {
                       while ($row = $results->fetch_assoc())
                       {
-                        echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null);
+                        echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, false);
                       } // End of while loop displaying posts
                     } // End of if statment ensuring posts!=0
                     else {

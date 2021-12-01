@@ -80,7 +80,7 @@ $user = $_GET['user'] ?? null;
 
         if ($row_cnt != 0) {
           while ($row = $results->fetch_assoc()) {
-            echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null);
+            echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, false);
           } // End of while loop
         } else {
           echo "<p>No posts to display!</p>";

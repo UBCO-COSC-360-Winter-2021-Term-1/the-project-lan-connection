@@ -1,6 +1,6 @@
 <?php
 
-function displayPost2($connection, $pid, $currentUname) {
+function displayPost2($connection, $pid, $currentUname, $showComments) {
   // make sql query for post info needed
   $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
@@ -26,7 +26,7 @@ function displayPost2($connection, $pid, $currentUname) {
     $bookmarked = alreadyBookmarked($connection, $pid, $currentUname ?? null);
     // Access proster profile pic + post image
     $pfp = accessImgFromDB($connection, $row['pfp'], 'image');
-    $pimg = accessImgFromDB($connection, $row['pimg'], 'image');
+    // $pimg = accessImgFromDB($connection, $row['pimg'], 'image');
     
     $catLower = strtolower($cat);
     // build html of post
@@ -70,9 +70,31 @@ function displayPost2($connection, $pid, $currentUname) {
   }
   mysqli_free_result($result);
   // output comments if that is wanted
-  // if ($showComments == true) {
-    // $sql = "SELECT * FROM Comment WHERE pid=$pid;";
-  // }
+  if ($showComments == true) {
+    // display add comment
+    $html = $html . '<form class="create-post" name="form" method="post" action="../php/createComment.php"><div class="user-comment">';
+    $html = $html . '<img src=' . $pfp . ' class="pfp-smaller">';
+    $html = $html . '<input type="text" name="comment" placeholder="Leave a comment" aria-label="Search">';
+    $html = $html . '<input type="hidden" id="pid" name="pid" value=' . $pid . '>';
+    $html = $html . '</div></form>';
+    // get other comments
+    $sql = "SELECT * FROM Comment WHERE pid=$pid ORDER BY comment_date DESC;";
+    $result = mysqli_query($connection, $sql);
+    while ($row = mysqli_fetch_array($result)) {
+      // get comment info
+      $cUname = $row['uname'];
+      $cDate = $row['comment_date'];
+      $cBody = str_replace("~", "'", $row['comment_body']);
+      // add comments to output
+      $html = $html . '<div class="comments"><div class="user-info">';
+      $html = $html . '<a href="./profile.php?username=' . $cUname . '">' . $cUname . '</a>';
+      $html = $html . '<p>' . $cDate . '</p></div>';
+      $html = $html . '<div class="user-content">';
+      $html = $html . '<p>' . $cBody . '</p>';
+      $html = $html . '<div class="menu-bar-comment"></div></div></div>';
+    }
+
+  }
   // return output html as string
   if ($html != null) {
     return $html; // return output html as string ready to echo

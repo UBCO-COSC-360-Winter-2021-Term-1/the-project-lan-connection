@@ -6,6 +6,8 @@ That certain post is isolated by it's post id and displayed on its own, along wi
 comment box and all comments left by users. 
 */
 
+include '../php/connectDB.php';
+
 session_start();
 
 $now = time();
@@ -16,6 +18,8 @@ if (isset($_SESSION['discard_after']) && $now > $_SESSION['discard_after']) {
 }
 
 $_SESSION['discard_after'] = $now + 1800;
+
+$connection = connectToDB();
 
 ?>
 
@@ -50,11 +54,9 @@ $_SESSION['discard_after'] = $now + 1800;
     <div class="content-box">
 
       <?php
-      include '../php/connectDB.php';
       include '../php/handleImg.php';
       include '../php/retrieveLikes.php';
-
-      $connection = connectToDB();
+      include '../php/displayPost.php';
 
       $uname = $_SESSION['signedin'] ?? null;
 
@@ -72,66 +74,8 @@ $_SESSION['discard_after'] = $now + 1800;
 
       while ($row = mysqli_fetch_array($result)) {
         echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, true);
-
-        // Assign database post values to their own variables for ease of use
-        $pid = $row['pid'];
-        $uname = $row['uname'];
-        $postDate = $row['post_date'];
-        $cat = $row['cat_title'];
-        $pBody = $row['post_body'];
-        // Replace our placeholder (~) with the user submitted apostrophes
-        $pBody = str_replace("~", "'", $pBody);
-        // Grab number of likes, dislikes and comments for each post
-        $numLikes = getNumLikes($connection, $pid);
-        $numDislikes = getNumDislikes($connection, $pid);
-        $numComments = getNumComments($connection, $pid);
-        // Determine if each post has already been liked by the signed in user
-        $liked = alreadyLiked($connection, $pid, $_SESSION['signedin'] ?? null);
-        $disliked = alreadyDisliked($connection, $pid, $_SESSION['signedin'] ?? null);
-        $bookmarked = alreadyBookmarked($connection, $pid, $_SESSION['signedin'] ?? null);
-        //Access the posting user's profile picture
-        $pfp = accessImgFromDB($connection, $row['pfp'], 'post');
+      } // End of while loop displaying post 
       ?>
-
-          <!-- Comment form -->
-          <form class="create-post" name="form" method="post" action="../php/createComment.php">
-            <div class="user-comment">
-              <?php echo '<img src=' . $pfp . ' alt="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">'; ?>
-              <input type="text" name="comment" placeholder="Leave a comment" aria-label="Search">
-              <?php echo '<input type="hidden" id="pid" name="pid" value=' . $pid . '> ' ?>
-            </div>
-          </form>
-
-          <?php
-          // Query comments for each post
-          $sql2 = "SELECT * FROM Comment WHERE pid = '$pid'  ORDER BY comment_date DESC";
-          $result2 = mysqli_query($connection, $sql2);
-
-          while ($row2 = mysqli_fetch_array($result2)) {
-            $cUname = $row2['uname'];
-            $cDate = $row2['comment_date'];
-            $cBody = $row2['comment_body'];
-            // Replace our placeholder (~) with the user submitted apostrophes
-            $cBody = str_replace("~", "'", $cBody);
-
-          ?>
-            <!-- Display comments -->
-            <div class="comments">
-              <div class="user-info">
-                <img src="../../../img/pfp-placeholder.jpeg" alt="../../../img/pfp-placeholder.jpeg" class="pfp-smaller">
-                <?php echo '<a href="./profile.php?username=' . $cUname . '">' . $cUname . '</a>'; ?>
-                <?php echo '<p>' . $cDate . '</p>'; ?>
-              </div>
-              <div class="user-content">
-                <?php echo '<p>' . $cBody . '</p>'; ?>
-                <div class="menu-bar-comment"></div>
-              </div>
-            </div>
-        <?php
-          } // End of while loop displaying comments
-        } // End of while loop displaying post 
-        ?>
-        </div>
     </div>
   </div>
 

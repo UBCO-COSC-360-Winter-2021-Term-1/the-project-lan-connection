@@ -84,7 +84,7 @@ $user = $_GET['user'] ?? null;
             echo "<p>Seeing results for: <b>" . $_GET['search'] . "</b></p>";
             if ($row_cnt != 0) {
               while ($row = $results->fetch_assoc()) {
-                echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null);
+                echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, false);
               }
             } else {
               echo "<p>No posts to display!</p>";
