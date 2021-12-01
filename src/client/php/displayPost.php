@@ -1,6 +1,6 @@
 <?php
 
-function displayPost2($connection, $pid, $currentUname) {
+function displayPost2($connection, $pid, $currentUname, $showComments) {
   include './checkAdmin.php';
 
   $isAdmins = checkForAdmin($connection, $currentUname);
