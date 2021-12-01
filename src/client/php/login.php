@@ -21,7 +21,7 @@ if (!$_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // check if input fields set
-if (!isset($_POST['email']) || !isset($_POST['password'])) {
+if (!isset($_POST['identifier']) || !isset($_POST['password'])) {
   // not all inputs set
   die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
         <h1>Oh no!</h1>
@@ -31,7 +31,7 @@ if (!isset($_POST['email']) || !isset($_POST['password'])) {
 }
 
 // get input values
-$email = validate($_POST['email']);
+$id = validate($_POST['identifier']);
 $pword = validate($_POST['password']);
 $pword = md5($pword);
 
@@ -39,7 +39,7 @@ $pword = md5($pword);
 $connection = connectToDB();
 
 // make SQL request
-$sql = "SELECT * FROM Account WHERE (email='$email' AND pword='$pword');";
+$sql = "SELECT * FROM Account WHERE ((email='$id' OR uname='$id') AND pword='$pword');";
 $results = mysqli_query($connection, $sql);
 
 // check if any results returned (ie. user exists in DB with that password)
