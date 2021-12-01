@@ -47,7 +47,7 @@ $user = $_GET['user'] ?? null;
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
   include '../php/navBar.php';
-  echo displayNavBar($_SESSION['signedin'] ?? null, null);
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
   ?>
 
   <div class="plain-background">

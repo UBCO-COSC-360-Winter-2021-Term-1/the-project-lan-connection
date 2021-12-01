@@ -43,7 +43,7 @@ $_SESSION['discard_after'] = $now + 1800;
 <body>
   <?php
   include '../php/navBar.php';
-  echo displayNavBar($_SESSION['signedin'] ?? null, null);
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
   ?>
 
   <div class="container-1">
