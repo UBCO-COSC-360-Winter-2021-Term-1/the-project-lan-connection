@@ -76,10 +76,12 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
         <div class="myDropdown" class="dropdown-content">
           <button>Delete post</a>
           <button>Delete user</a>
-        </div>
-      </div>';
+        </div>';
     }
     $html = $html.'</div></div>';
+    if ($showComments!=true) {
+      $html = $html.'</div>';
+    }
   }
   mysqli_free_result($result);
   // output comments if that is wanted
@@ -124,6 +126,9 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
       $html = $html . '<div class="user-content">';
       $html = $html . '<p>' . $cBody . '</p>';
       $html = $html . '<div class="menu-bar-comment"></div></div></div>';
+    }
+    if ($showComments==true) {
+      $html = $html.'</div>';
     }
     mysqli_free_result($result);
 
