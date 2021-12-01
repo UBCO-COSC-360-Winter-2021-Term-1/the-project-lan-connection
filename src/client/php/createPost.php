@@ -21,7 +21,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $postCat = $_POST['post_category'];
   $uname = $_SESSION['signedin'];
-  $postImg = $_FILES["file"]["name"];
 
   if ($postBody == null || $postCat == null) {
     echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">

@@ -130,6 +130,24 @@ html {
   align-items: center;
 }
 
+.post-status a {
+  color: #01a7ee;
+}
+
+.post-status a:hover {
+  color: #01a7ee;
+  text-decoration: none;
+}
+
+.category a {
+  color: #01a7ee;
+}
+
+.category a:hover {
+  color: #01a7ee;
+  text-decoration: none;
+}
+
 .post-status p {
   margin-left: auto;
   order: 2;
@@ -209,8 +227,6 @@ html {
 
 .menu-bar input {
   height: 25px;
-  margin-left: auto;
-  order: 2;
   background-color: #039ce0;
   border: none;
   border-radius: 30px;
@@ -221,6 +237,7 @@ html {
   font-size: 16px;
   font-family: "Helvetica-light";
   margin-right: 10px;
+  margin-left: 2.3em;
 }
 
 .menu-bar input:hover {
@@ -238,6 +255,21 @@ html {
   text-decoration: none;
   font-size: 16px;
   font-family: "Helvetica-light";
-  margin: 10px 20px;
-  width: auto;
+  margin: 15px 20px 20px 20px;
+  width: 83%;
+}
+
+.post-text textarea {
+  background-color: white;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 4px;
+  color: black;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: "Helvetica-light";
+  margin: 20px 20px 0px 20px;
+  width: 83%;
 }

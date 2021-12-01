@@ -129,7 +129,7 @@ bookmarks and activity monitor will not be functional.
                     <!--CREATE A POST-->
                     <form class="create-post" name="form" method="post" action="../php/createPost.php" enctype="multipart/form-data">
                       <div class="post-text">
-                        <input type="text" name="post_body" placeholder="Create a post">
+                        <textarea name="post_body" placeholder="Create a post" rows="5"></textarea>
                         <br>
                         <input type="text" name="post_category" placeholder="Category" list="category-selection">
                         <datalist id="category-selection">
@@ -142,10 +142,6 @@ bookmarks and activity monitor will not be functional.
                         </datalist>
                       </div>
                       <div class="menu-bar">
-
-                        <input id="file" name="file" type="file">
-                        <label id="pfpup" for="file-input"><img src="../../../img/media.png"></label>
-
                         <input type="submit" class="form-post" value="Post">
                       </div>
                     </form>

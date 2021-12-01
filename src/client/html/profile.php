@@ -175,7 +175,7 @@ $_SESSION['discard_after'] = $now + 1800;
           <?php if (!isset($userProfile)) : ?>
             <form class="create-post" name="form" method="post" action="../php/createPost.php" enctype="multipart/form-data">
               <div class="post-text">
-                <input type="search" name="post_body" placeholder="Create a post" aria-label="Search">
+                <textarea name="post_body" placeholder="Create a post" rows="5"></textarea>
                 <br>
                 <input type="text" name="post_category" placeholder="Category" list="category-selection" aria-label="Category">
                 <datalist id="category-selection">
@@ -188,8 +188,6 @@ $_SESSION['discard_after'] = $now + 1800;
                 </datalist>
               </div>
               <div class="menu-bar">
-                <a href="#"><img src="../../../img/media.png"></a>
-                <a href="#"><img src="../../../img/plus.png"></a>
                 <input type="submit" class="form-post" value="Post">
               </div>
             </form>

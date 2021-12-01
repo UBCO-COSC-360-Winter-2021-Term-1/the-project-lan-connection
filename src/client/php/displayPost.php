@@ -28,12 +28,14 @@ function displayPost2($connection, $pid, $currentUname) {
     // Access proster profile pic + post image
     $pfp = accessImgFromDB($connection, $row['pfp'], 'image');
     $pimg = accessImgFromDB($connection, $row['pimg'], 'image');
+    
+    $catLower = strtolower($cat);
     // build html of post
     $html = '<div class="popular-post"><div class="post-status">';
     $html = $html.'<img src='.$pfp.' class="pfp-small">';
     $html = $html.'<a href="./profile.php?username='.$uname.'" class="username">'.$uname.' </a>';
     $html = $html.'<p>'.$postDate.'</p></div>';
-    $html = $html. '<div class="category"><p>Posted to <a href="./category-page.php?page='.$cat.'" class="post-category">'.$cat.'</a></p></div>';
+    $html = $html. '<div class="category"><p>Posted to<a href="./category-page.php?page='.$cat.'" class="post-category">'.$catLower.'</a></p></div>';
     $html = $html. '<div class="post-text"><p>'. $pBody.'</p></div>';
     // likes
     $html = $html.'<div class="menu-bar">';
