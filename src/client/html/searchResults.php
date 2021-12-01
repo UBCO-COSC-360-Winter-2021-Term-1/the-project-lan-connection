@@ -46,10 +46,14 @@ $user = $_GET['user'] ?? null;
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
   include '../php/navBar.php';
+<<<<<<< HEAD
   include '../php/connectDB.php';
   $connection = connectToDB();
 
   echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
+=======
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
+>>>>>>> refs/remotes/origin/master
   ?>
 
   <div class="plain-background">
