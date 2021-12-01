@@ -100,7 +100,7 @@ $_SESSION['discard_after'] = $now + 1800;
 
               $fname = $result2['fname'];
               $lname = $result2['lname'];
-              $pfp2 = accessImgFromDB($connection, $result2['pfp'], 'account');
+              $pfp2 = accessImgFromDB($connection, $result2['pfp'], 'image');
             } else {
               $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
                                     FROM POST P
@@ -118,7 +118,7 @@ $_SESSION['discard_after'] = $now + 1800;
 
               $fname2 = $result2['fname'];
               $lname2 = $result2['lname'];
-              $pfp = accessImgFromDB($connection, $result2['pfp'], 'account');
+              $pfp = accessImgFromDB($connection, $result2['pfp'], 'image');
             }
 
             if ($row_cnt = 0) {
@@ -137,9 +137,9 @@ $_SESSION['discard_after'] = $now + 1800;
             <div class="profile-header">
               <?php
               if (isset($userProfile)) {
-                echo '<img src="' . $pfp2 . '">';
+                echo '<img src=' . $pfp2 . '>';
               } else {
-                echo '<img src="' . $pfp . '">';
+                echo '<img src=' . $pfp . '>';
               }
               ?>
               <div>
