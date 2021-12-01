@@ -1,7 +1,6 @@
 <?php
 
 function displayPost2($connection, $pid, $currentUname) {
-
   // make sql query for post info needed
   $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
@@ -70,6 +69,10 @@ function displayPost2($connection, $pid, $currentUname) {
     $html = $html.'</butto></div></div>';
   }
   mysqli_free_result($result);
+  // output comments if that is wanted
+  // if ($showComments == true) {
+    // $sql = "SELECT * FROM Comment WHERE pid=$pid;";
+  // }
   // return output html as string
   if ($html != null) {
     return $html; // return output html as string ready to echo
