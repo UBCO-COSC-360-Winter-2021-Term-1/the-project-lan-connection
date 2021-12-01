@@ -36,6 +36,7 @@ bookmarks and activity monitor will not be functional.
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> 
     <script src="../js/likeSystem.js"></script>
     <script src="../js/bookmarkSystem.js"></script>
+    <script src="../js/dropdown.js"></script>
     <title>Home</title>
 </head>
 <body">

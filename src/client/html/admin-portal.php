@@ -2,6 +2,7 @@
 
 include '../php/navBar.php';
 include '../php/connectDB.php';
+include '../php/validateText.php';
 // include '../php/handleImg.php';
 // include '../php/retrieveLikes.php';
 // include '../php/displayPost.php';
@@ -53,13 +54,10 @@ if ($results = mysqli_query($connection, $sql)) {
 </head>
 
 <body>
-    <!-- display nav bar -->
-    <?php // echo displayNavBar($admin, null); ?> 
-
     <!-- Display page content -->
     <div id="content">
         <div id="logo">
-            <img src="../../../img/login-logo.png">
+            <a href="./home.php"><img src="../../../img/login-logo.png"></a>
         </div>
         <div id="search-user-container" class="form">
             <!-- Form to search for users -->
@@ -77,21 +75,21 @@ if ($results = mysqli_query($connection, $sql)) {
             <?php
             // check if user already submitted user search form
             if (isset($_GET['userSearch'])) {
-                $keyword = $_GET['userSearch'];
+                $keyword = validate($_GET['userSearch'] ?? null);
+                $keyword = '%' . $keyword . '%';
                 // display search keyword
-                echo '<p>Displaying results from "' . $keyword . '"</p>';
+                echo '<p>Seeing results for: <b>'.$_GET['userSearch'].'</b></p>';
                 // display top of table
                 echo '<table id="users-results"><tbody><th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th></tr>';
                 // get results
-                // $sql = 'SELECT * FROM Account WHERE (uname LIKE '.$keyword.' OR email LIKE '.$keyword.');';
-                $sql = 'SELECT * FROM Account WHERE (uname=' . $keyword . ');';
-                if ($results = mysqli_query($connection, $sql)) {
-                    while ($row = mysqli_fetch_assoc($results)) {
+                $sql = "SELECT * FROM Account WHERE (uname LIKE '$keyword' OR email LIKE '$keyword');";
+                if ($result = mysqli_query($connection, $sql)) {
+                    while ($row = mysqli_fetch_assoc($result)) {
                         // display row of table
                         echo '<tr><td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
                         echo '<td>' . $row['uname'] . '</td>';
                         echo '<td>' . $row['email'] . '</td>';
-                        echo '<td><a href="profile.php?username=' . $uname . '"</a></td></tr>';
+                        echo "<td><a href='./profile.php?username=".$row['uname']."'>Click here</a></td></tr>";
                     }
                     mysqli_free_result($result);
                 }
