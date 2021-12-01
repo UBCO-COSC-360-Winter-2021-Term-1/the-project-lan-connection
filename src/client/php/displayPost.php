@@ -1,7 +1,6 @@
 <?php
 
 function displayPost2($connection, $pid, $currentUname) {
-
   // make sql query for post info needed
   $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
