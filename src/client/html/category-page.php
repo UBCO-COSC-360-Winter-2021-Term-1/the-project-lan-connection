@@ -47,7 +47,7 @@ $pageCat = $_GET['page'] ?? null;
   include '../php/connectDB.php';
   $connection = connectToDB();
 
-  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, $pageCat); 
   ?>
 
   <!--PAGE CONTENT-->
@@ -83,7 +83,7 @@ $pageCat = $_GET['page'] ?? null;
 
       if ($row_cnt != 0) {
         while ($row = $results->fetch_assoc()) {
-          echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null);
+          echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, false);
         } // End of while loop
       } else {
         echo "<p>Be the first to post in this category!</p>";

@@ -47,14 +47,7 @@ $connection = connectToDB();
 <body>
   <?php
   include '../php/navBar.php';
-<<<<<<< HEAD
-  include '../php/connectDB.php';
-  $connection = connectToDB();
-
-  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
-=======
   echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
->>>>>>> refs/remotes/origin/master
   ?>
 
   <div class="container-1">

@@ -1,7 +1,7 @@
 <?php
 
 function displayPost2($connection, $pid, $currentUname, $showComments) {
-  include './checkAdmin.php';
+  // include '../php/checkAdmin.php';
 
   $isAdmins = checkForAdmin($connection, $currentUname);
   // make sql query for post info needed
@@ -27,7 +27,7 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
     $liked = alreadyLiked($connection, $pid, $currentUname ?? null);
     $disliked = alreadyDisliked($connection, $pid, $currentUname ?? null);
     $bookmarked = alreadyBookmarked($connection, $pid, $currentUname ?? null);
-    // Access proster profile pic + post image
+    // Access profile pic + post image
     $pfp = accessImgFromDB($connection, $row['pfp'], 'image');
     // $pimg = accessImgFromDB($connection, $row['pimg'], 'image');
     
@@ -84,13 +84,24 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
   mysqli_free_result($result);
   // output comments if that is wanted
   if ($showComments == true) {
-    // display add comment
-    $html = $html . '<form class="create-post" name="form" method="post" action="../php/createComment.php"><div class="user-comment">';
-    $html = $html . '<img src=' . $pfp . ' class="pfp-smaller">';
-    $html = $html . '<input type="text" name="comment" placeholder="Leave a comment" aria-label="Search">';
-    $html = $html . '<input type="hidden" id="pid" name="pid" value=' . $pid . '>';
-    $html = $html . '</div></form>';
-    // get other comments
+    // check if user logged in
+    if ($currentUname != null) {
+      // get pfp of logged in user
+      $sql = 'SELECT imageID FROM Account WHERE uname="'. $currentUname . '"';
+      $result = mysqli_query($connection, $sql);
+      if ($row = mysqli_fetch_array($result)) {
+        // get photo
+        $pfp = accessImgFromDB($connection, $row['imageID'], 'image');
+      }
+      mysqli_free_result($result);
+      // display add comment box
+      $html = $html . '<form class="create-post" name="form" method="post" action="../php/createComment.php"><div class="user-comment">';
+      $html = $html . '<img src=' . $pfp . ' class="pfp-smaller">';
+      $html = $html . '<input type="text" name="comment" placeholder="Leave a comment" aria-label="Search">';
+      $html = $html . '<input type="hidden" id="pid" name="pid" value=' . $pid . '>';
+      $html = $html . '</div></form>';
+    } 
+    // get comments
     $sql = "SELECT * FROM Comment WHERE pid=$pid ORDER BY comment_date DESC;";
     $result = mysqli_query($connection, $sql);
     while ($row = mysqli_fetch_array($result)) {
@@ -98,14 +109,23 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
       $cUname = $row['uname'];
       $cDate = $row['comment_date'];
       $cBody = str_replace("~", "'", $row['comment_body']);
+      // get commenter pfp
+      $sql1 = 'SELECT imageID FROM Account WHERE uname="' . $cUname . '"';
+      $result1 = mysqli_query($connection, $sql1);
+      if ($row1 = mysqli_fetch_array($result1)) {
+        $pfp = accessImgFromDB($connection, $row1['imageID'], "image");
+      }
+      mysqli_free_result($result1);
       // add comments to output
       $html = $html . '<div class="comments"><div class="user-info">';
+      $html = $html . '<img src=' . $pfp . ' class="pfp-small">';
       $html = $html . '<a href="./profile.php?username=' . $cUname . '">' . $cUname . '</a>';
       $html = $html . '<p>' . $cDate . '</p></div>';
       $html = $html . '<div class="user-content">';
       $html = $html . '<p>' . $cBody . '</p>';
       $html = $html . '<div class="menu-bar-comment"></div></div></div>';
     }
+    mysqli_free_result($result);
 
   }
   // return output html as string
