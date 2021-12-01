@@ -1,6 +1,9 @@
 <?php
 
 function displayPost2($connection, $pid, $currentUname) {
+  include './checkAdmin.php';
+
+  $isAdmins = checkForAdmin($connection, $currentUname);
   // make sql query for post info needed
   $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
                   FROM POST P
@@ -66,7 +69,17 @@ function displayPost2($connection, $pid, $currentUname) {
     else {
       $html = $html.'<i class="far fa-bookmark"></i>';
     }
-    $html = $html.'</butto></div></div>';
+    $html = $html.'</button>';
+    if ($isAdmins) {
+      $html = $html.'<div class="dropdown">
+        <button onclick="dropdown()" class="dropbtn"><i class="fas fa-ellipsis-h"></i></button>
+        <div class="myDropdown" class="dropdown-content">
+          <button>Delete post</a>
+          <button>Delete user</a>
+        </div>
+      </div>';
+    }
+    $html = $html.'</div></div>';
   }
   mysqli_free_result($result);
   // output comments if that is wanted

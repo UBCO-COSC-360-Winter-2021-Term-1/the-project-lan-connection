@@ -46,20 +46,20 @@ $user = $_GET['user'] ?? null;
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
   include '../php/navBar.php';
-  echo displayNavBar($_SESSION['signedin'] ?? null, null);
+  include '../php/connectDB.php';
+  $connection = connectToDB();
+
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
   ?>
 
   <div class="plain-background">
     <div class="container5">
 
       <?php
-      include '../php/connectDB.php';
       include '../php/validateText.php';
       include '../php/handleImg.php';
       include '../php/retrieveLikes.php';
       include '../php/displayPost.php';
-
-      $connection = connectToDB();
 
       if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
@@ -81,7 +81,7 @@ $user = $_GET['user'] ?? null;
           if ($_GET['search'] == "") {
             echo "<p>Please enter a keyword into the searchbar";
           } else {
-            echo "<p>Seeing results for: <b>" . $_GET['search'] . "</b></p>";
+            echo "<p>Seeing results for: <b>".$_GET['search']."</b></p>";
             if ($row_cnt != 0) {
               while ($row = $results->fetch_assoc()) {
                 echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null);
