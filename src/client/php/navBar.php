@@ -1,5 +1,9 @@
 <?php
-function displayNavBar($signedin, $pagecat) {
+function displayNavBar($connection, $signedin, $pagecat) {
+    include '../php/checkAdmin.php';
+
+    $isAdmin = checkForAdmin($connection, $signedin);
+
     $html = '<nav class="navbar navbar-expand-lg navbar-light navbar-static-top">';
     $html = $html . '<a class="navbar-brand" href="../html/home.php"><img src="../../../img/nav-logo.png"></a>';
     $html = $html . '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
@@ -28,7 +32,10 @@ function displayNavBar($signedin, $pagecat) {
     $html = $html . '<input class="search-bar" type="search" name="search" placeholder="Search" aria-label="Search">';
     $html = $html . '<button class="search-button" type="submit"><i class="fa fa-search"></i></button>';
     $html = $html . '</form>';
-    // Login/Signup link / Profile/Logout links
+    // Login/Signup link / Profile/Logout links / Admin link
+    if ($isAdmin == true) {
+      $html = $html . "<a href='./admin-portal.php' class='form-login'>Admin Portal</a>";
+    }
     if ($signedin != null) {
         $html = $html . "<a href='./profile.php' class='form-login'>My Profile</a>";
         $html = $html . "<a href='../php/logout.php' class='form-login'>Logout</a>";

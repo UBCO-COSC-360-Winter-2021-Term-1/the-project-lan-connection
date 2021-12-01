@@ -22,7 +22,7 @@ $admin = $_SESSION['signedin'];
 $connection = connectToDB();
 
 // check if signed in user is an admin
-$sql = 'SELECT * FROM Account WHERE uname=' . $admin . ' AND administrator=TRUE;';
+$sql = "SELECT * FROM Account WHERE uname='$admin' AND administrator=true;";
 if ($results = mysqli_query($connection, $sql)) {
     // signed in user is an admin -> continue displaying page
 } else {

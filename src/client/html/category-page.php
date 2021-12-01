@@ -44,7 +44,10 @@ $pageCat = $_GET['page'] ?? null;
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
   include '../php/navBar.php';
-  echo displayNavBar($_SESSION['signedin'] ?? null, $pageCat);
+  include '../php/connectDB.php';
+  $connection = connectToDB();
+
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
   ?>
 
   <!--PAGE CONTENT-->
@@ -62,12 +65,9 @@ $pageCat = $_GET['page'] ?? null;
   <div class="container-1">
     <div class="content-box">
       <?php
-      include '../php/connectDB.php';
       include '../php/handleImg.php';
       include '../php/retrieveLikes.php';
       include '../php/displayPost.php';
-
-      $connection = connectToDB();
 
       $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp 
                       FROM POST P

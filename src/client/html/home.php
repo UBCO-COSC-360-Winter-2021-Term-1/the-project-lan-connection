@@ -42,7 +42,10 @@ bookmarks and activity monitor will not be functional.
     <!--NAVIGATION BAR (done with bootstrap)-->
     <?php 
     include '../php/navBar.php';
-    echo displayNavBar($_SESSION['signedin'] ?? null, null); 
+    include '../php/connectDB.php';
+    $connection = connectToDB();
+
+    echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
     ?>
 
     <!--PAGE CONTENT-->
@@ -92,12 +95,10 @@ bookmarks and activity monitor will not be functional.
                 <div class="mid-col">
                   <p class="header1">Popular Posts</p>
                   <?php
-                    include '../php/connectDB.php';
                     include '../php/handleImg.php';
                     include '../php/retrieveLikes.php';
                     include '../php/displayPost.php';
-                    
-                    $connection = connectToDB();
+
                     // Query the posts that will be displayed on the home page
                     $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
                             FROM POST P

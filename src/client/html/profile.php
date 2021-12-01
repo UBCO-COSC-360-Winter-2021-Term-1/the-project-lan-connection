@@ -48,7 +48,10 @@ $_SESSION['discard_after'] = $now + 1800;
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
   include '../php/navBar.php';
-  echo displayNavBar($_SESSION['signedin'] ?? null, null);
+  include '../php/connectDB.php';
+  $connection = connectToDB();
+
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
   ?>
 
   <div class="plain-background-2">
@@ -67,12 +70,9 @@ $_SESSION['discard_after'] = $now + 1800;
 
           <div class="posts">
             <?php
-            include '../php/connectDB.php';
             include '../php/handleImg.php';
             include '../php/retrieveLikes.php';
             include '../php/displayPost.php';
-
-            $connection = connectToDB();
 
             $uname = $_SESSION['signedin'] ?? null;
             $userProfile = $_GET['username'] ?? null;
