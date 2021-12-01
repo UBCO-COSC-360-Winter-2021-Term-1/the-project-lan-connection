@@ -45,7 +45,7 @@ This php file adds a users comment information to the database, and handles any 
       $stmt->bind_param("ssss", $pid, $commentText, $uname, $curDate);
 
       if ($stmt->execute()) {
-        header('Location: ../html/home.php');
+        header('Location: ../html/post.php?pids='.$pid);
       }
       else {
         echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
