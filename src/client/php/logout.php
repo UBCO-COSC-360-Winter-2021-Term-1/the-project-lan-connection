@@ -13,8 +13,8 @@ if (isset($_SESSION['signedin'])) {
     header("Location: ".$_SERVER['HTTP_REFERER']);
 }
 else {
-    // redirect no session user to home page
-    header("Location: ../html/home.php");
+    // redirect no session user to previous page
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 
 ?>

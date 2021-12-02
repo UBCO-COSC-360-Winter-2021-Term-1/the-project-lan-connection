@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       uploadImgToDB($connection, $postImg, $postID, "post");
 
       // redirect user back to home
-      header('Location: ../html/home.php');
+      header('Location: '. $_SERVER['HTTP_REFERER']);
     }
     else {
       die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
