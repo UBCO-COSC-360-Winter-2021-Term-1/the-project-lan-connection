@@ -77,13 +77,14 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
                           <i class="fas fa-ellipsis-h"></i></a>
                         
                           <div class="dropdown-menu">
-                            <button onclick="deletePost(this)" class="dropdown-item" data-pid="'.$pid.'" data-uname="'.$uname.'">Delete post</button>
-                            <button class="dropdown-item">Delete user</button>
+                            <button onclick="deleteFunc(this)" name="deletePost" class="dropdown-item" data-uname="'.$uname.'">Delete post</button>
+                            <button onclick="deleteFunc(this)" name="deleteUser" class="dropdown-item" data-uname="'.$uname.'">Delete user</button>
                           </div>
                           <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;">
-                            <strong>Delete user?</strong>
-                            <a href="#">Yes</a><br>
-                            <a href="#">No</a>
+                            <strong>Text</strong>
+                            <button class="deletePost" name="deletePost" type="submit" onclick="deleteContent(this)" data-pid="'.$pid.'" data-uname="'.$uname.'">Yes</button>
+                            <button class="deleteUser" name="deleteUser" type="submit" onclick="deleteContent(this)" data-pid="'.$pid.'" data-uname="'.$uname.'">Yes</button>
+                            <button onclick="exitAlert(this)">No</button>
                           </div>
                         </div>';
     }

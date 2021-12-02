@@ -299,12 +299,25 @@ html {
   margin: 0;
 }
 
-#bootstrap-overrides .dropdown-menu input{
+#bootstrap-overrides .dropdown-menu button{
   margin: 0;
   padding: 0.5em 1em;
   border-radius: 3px;
 }
 
-#bootstrap-overrides .hidden {
-  display: none;
+#bootstrap-overrides .alert button {
+  background-color: rgba(249,215,218,255);
+  margin: 0;
+  padding: 0;
+  height: 2em;
+}
+
+#bootstrap-overrides .alert {
+  width: 26.5em;
+  height: 12.5em;
+  z-index: 4;
+  position: absolute;
+  right: -1.05em;
+  bottom: -1.35em;
+  border: 1px solid grey;
 }
