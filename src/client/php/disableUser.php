@@ -31,7 +31,7 @@ $uname = $_GET['uname'];
 $connection = connectToDB();
 
 // determine if user enabled or disabled
-$sql = 'SELECT * FROM Account WHERE (uname='.$uname.');';
+$sql = "SELECT * FROM Account WHERE (uname='$uname');";
 $results = mysqli_query($connection, $sql);
 
 if ($row = mysqli_fetch_assoc($results)) {
@@ -41,10 +41,10 @@ mysqli_free_result($results);
 
 // toggle user_enabled field in account table
 if ($enabled == TRUE) {
-    $sql = "UPDATE Account SET user_enabled=FALSE WHERE uname=$uname";
+    $sql = "UPDATE Account SET user_enabled=0 WHERE uname='$uname'";
 }
 else {
-    $sql = "UPDATE Account SET user_enabled=TRUE WHERE uname=$uname";
+    $sql = "UPDATE Account SET user_enabled=1 WHERE uname='$uname'";
 }
 mysqli_query($connection, $sql);
 
@@ -53,5 +53,6 @@ mysqli_close($connection);
 
 // redirect user back to admin page
 header('Location: ' . $_SERVER['HTTP_REFERER']);
+// header('Location: ../html/admin-portal.php');
 
 ?>
