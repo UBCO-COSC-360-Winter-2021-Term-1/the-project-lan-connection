@@ -104,9 +104,16 @@ function accessImgFromDB($connection, $id, $purpose) {
   mysqli_stmt_bind_result($stmt, $type, $image);
   mysqli_stmt_fetch($stmt);
   mysqli_stmt_close($stmt);
+
   
   // formulate output
-  return "'data:image/".$type.";base64,".base64_encode($image)."'";
+  if ($image != null) {
+    return "'data:image/" . $type . ";base64," . base64_encode($image) . "'";
+  }
+  else {
+    return "'../../../img/default_profile_picture.jpg'";
+  }
+  
 }
 
 ?>
