@@ -53,7 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // Insert post img to db
       uploadImgToDB($connection, $postImg, $postID, "post");
 
-      // redirect user back to home
+      mysqli_close($connection);
+
+      // redirect user back
       header('Location: '. $_SERVER['HTTP_REFERER']);
     }
     else {

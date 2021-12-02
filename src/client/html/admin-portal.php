@@ -94,7 +94,8 @@ if ($results = mysqli_query($connection, $sql)) {
                         echo '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
                         echo '<td>' . $row['uname'] . '</td>';
                         echo '<td>' . $row['email'] . '</td>';
-                        echo "<td><a href='./profile.php?username=" . $row['uname'] . "'>". $row['fname'] . "'s Profile</a></td></tr>";
+                        echo "<td><a href='./profile.php?username=" . $row['uname'] . "'>". $row['fname'] . "'s Profile</a></td>";
+                        echo '<td><a href="../php/disableUser.php?uname=' . $row['uname'] . '">' . ( ($row['user_enabled'] == TRUE) ? ('Disable') : ('Enable') ) . ' ' . $row['fname'] . '</a></td></tr>';
                     }
                     mysqli_free_result($result);
                 }
