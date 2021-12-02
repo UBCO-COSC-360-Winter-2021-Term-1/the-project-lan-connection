@@ -33,7 +33,7 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
     
     $catLower = strtolower($cat);
     // build html of post
-    $html = '<div class="popular-post"><div class="post-status">';
+    $html = '<div class="popular-post" id="bootstrap-overrides"><div class="post-status">';
     $html = $html.'<img src='.$pfp.' class="pfp-small">';
     $html = $html.'<a href="./profile.php?username='.$uname.'" class="username">'.$uname.' </a>';
     $html = $html.'<p>'.$postDate.'</p></div>';
@@ -70,15 +70,24 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
       $html = $html.'<i class="far fa-bookmark"></i>';
     }
     $html = $html.'</button>';
+    // If admin, display delete post button
     if ($isAdmins) {
-      $html = $html.'<div class="dropdown">
-        <button onclick="dropdown()" class="dropbtn"><i class="fas fa-ellipsis-h"></i></button>
-        <div class="myDropdown" class="dropdown-content">
-          <button>Delete post</a>
-          <button>Delete user</a>
-        </div>';
+        $html = $html. '<div class="dropdown show">
+                          <a class="btn btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h"></i></a>
+                        
+                          <div class="dropdown-menu">
+                            <button onclick="deletePost(this)" class="dropdown-item" data-pid="'.$pid.'" data-uname="'.$uname.'">Delete post</button>
+                            <button class="dropdown-item">Delete user</button>
+                          </div>
+                          <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display:none;">
+                            <strong>Delete user?</strong>
+                            <a href="#">Yes</a><br>
+                            <a href="#">No</a>
+                          </div>
+                        </div>';
     }
-    $html = $html.'</div></div>';
+    $html = $html.'</div>';
     if ($showComments!=true) {
       $html = $html.'</div>';
     }
