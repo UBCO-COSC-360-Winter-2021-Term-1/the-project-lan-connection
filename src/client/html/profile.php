@@ -58,6 +58,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
   <script src="../js/likeSystem.js"></script>
   <script src="../js/sortPosts.js"></script>
   <script src="../js/bookmarkSystem.js"></script>
+  <script src="../js/dropdown.js"></script>
   <title>Profile</title>
 </head>
 
