@@ -146,20 +146,31 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
             </div>
             <?php
             // if on own page
-            if ($uname == $userProfile ?? $uname != null) {
-              // display edit account tools
-              echo '<button>Change profile picture</button>';
-              echo '<div class="links">';
-              echo '<a href="./bookmarks.php?user=' . $_SESSION['signedin'] . '"><i class="fa fa-bookmark"></i>Bookmarks</a>
-                      <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
-                      <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
+            if ($uname == $userProfile && $uname != null) {
+              // display account tools
+              echo '<br><div class="links">';
+              echo '<a href="./bookmarks.php?user=' . $_SESSION['signedin'] . '"><i class="fa fa-bookmark"></i>Bookmarks</a>';
+              echo '<a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>';
+              echo '<a href="../php/changePassword.php"><i class="fas fa-sign-out-alt"></i>Change Password</a>';
+              echo '<a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
               echo '</div>';
+              // display edit account forms
+              echo '<br><form id="changePfp" method="post" action="../php/changePfp.php">';
+              echo '<input type="password" name="pw" placeholder="Password">';
+              echo '<input type="file" name="ppic" id="ppic" >';
+              echo '<input class="form-submit" type="submit" value="Update Profile Picture"></form>';
+              
+              echo '<br><form id="changePassword" method="post" action="../php/changePassword.php">';
+              echo '<input type="password" name="oldpw" placeholder="Old Password">';
+              echo '<input type="password" name="pw1" placeholder="New Password">';
+              echo '<input type="password" name="pw2" placeholder="Confirm Password">';
+              echo '<input class="form-submit" type="submit" value="Update Password"></form>';
             }
             ?>
           </div>
 
           <!-- If on own profile page -->
-          <?php if ($uname == $userProfile ?? $uname != null) : ?>
+          <?php if ($uname == $userProfile && $uname != null) : ?>
             <form class="create-post" name="form" method="post" action="../php/createPost.php" enctype="multipart/form-data">
               <div class="post-text">
                 <textarea name="post_body" placeholder="Create a post" rows="5"></textarea>
