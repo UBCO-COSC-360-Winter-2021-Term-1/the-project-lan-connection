@@ -6,7 +6,7 @@ session_start();
 
 // ensure using GET method
 if (!$_SERVER["REQUEST_METHOD"] == "GET") {
-    // not using POST
+    // not using GET
     die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
         <h1>Oh no!</h1>
         <p>Ensure request method is GET, not POST</p>
