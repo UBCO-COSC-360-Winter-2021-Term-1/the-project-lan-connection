@@ -22,6 +22,7 @@ CREATE TABLE Account(
   pword VARCHAR(255),
   administrator BOOLEAN,
   imageID int(11),
+  user_enabled BOOLEAN,
   PRIMARY KEY(uname)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -88,22 +89,22 @@ INSERT INTO Category VALUES ('Snowboarding');
 INSERT INTO Category VALUES ('Golf');
 INSERT INTO Category VALUES ('Hockey');
 
-INSERT INTO Account VALUES ('noahward', 'noahward@shaw.ca', 'Noah', 'Ward', '5f4dcc3b5aa765d61d8327deb882cf99', TRUE, NULL);
-INSERT INTO Account VALUES ('andymcd', 'andymcd@shaw.ca', 'Andy', 'McDonald', '5f4dcc3b5aa765d61d8327deb882cf99', TRUE, NULL);
-INSERT INTO Account VALUES ('liviaz', 'liviaz@shaw.ca', 'Livia', 'Zalilla', '5f4dcc3b5aa765d61d8327deb882cf99', TRUE, NULL);
-INSERT INTO Account VALUES ('pattym', 'patrickmahler@hotmail.com', 'Patrick', 'Mahler', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('simotheyam', 'simon@gmail.com', 'Simon', 'Yamamoto', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('coletweed', 'cole@gmail.com', 'Cole', 'Tweed', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('alexandrias', 'alex@shaw.ca', 'Alex', 'Shaw', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('matty', 'matt@shaw.ca', 'Matt', 'Francais', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('jakeywitty', 'jakey@gmail.com', 'Jake', 'Wittenberg', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('jessy', 'jessica@gmail.com', 'Jessica', 'Grant', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('joliev', 'jolie@telus.net', 'Jolie', 'Volk', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('terpy7536', 'wesley@shaw.ca', 'Wesley', 'Terpstra', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('tendybrendy', 'james@hotmail.com', 'James', 'Brendeland', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('golferboy2', 'jakelane@shaw.ca', 'Jake', 'Lane', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('aussy', 'austin@shaw.ca', 'Austin', 'Smith', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
-INSERT INTO Account VALUES ('nessa', 'vanessa@shaw.ca', 'Vanessa', 'Dunn', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL);
+INSERT INTO Account VALUES ('noahward', 'noahward@shaw.ca', 'Noah', 'Ward', '5f4dcc3b5aa765d61d8327deb882cf99', TRUE, NULL, TRUE);
+INSERT INTO Account VALUES ('andymcd', 'andymcd@shaw.ca', 'Andy', 'McDonald', '5f4dcc3b5aa765d61d8327deb882cf99', TRUE, NULL, TRUE);
+INSERT INTO Account VALUES ('liviaz', 'liviaz@shaw.ca', 'Livia', 'Zalilla', '5f4dcc3b5aa765d61d8327deb882cf99', TRUE, NULL, TRUE);
+INSERT INTO Account VALUES ('pattym', 'patrickmahler@hotmail.com', 'Patrick', 'Mahler', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('simotheyam', 'simon@gmail.com', 'Simon', 'Yamamoto', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('coletweed', 'cole@gmail.com', 'Cole', 'Tweed', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('alexandrias', 'alex@shaw.ca', 'Alex', 'Shaw', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('matty', 'matt@shaw.ca', 'Matt', 'Francais', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('jakeywitty', 'jakey@gmail.com', 'Jake', 'Wittenberg', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('jessy', 'jessica@gmail.com', 'Jessica', 'Grant', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('joliev', 'jolie@telus.net', 'Jolie', 'Volk', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('terpy7536', 'wesley@shaw.ca', 'Wesley', 'Terpstra', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('tendybrendy', 'james@hotmail.com', 'James', 'Brendeland', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('golferboy2', 'jakelane@shaw.ca', 'Jake', 'Lane', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('aussy', 'austin@shaw.ca', 'Austin', 'Smith', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
+INSERT INTO Account VALUES ('nessa', 'vanessa@shaw.ca', 'Vanessa', 'Dunn', '5f4dcc3b5aa765d61d8327deb882cf99', FALSE, NULL, TRUE);
 
 INSERT INTO Post VALUES (1, "Golf is such a great game, thank God I'm better than Wesley!", 'noahward', 'Golf', '2021-11-28 23:42:13', NULL);
 INSERT INTO Post VALUES (2, "30cm powday at Big White today. Tried out the new board for the new season", 'aussy', 'Snowboarding', '2021-11-25 13:42:13', NULL);

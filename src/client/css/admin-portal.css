@@ -14,9 +14,11 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
+
 tbody tr:nth-child(odd) td {
     background-color: #d5d5d5;
 }
+
 tbody th {
     padding: 0.4em;
     margin-bottom: 0.4em;
@@ -26,10 +28,19 @@ tbody th {
     font-family: "Helvetica Neue";
     font-weight: normal;
 }
+
 tbody td {
     padding: 0.4em;
     font-size: 15px;
     text-align: center;
     font-family: "Helvetica Neue";
     font-weight: normal;
+}
+
+.pfp-small {
+    width: 50px;
+    height: 50px;
+    border-radius: 40px;
+    border: 2px solid grey;
+    margin: 0.5em 0.5em 0.25em 1em;
 }

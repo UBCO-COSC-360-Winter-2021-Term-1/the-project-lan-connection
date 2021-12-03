@@ -3,7 +3,7 @@
 include '../php/navBar.php';
 include '../php/connectDB.php';
 include '../php/validateText.php';
-// include '../php/handleImg.php';
+include '../php/handleImg.php';
 // include '../php/retrieveLikes.php';
 // include '../php/displayPost.php';
 
@@ -47,6 +47,7 @@ if ($results = mysqli_query($connection, $sql)) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" integrity="sha512-P9vJUXK+LyvAzj8otTOKzdfF1F3UYVl13+F8Fof8/2QNb8Twd6Vb+VD52I7+87tex9UXxnzPgWA3rH96RExA7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/admin-portal.css">
@@ -54,6 +55,9 @@ if ($results = mysqli_query($connection, $sql)) {
 </head>
 
 <body>
+    <?php
+    // echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
+    ?>
     <!-- Display page content -->
     <div id="content">
         <div id="logo">
@@ -78,18 +82,20 @@ if ($results = mysqli_query($connection, $sql)) {
                 $keyword = validate($_GET['userSearch'] ?? null);
                 $keyword = '%' . $keyword . '%';
                 // display search keyword
-                echo '<p>Seeing results for: <b>'.$_GET['userSearch'].'</b></p>';
+                echo '<p>Seeing results for: <b>' . $_GET['userSearch'] . '</b></p>';
                 // display top of table
-                echo '<table id="users-results"><tbody><th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th></tr>';
+                echo '<table id="users-results"><tbody><th></th><th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th></tr>';
                 // get results
                 $sql = "SELECT * FROM Account WHERE (uname LIKE '$keyword' OR email LIKE '$keyword');";
                 if ($result = mysqli_query($connection, $sql)) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         // display row of table
-                        echo '<tr><td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
+                        echo '<tr><td><img src=' . accessImgFromDB($connection, $row['imageID'], 'image') . ' class="pfp-small"></td>';
+                        echo '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
                         echo '<td>' . $row['uname'] . '</td>';
                         echo '<td>' . $row['email'] . '</td>';
-                        echo "<td><a href='./profile.php?username=".$row['uname']."'>Click here</a></td></tr>";
+                        echo "<td><a href='./profile.php?username=" . $row['uname'] . "'>". $row['fname'] . "'s Profile</a></td>";
+                        echo '<td><a href="../php/disableUser.php?uname=' . $row['uname'] . '">' . ( ($row['user_enabled'] == TRUE) ? ('Disable') : ('Enable') ) . ' ' . $row['fname'] . '</a></td></tr>';
                     }
                     mysqli_free_result($result);
                 }

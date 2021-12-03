@@ -39,7 +39,7 @@ $pword = md5($pword);
 $connection = connectToDB();
 
 // make SQL request
-$sql = "SELECT * FROM Account WHERE ((email='$id' OR uname='$id') AND pword='$pword');";
+$sql = "SELECT * FROM Account WHERE ((email='$id' OR uname='$id') AND pword='$pword' AND user_enabled=TRUE);";
 $results = mysqli_query($connection, $sql);
 
 // check if any results returned (ie. user exists in DB with that password)
