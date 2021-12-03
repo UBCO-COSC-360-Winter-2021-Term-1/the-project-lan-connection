@@ -86,11 +86,11 @@ if ($results = mysqli_query($connection, $sql)) {
                 // display top of table
                 echo '<table id="users-results"><tbody><th></th><th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th></tr>';
                 // get results
-                $sql = "SELECT * FROM Account WHERE (uname LIKE '$keyword' OR email LIKE '$keyword');";
+                $sql = "SELECT * FROM Account AS A INNER JOIN Post AS P ON P.uname=A.uname WHERE (A.uname LIKE '$keyword' OR email LIKE '$keyword' OR post_body LIKE '$keyword');";
                 if ($result = mysqli_query($connection, $sql)) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         // display row of table
-                        echo '<tr><td><img src=' . accessImgFromDB($connection, $row['imageID'], 'image') . ' class="pfp-small"></td>';
+                        echo '<tr><td><img src=' . accessImgFromDB($connection, $row['imageID'], 'image') . ' class="pfp-admin"></td>';
                         echo '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
                         echo '<td>' . $row['uname'] . '</td>';
                         echo '<td>' . $row['email'] . '</td>';

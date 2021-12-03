@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $postBody = str_replace("'", "~", $postBody);
 
   $postCat = $_POST['post_category'];
-  $uname = $_SESSION['signedin'];
+  $uname = $_SESSION['signedin'] ?? null;
 
   if ($postBody == null || $postCat == null) {
     echo '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
