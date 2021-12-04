@@ -11,7 +11,7 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
   // get inputted picture file
   if (isset($fileName)) {
     // initialize image variables
-    $target_file = "../uploads" . basename($fileName);
+    $target_file = "../uploads/" . basename($fileName);
     $uploadOk = 1; // switch to zero if anything wrong
 /*     // Check file size
     if ($_FILES["ppic"]["size"] > 1000000000000) {
