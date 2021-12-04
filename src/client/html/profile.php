@@ -156,7 +156,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
               echo '<a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
               echo '</div>';
               // display edit account forms
-              echo '<br><form id="changePfp" method="post" action="../php/changePfp.php">';
+              echo '<br><form id="changePfp" method="post" action="../php/changePfp.php" enctype="multipart/form-data">';
               echo '<input type="password" name="pw" placeholder="Password">';
               echo '<input type="file" name="ppic" id="ppic" >';
               echo '<input class="form-submit" type="submit" value="Update Profile Picture"></form>';
