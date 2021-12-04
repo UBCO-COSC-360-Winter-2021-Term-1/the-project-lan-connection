@@ -84,14 +84,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
       <div class="row">
 
         <div class="left-col">
-          <div class="filter">
-            <h1>Filter by:</h1>
-            <div>
-              <input type="submit" id="1" onclick="changeColor(this.id)" class="special-button classy" name="newest" value="Newest">
-              <input type="submit" id="2" onclick="changeColor(this.id)" class="special-button" name="likes" value="Likes">
-              <input type="submit" id="3" onclick="changeColor(this.id)" class="special-button" name="dislikes" value="Dislikes">
-            </div>
-          </div>
+
 
           <div class="posts">
             <?php
@@ -151,8 +144,8 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
               // display account tools
               echo '<br><div class="links">';
               echo '<a href="./bookmarks.php?user=' . $_SESSION['signedin'] . '"><i class="fa fa-bookmark"></i>Bookmarks</a>';
-              echo '<a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>';
-              echo '<a href="../php/changePassword.php"><i class="fas fa-sign-out-alt"></i>Change Password</a>';
+              // echo '<a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>';
+              // echo '<a href="../php/changePassword.php"><i class="fas fa-sign-out-alt"></i>Change Password</a>';
               echo '<a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
               echo '</div>';
               // display edit account forms

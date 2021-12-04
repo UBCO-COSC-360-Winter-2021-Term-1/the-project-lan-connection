@@ -151,15 +151,15 @@ bookmarks and activity monitor will not be functional.
                     <!--PROFILE LINKS-->
                     <?php 
                       if (isset($_SESSION['signedin'])) {
-                        echo '<a href="./profile.php"><i class="fa fa-cog"></i>Settings</a>
-                              <a href="./bookmarks.php?user='.$_SESSION['signedin'].'"><i class="fa fa-bookmark"></i>Bookmarks</a>
-                              <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>
-                              <a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
+                        // echo '<a href="./profile.php"><i class="fa fa-cog"></i>Settings</a>';
+                        echo '<a href="./bookmarks.php?user='.$_SESSION['signedin'].'"><i class="fa fa-bookmark"></i>Bookmarks</a>';
+                        // echo '<a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>';
+                        echo '<a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>';
                       }
                       else {
-                        echo '<a href="#"><i class="fa fa-cog"></i>Settings</a>
-                              <a href="#"><i class="fa fa-bookmark"></i>Bookmarks</a>
-                              <a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>';
+                        // echo '<a href="#"><i class="fa fa-cog"></i>Settings</a>';
+                        // echo '<a href="#"><i class="fa fa-bookmark"></i>Bookmarks</a>';
+                        // echo '<a href="#"><i class="fa fa-chart-line"></i>Activity Monitor</a>';
                       }
                     ?>
                     
