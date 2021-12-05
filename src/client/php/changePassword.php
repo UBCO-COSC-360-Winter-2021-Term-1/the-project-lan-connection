@@ -61,6 +61,13 @@ if ($row = mysqli_fetch_assoc($result)) {
     $sql = "UPDATE Account SET pword='$pw' WHERE uname='$uname';";
     mysqli_query($connection, $sql);
 }
+else {
+    die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <h1>Oh no!</h1>
+            <p>Incorrect password</p>
+            <a href="javascript:history.back()">Return to Profile</a>
+            </div>');
+}
 mysqli_free_result($result);
 
 // close connection to DB
