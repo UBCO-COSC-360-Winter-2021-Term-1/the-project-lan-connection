@@ -6,7 +6,7 @@ This function is called when a php file needs to connect to the database.
 function connectToDB() { 
   //DB config info
   $host = "localhost";
-  $database = "lan-connection";
+  $database = "db_10817245";
   $user = "10817245";
   $password = "10817245";
 
