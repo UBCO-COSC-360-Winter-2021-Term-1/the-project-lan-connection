@@ -88,7 +88,7 @@ if ($results = mysqli_query($connection, $sql)) {
                     // display top of table
                     echo '<table id="users-results"><tbody><th></th><th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th></tr>';
                     // get results
-                    $sql = "SELECT DISTINCT A.uname, A.fname, A.lname, A.email, A.user_enabled, A.imageID FROM Account AS A INNER JOIN Post AS P ON P.uname=A.uname WHERE (A.uname LIKE '$keyword' OR email LIKE '$keyword' OR post_body LIKE '$keyword');";
+                    $sql = "SELECT DISTINCT A.uname, A.fname, A.lname, A.email, A.user_enabled, A.imageID FROM Account AS A LEFT OUTER JOIN Post AS P ON P.uname=A.uname WHERE (A.uname LIKE '$keyword' OR email LIKE '$keyword' OR post_body LIKE '$keyword');";
                     if ($result = mysqli_query($connection, $sql)) {
                         while ($row = mysqli_fetch_assoc($result)) {
                             // display row of table
