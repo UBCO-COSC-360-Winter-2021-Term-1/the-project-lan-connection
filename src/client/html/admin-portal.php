@@ -51,63 +51,65 @@ if ($results = mysqli_query($connection, $sql)) {
     <link rel="stylesheet" href="../css/reset.css">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/admin-portal.css">
+    <link rel="stylesheet" href="../css/nav.css">
     <title>Admin Portal</title>
 </head>
 
 <body>
     <?php
-    // echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
+    echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
     ?>
     <!-- Display page content -->
-    <div id="content">
-        <div id="logo">
-            <a href="./home.php"><img src="../../../img/login-logo.png"></a>
-        </div>
-        <div id="search-user-container" class="form">
-            <!-- Form to search for users -->
-            <form method="get" action="admin-portal.php">
-                <legend>Admin Portal</legend>
-                <hr>
-                <p>
-                    <label>Search for User</label>
-                    <br>
-                    <input type="text" class="textbox" name="userSearch" placeholder="Username or email of desired user" required>
-                    <input class="form-submit" type="submit" value="Search">
-                </p>
-            </form>
-            <!-- display results of search -->
-            <?php
-            // check if user already submitted user search form
-            if (isset($_GET['userSearch'])) {
-                $keyword = validate($_GET['userSearch'] ?? null);
-                $keyword = '%' . $keyword . '%';
-                // display search keyword
-                echo '<p>Seeing results for: <b>' . $_GET['userSearch'] . '</b></p>';
-                // display top of table
-                echo '<table id="users-results"><tbody><th></th><th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th></tr>';
-                // get results
-                $sql = "SELECT * FROM Account AS A INNER JOIN Post AS P ON P.uname=A.uname WHERE (A.uname LIKE '$keyword' OR email LIKE '$keyword' OR post_body LIKE '$keyword');";
-                if ($result = mysqli_query($connection, $sql)) {
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        // display row of table
-                        echo '<tr><td><img src=' . accessImgFromDB($connection, $row['imageID'], 'image') . ' class="pfp-admin"></td>';
-                        echo '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
-                        echo '<td>' . $row['uname'] . '</td>';
-                        echo '<td>' . $row['email'] . '</td>';
-                        echo "<td><a href='./profile.php?username=" . $row['uname'] . "'>". $row['fname'] . "'s Profile</a></td>";
-                        echo '<td><a href="../php/disableUser.php?uname=' . $row['uname'] . '">' . ( ($row['user_enabled'] == TRUE) ? ('Disable') : ('Enable') ) . ' ' . $row['fname'] . '</a></td></tr>';
+    <div class="plain-background">
+        <div id="container">
+            <div id="logo">
+                <a href="./home.php"><img src="../../../img/login-logo.png"></a>
+            </div>
+            <div id="search-user-container" class="form">
+                <!-- Form to search for users -->
+                <form method="get" action="admin-portal.php">
+                    <legend>Admin Portal</legend>
+                    <hr>
+                    <p>
+                        <label>Search for User</label>
+                        <br>
+                        <input type="text" class="textbox" name="userSearch" placeholder="Username or email of desired user" required>
+                        <input class="form-submit" type="submit" value="Search">
+                    </p>
+                </form>
+                <!-- display results of search -->
+                <?php
+                // check if user already submitted user search form
+                if (isset($_GET['userSearch'])) {
+                    $keyword = validate($_GET['userSearch'] ?? null);
+                    $keyword = '%' . $keyword . '%';
+                    // display search keyword
+                    echo '<p>Seeing results for: <b>' . $_GET['userSearch'] . '</b></p>';
+                    // display top of table
+                    echo '<table id="users-results"><tbody><th></th><th>Full Name</th><th>Username</th><th>Email</th><th>Profile Page</th></tr>';
+                    // get results
+                    $sql = "SELECT DISTINCT A.uname, A.fname, A.lname, A.email, A.user_enabled, A.imageID FROM Account AS A INNER JOIN Post AS P ON P.uname=A.uname WHERE (A.uname LIKE '$keyword' OR email LIKE '$keyword' OR post_body LIKE '$keyword');";
+                    if ($result = mysqli_query($connection, $sql)) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            // display row of table
+                            echo '<tr><td><img src=' . accessImgFromDB($connection, $row['imageID'], 'image') . ' class="pfp-admin"></td>';
+                            echo '<td>' . $row['fname'] . ' ' . $row['lname'] . '</td>';
+                            echo '<td>' . $row['uname'] . '</td>';
+                            echo '<td>' . $row['email'] . '</td>';
+                            echo "<td><a href='./profile.php?username=" . $row['uname'] . "'>" . $row['fname'] . "'s Profile</a></td>";
+                            echo '<td><a href="../php/disableUser.php?uname=' . $row['uname'] . '">' . (($row['user_enabled'] == TRUE) ? ('Disable') : ('Enable')) . ' ' . $row['fname'] . '</a></td></tr>';
+                        }
+                        mysqli_free_result($result);
                     }
-                    mysqli_free_result($result);
+                    // display bottom of table
+                    echo '</tbody></table>';
+                } else {
+                    echo '<p>Search for users in search bar above</p>';
                 }
-                // display bottom of table
-                echo '</tbody></table>';
-            } else {
-                echo '<p>Search for users in search bar above</p>';
-            }
-            ?>
+                ?>
+            </div>
         </div>
     </div>
-
 </body>
 
 <?php
