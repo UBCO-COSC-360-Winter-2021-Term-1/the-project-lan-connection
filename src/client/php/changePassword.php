@@ -21,20 +21,28 @@ if (!$_SERVER["REQUEST_METHOD"] == "POST") {
        </div>');
 }
 
-// validate data existence for change password
-if (isset($_POST['oldpw']) && isset($_POST['pw1']) && isset($_POST['pw2'])) {
-    $old = md5($_POST['oldpw']);
-    $pw = md5($_POST['pw1']);
-    $confirm = md5($_POST['pw2']);
-}
-// else die early
-else {
+// check if inputs not set
+if (!isset($_POST['oldpw']) || !isset($_POST['pw1']) || !isset($_POST['pw2'])) {
     die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
         <h1>Oh no!</h1>
         <p>Input Parameters not specified</p>
         <a href="javascript:history.back()">Return to Profile</a>
         </div>');
 }
+
+// check if inputs not set to good values
+if ($_POST['oldpw'] == "" || $_POST['pw1'] == "" || $_POST['pw2'] == "") {
+    die('<div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <h1>Oh no!</h1>
+        <p>Input Parameters not specified</p>
+        <a href="javascript:history.back()">Return to Profile</a>
+        </div>');
+}
+
+// get input parameters
+$old = md5($_POST['oldpw']);
+$pw = md5($_POST['pw1']);
+$confirm = md5($_POST['pw2']);
 
 // check if new passwords don't match
 if ($pw != $confirm) {

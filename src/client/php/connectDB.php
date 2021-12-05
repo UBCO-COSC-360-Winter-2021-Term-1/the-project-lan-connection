@@ -7,6 +7,7 @@ function connectToDB() {
   //DB config info
   $host = "localhost";
   $database = "db_10817245";
+  // $database = "lan-connection";
   $user = "10817245";
   $password = "10817245";
 
