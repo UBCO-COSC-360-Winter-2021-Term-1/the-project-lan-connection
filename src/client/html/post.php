@@ -64,7 +64,7 @@ $connection = connectToDB();
       $pid = $_GET['pids'];
 
       $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
-                  FROM POST P
+                  FROM Post P
                   INNER JOIN Account A ON A.uname=P.uname
                   INNER JOIN Category C ON P.cat_title=C.cat_title
                   LEFT OUTER JOIN Images I ON I.imageID=P.imageID

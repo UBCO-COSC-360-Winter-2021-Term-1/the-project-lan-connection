@@ -161,10 +161,10 @@ INSERT INTO Ratings VALUES('noahward', 1, 'liked');
 INSERT INTO Ratings VALUES('noahward', 3, 'liked');
 INSERT INTO Ratings VALUES('noahward', 11, 'liked');
 
-INSERT INTO BOOKMARKS VALUES('noahward', 2);
-INSERT INTO BOOKMARKS VALUES('jakeywitty', 3);
-INSERT INTO BOOKMARKS VALUES('joliev', 6);
-INSERT INTO BOOKMARKS VALUES('andymcd', 1);
-INSERT INTO BOOKMARKS VALUES('noahward', 9);
-INSERT INTO BOOKMARKS VALUES('noahward', 11);
-INSERT INTO BOOKMARKS VALUES('jessy', 2);
+INSERT INTO Bookmarks VALUES('noahward', 2);
+INSERT INTO Bookmarks VALUES('jakeywitty', 3);
+INSERT INTO Bookmarks VALUES('joliev', 6);
+INSERT INTO Bookmarks VALUES('andymcd', 1);
+INSERT INTO Bookmarks VALUES('noahward', 9);
+INSERT INTO Bookmarks VALUES('noahward', 11);
+INSERT INTO Bookmarks VALUES('jessy', 2);

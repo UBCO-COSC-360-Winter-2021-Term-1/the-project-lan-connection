@@ -92,7 +92,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
             if (isset($userProfile)) {
 
               $sql = "SELECT P.pid
-                                    FROM POST P
+                                    FROM Post P
                                     INNER JOIN Account A ON A.uname=P.uname
                                     WHERE A.uname = '$userProfile'
                                     ORDER BY post_date DESC";

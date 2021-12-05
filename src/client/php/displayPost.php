@@ -6,7 +6,7 @@ function displayPost2($connection, $pid, $currentUname, $showComments) {
   $isAdmins = checkForAdmin($connection, $currentUname);
   // make sql query for post info needed
   $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID AS pimg, P.cat_title, post_body, A.imageID AS pfp
-                  FROM POST P
+                  FROM Post P
                   INNER JOIN Account A ON A.uname=P.uname
                   INNER JOIN Category C ON P.cat_title=C.cat_title
                   LEFT OUTER JOIN Images I ON I.imageID=P.imageID

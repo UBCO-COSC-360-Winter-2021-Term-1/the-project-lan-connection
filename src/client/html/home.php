@@ -101,7 +101,7 @@ bookmarks and activity monitor will not be functional.
                     include '../php/displayPost.php';
 
                     // Query the posts that will be displayed on the home page
-                    $sql = "SELECT pid FROM POST P ORDER BY post_date DESC LIMIT 10;";
+                    $sql = "SELECT pid FROM Post P ORDER BY post_date DESC LIMIT 10;";
                             
                     $results = mysqli_query($connection, $sql);
                     $row_cnt = mysqli_num_rows($results);

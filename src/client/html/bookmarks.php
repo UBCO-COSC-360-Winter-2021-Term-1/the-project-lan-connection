@@ -69,7 +69,7 @@ $user = $_GET['user'] ?? null;
       if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         $sql = "SELECT P.pid, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
-                  FROM POST P
+                  FROM Post P
                   INNER JOIN Account A ON A.uname=P.uname
                   INNER JOIN Category C ON P.cat_title=C.cat_title
                   INNER JOIN Bookmarks B ON B.pid = P.pid

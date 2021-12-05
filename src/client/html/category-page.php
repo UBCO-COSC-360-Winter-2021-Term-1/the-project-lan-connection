@@ -71,7 +71,7 @@ $pageCat = $_GET['page'] ?? null;
       include '../php/displayPost.php';
 
       $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp 
-                      FROM POST P
+                      FROM Post P
                       INNER JOIN Account A ON A.uname=P.uname
                       INNER JOIN Category C ON P.cat_title=C.cat_title
                       LEFT OUTER JOIN Images I ON I.imageID=P.imageID

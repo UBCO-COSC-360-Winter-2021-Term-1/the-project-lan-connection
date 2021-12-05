@@ -87,7 +87,7 @@ function accessImgFromDB($connection, $id, $purpose) {
       mysqli_free_result($results);
       break;
     case "post":
-      $sql = "SELECT imageID FROM post WHERE pid = $id";
+      $sql = "SELECT imageID FROM Post WHERE pid = $id";
       if ($results = mysqli_query($connection, $sql)) {
         if ($row = mysqli_fetch_assoc($results)) {
           $imageID = $row['imageID'];
@@ -98,7 +98,7 @@ function accessImgFromDB($connection, $id, $purpose) {
   }
 
   // query images table
-  $sql = "SELECT contentType, image FROM images WHERE imageID = ?";
+  $sql = "SELECT contentType, image FROM Images WHERE imageID = ?";
   $stmt = mysqli_stmt_init($connection);
   mysqli_stmt_prepare($stmt, $sql);
   mysqli_stmt_bind_param($stmt, "i", $id);
