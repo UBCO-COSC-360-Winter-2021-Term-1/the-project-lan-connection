@@ -59,6 +59,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
   <script src="../js/sortPosts.js"></script>
   <script src="../js/bookmarkSystem.js"></script>
   <script src="../js/dropdown.js"></script>
+  <script src="../js/formValidation.js"></script>
   <title>Profile</title>
 </head>
 
@@ -76,7 +77,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
 
   <!--NAVIGATION BAR (done with bootstrap)-->
   <?php
-  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null); 
+  echo displayNavBar($connection, $_SESSION['signedin'] ?? null, null);
   ?>
 
   <div class="plain-background-2">
@@ -106,7 +107,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
               $fname = $result2['fname'];
               $lname = $result2['lname'];
               $pfp2 = accessImgFromDB($connection, $result2['pfp'], 'image');
-            } 
+            }
 
             if ($row_cnt = 0) {
               echo 'No posts to display!';
@@ -114,7 +115,7 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
 
             while ($row = mysqli_fetch_array($result)) {
               echo displayPost2($connection, $row['pid'], $_SESSION['signedin'] ?? null, false);
-            } 
+            }
             ?>
           </div>
         </div>
@@ -125,14 +126,14 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
               <?php
               if (isset($userProfile)) {
                 echo '<img src=' . $pfp2 . '>';
-              } 
+              }
               ?>
               <div>
                 <?php
                 if (isset($userProfile)) {
                   echo '<p class="user-name">' . $fname . ' ' . $lname . '</p>';
                   echo '<p>' . $userProfile . '</p>';
-                } 
+                }
                 ?>
               </div>
             </div>
@@ -148,14 +149,14 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
               echo '</div>';
               // display edit account forms
               echo '<br><form id="changePfp" method="post" action="../php/changePfp.php" enctype="multipart/form-data">';
-              echo '<input type="password" name="pw" placeholder="Password">';
-              echo '<input type="file" name="ppic" id="ppic" >';
+              echo '<input type="password" class="required-1" name="pw" placeholder="Password">';
+              echo '<input type="file" class="required-1" name="ppic" id="ppic" >';
               echo '<input class="form-submit" type="submit" value="Update Profile Picture"></form>';
-              
-              echo '<br><form id="changePassword" method="post" action="../php/changePassword.php">';
-              echo '<input type="password" name="oldpw" placeholder="Old Password">';
-              echo '<input type="password" name="pw1" placeholder="New Password">';
-              echo '<input type="password" name="pw2" placeholder="Confirm Password">';
+
+              echo '<br><form id="changePassword" method="post" action="../php/changePassword.php" onsubmit="return validateLogin() onchange="return removeHighlightLogin()">';
+              echo '<input type="password" class="required-1" name="oldpw" placeholder="Old Password">';
+              echo '<input type="password" class="required-1" name="pw1" placeholder="New Password">';
+              echo '<input type="password" class="required-1" name="pw2" placeholder="Confirm Password">';
               echo '<input class="form-submit" type="submit" value="Update Password"></form>';
             }
             ?>
