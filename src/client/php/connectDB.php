@@ -7,8 +7,8 @@ function connectToDB() {
   //DB config info
   $host = "localhost";
   $database = "lan-connection";
-  $user = "10817245";
-  $password = "10817245";
+  $user = "LANuser";
+  $password = "sk11ng@b1gwh1t3";
 
   $connection = mysqli_connect($host, $user, $password, $database);
   $error = mysqli_connect_error();
