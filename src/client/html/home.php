@@ -101,13 +101,7 @@ bookmarks and activity monitor will not be functional.
                     include '../php/displayPost.php';
 
                     // Query the posts that will be displayed on the home page
-                    $sql = "SELECT pid, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
-                            FROM POST P
-                            INNER JOIN Account A ON A.uname=P.uname
-                            INNER JOIN Category C ON P.cat_title=C.cat_title
-                            LEFT OUTER JOIN Images I ON I.imageID=P.imageID
-                            ORDER BY post_date DESC
-                            LIMIT 10;";
+                    $sql = "SELECT pid FROM POST P ORDER BY post_date DESC LIMIT 10;";
                             
                     $results = mysqli_query($connection, $sql);
                     $row_cnt = mysqli_num_rows($results);

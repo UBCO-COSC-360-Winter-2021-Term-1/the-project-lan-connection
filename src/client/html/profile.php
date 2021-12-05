@@ -91,11 +91,9 @@ $dislikesQuery = $_GET['dislikes'] ?? null;
             // query DB with desired uname
             if (isset($userProfile)) {
 
-              $sql = "SELECT P.pid, fname, lname, A.uname, post_date, P.imageID, P.cat_title, post_body, A.imageID AS pfp
+              $sql = "SELECT P.pid
                                     FROM POST P
                                     INNER JOIN Account A ON A.uname=P.uname
-                                    INNER JOIN Category C ON P.cat_title=C.cat_title
-                                    LEFT OUTER JOIN Images I ON I.imageID=P.imageID
                                     WHERE A.uname = '$userProfile'
                                     ORDER BY post_date DESC";
 
