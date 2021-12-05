@@ -65,8 +65,8 @@ if ($row = mysqli_fetch_assoc($results)) {
 mysqli_free_result($results);
 
 // insert new user into DB
-$sql2 = "INSERT INTO Account (uname, fname, lname, email, pword) 
-         VALUES ('$uname', '$fname', '$lname', '$email', '$pword')";
+$sql2 = "INSERT INTO Account (uname, fname, lname, email, pword, administrator, user_enabled) 
+         VALUES ('$uname', '$fname', '$lname', '$email', '$pword', FALSE, TRUE)";
 mysqli_query($connection, $sql2);
 
 // upload profile picture to DB
