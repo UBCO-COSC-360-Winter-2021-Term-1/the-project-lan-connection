@@ -28,7 +28,10 @@
     return "<p>Something went wrong, post was not deleted</p>";
   }
 
-  if ($_SERVER["REQUEST_METHOD"] == "GET") {
+  if ($_SERVER["REQUEST_METHOD"] == "GET" && mysqli_query($connection, $sql)) {
+    header('Location: ../html/admin-portal.php');
+  }
+  else if ($_SERVER["REQUEST_METHOD"] == "GET") {
     header('Location: ../html/admin-portal.php');
   }
 
