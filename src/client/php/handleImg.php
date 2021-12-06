@@ -13,10 +13,10 @@ function uploadImgToDB ($connection, $fileName, $id, $purpose) {
     // initialize image variables
     $target_file = "../uploads/" . basename($fileName);
     $uploadOk = 1; // switch to zero if anything wrong
-/*     // Check file size
+    // Check file size
     if ($_FILES["ppic"]["size"] > 1000000000000) {
       $uploadOk = 0;
-    } */
+    } 
     // Check file type
     $imageFileType = strtolower(pathinfo(basename($fileName), PATHINFO_EXTENSION));
     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "gif" && $imageFileType != "jpeg" && $imageFileType != "pdf") {
